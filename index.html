@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sygma House — Residential Assisted Living in Minnesota</title>
+<style>
+  :root {
+    --cream: #faf8f4;
+    --white: #ffffff;
+    --green: #4a7c59;
+    --green-light: #6a9e78;
+    --green-pale: #e8f2ec;
+    --blue: #4a6fa5;
+    --blue-pale: #e8eef7;
+    --warm-gray: #f5f2ed;
+    --text-dark: #2c2c2c;
+    --text-mid: #555555;
+    --text-light: #888888;
+    --border: #e0dbd2;
+    --gold: #c9a84c;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+    --shadow-hover: 0 6px 24px rgba(0,0,0,0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Georgia', 'Times New Roman', serif; background: var(--cream); color: var(--text-dark); line-height: 1.7; }
+
+  /* NAVIGATION */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 68px;
+  }
+  .logo { font-size: 1.4rem; font-weight: 700; color: var(--green); letter-spacing: -0.3px; }
+  .logo span { color: var(--text-dark); font-weight: 400; }
+  .nav-links { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Arial', sans-serif; font-size: 0.85rem; color: var(--text-mid);
+    text-decoration: none; padding: 6px 10px; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); background: var(--green-pale); }
+  .nav-cta {
+    background: var(--green) !important; color: var(--white) !important;
+    padding: 8px 18px !important; border-radius: 8px !important; font-weight: 600 !important;
+    font-size: 0.85rem !important;
+  }
+  .nav-cta:hover { background: var(--green-light) !important; }
+
+  /* PAGE SECTIONS */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #2d5a3d 0%, #3d6b4a 40%, #4a7c59 100%);
+    color: var(--white); padding: 80px 24px 90px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content { max-width: 720px; margin: 0 auto; position: relative; }
+  .hero-badge {
+    display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 5px 16px; font-size: 0.82rem; margin-bottom: 24px;
+    font-family: 'Arial', sans-serif; letter-spacing: 0.3px;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700;
+    line-height: 1.25; margin-bottom: 20px; letter-spacing: -0.5px;
+  }
+  .hero p { font-size: 1.15rem; opacity: 0.9; max-width: 560px; margin: 0 auto 36px; }
+  .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--white); color: var(--green);
+    padding: 14px 28px; border-radius: 10px; font-weight: 700;
+    border: none; cursor: pointer; font-size: 1rem;
+    font-family: 'Arial', sans-serif; text-decoration: none;
+    display: inline-block; transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 2px solid rgba(255,255,255,0.6);
+    padding: 12px 26px; border-radius: 10px; font-weight: 600;
+    cursor: pointer; font-size: 1rem; font-family: 'Arial', sans-serif;
+    text-decoration: none; display: inline-block; transition: all 0.2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+  /* SECTION */
+  section { padding: 70px 24px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Arial', sans-serif; font-size: 0.78rem; font-weight: 700;
+    color: var(--green); letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); color: var(--text-dark); margin-bottom: 14px; line-height: 1.3; }
+  .subtitle { font-size: 1.08rem; color: var(--text-mid); max-width: 600px; margin-bottom: 48px; }
+
+  /* TRUST PILLARS */
+  .pillars { background: var(--white); }
+  .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; }
+  .pillar-card {
+    background: var(--cream); border-radius: var(--radius);
+    padding: 28px 24px; border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+  .pillar-card:hover { box-shadow: var(--shadow-hover); }
+  .pillar-icon { font-size: 2rem; margin-bottom: 12px; }
+  .pillar-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--green); }
+  .pillar-card p { font-size: 0.92rem; color: var(--text-mid); }
+
+  /* CAPACITY BADGE */
+  .capacity-strip {
+    background: var(--green-pale); border: 1px solid #b8d4c0;
+    border-radius: 12px; padding: 20px 28px;
+    display: flex; align-items: center; gap: 16px; margin: 0 0 48px;
+    flex-wrap: wrap;
+  }
+  .cap-icon { font-size: 1.6rem; }
+  .cap-text { flex: 1; }
+  .cap-text strong { color: var(--green); }
+
+  /* ADMISSION STEPS */
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .step-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 32px 28px; border: 1px solid var(--border);
+    position: relative;
+  }
+  .step-num {
+    width: 44px; height: 44px; background: var(--green); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 700; margin-bottom: 16px;
+    font-family: 'Arial', sans-serif;
+  }
+  .step-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+  .step-card p { font-size: 0.93rem; color: var(--text-mid); }
+
+  /* PAYMENT STRIP */
+  .payment-strip {
+    background: linear-gradient(135deg, #4a6fa5 0%, #5a7fb5 100%);
+    color: white; border-radius: var(--radius);
+    padding: 36px 40px; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+  }
+  .payment-strip h3 { font-size: 1.4rem; margin-bottom: 10px; }
+  .payment-strip p { opacity: 0.88; font-size: 0.95rem; }
+  .payment-items { list-style: none; margin-top: 12px; }
+  .payment-items li { padding: 4px 0; opacity: 0.9; font-size: 0.93rem; }
+  .payment-items li::before { content: '✓ '; opacity: 0.7; }
+
+  /* CARDS */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 28px 24px; border: 1px solid var(--border);
+    box-shadow: var(--shadow); transition: all 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+  .card-icon { font-size: 2rem; margin-bottom: 14px; }
+  .card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text-dark); }
+  .card p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; }
+  .card-note { font-size: 0.78rem; color: var(--text-light); margin-top: 10px; font-style: italic; }
+
+  /* PHOTO GRID */
+  .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .photo-ph {
+    background: var(--warm-gray); border-radius: var(--radius);
+    aspect-ratio: 4/3; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; border: 2px dashed var(--border);
+    color: var(--text-light); font-size: 0.85rem; gap: 8px;
+    font-family: 'Arial', sans-serif;
+  }
+  .photo-ph span { font-size: 2rem; }
+
+  /* FORM STYLES */
+  .form-section { background: var(--white); }
+  .form-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 40px; border: 1px solid var(--border); box-shadow: var(--shadow);
+    max-width: 680px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-full { grid-column: 1 / -1; }
+  label { font-size: 0.88rem; font-weight: 600; font-family: 'Arial', sans-serif; color: var(--text-dark); display: block; margin-bottom: 6px; }
+  input, select, textarea {
+    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); font-size: 0.95rem; font-family: inherit;
+    background: var(--cream); color: var(--text-dark); transition: border 0.2s;
+    outline: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--green); background: white; }
+  textarea { resize: vertical; min-height: 100px; }
+  .btn-green {
+    background: var(--green); color: white; border: none; border-radius: 10px;
+    padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer;
+    font-family: 'Arial', sans-serif; transition: all 0.2s; display: inline-block;
+    text-decoration: none;
+  }
+  .btn-green:hover { background: var(--green-light); transform: translateY(-1px); }
+  .btn-blue {
+    background: var(--blue); color: white; border: none; border-radius: 10px;
+    padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer;
+    font-family: 'Arial', sans-serif; transition: all 0.2s; display: inline-block;
+  }
+
+  /* FAQ */
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q {
+    padding: 18px 0; font-weight: 600; cursor: pointer; display: flex;
+    justify-content: space-between; align-items: center; font-size: 1rem;
+  }
+  .faq-q:hover { color: var(--green); }
+  .faq-a { padding: 0 0 18px; color: var(--text-mid); font-size: 0.95rem; display: none; }
+  .faq-a.open { display: block; }
+
+  /* COMPLIANCE */
+  .compliance-box {
+    background: var(--blue-pale); border: 1px solid #c5d4e8;
+    border-radius: var(--radius); padding: 28px; margin-bottom: 28px;
+  }
+  .compliance-box h3 { color: var(--blue); margin-bottom: 10px; }
+  .placeholder-box {
+    background: var(--warm-gray); border: 2px dashed var(--border);
+    border-radius: var(--radius-sm); padding: 20px; font-style: italic;
+    color: var(--text-light); font-size: 0.88rem; font-family: 'Arial', sans-serif;
+    margin: 12px 0;
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--green) 0%, #3d6b4a 100%);
+    color: white; text-align: center; padding: 60px 24px;
+  }
+  .cta-banner h2 { color: white; margin-bottom: 12px; }
+  .cta-banner p { opacity: 0.88; max-width: 500px; margin: 0 auto 32px; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer {
+    background: #1e2d23; color: rgba(255,255,255,0.75);
+    padding: 50px 24px 28px;
+  }
+  .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+  footer h4 { color: white; font-size: 0.95rem; margin-bottom: 14px; }
+  footer a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.85rem; display: block; margin-bottom: 6px; }
+  footer a:hover { color: white; }
+  .footer-bottom {
+    max-width: 1100px; margin: 40px auto 0; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.78rem; font-family: 'Arial', sans-serif;
+    color: rgba(255,255,255,0.45);
+  }
+  .footer-logo { font-size: 1.3rem; font-weight: 700; color: white; margin-bottom: 10px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: linear-gradient(135deg, #f0f5f1 0%, var(--cream) 100%);
+    padding: 52px 24px 40px; border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .page-header h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 12px; }
+  .page-header p { color: var(--text-mid); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem;
+  }
+  .check-icon { color: var(--green); font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+
+  /* PATH CARDS */
+  .path-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .path-card {
+    border-radius: var(--radius); padding: 32px;
+    border: 2px solid transparent;
+  }
+  .path-card.private { background: #fffbf0; border-color: #e6d5a0; }
+  .path-card.waiver { background: #f0f5fb; border-color: #b8cde0; }
+  .path-card h3 { font-size: 1.2rem; margin-bottom: 12px; }
+  .path-card.private h3 { color: #8a6a10; }
+  .path-card.waiver h3 { color: #1a4a6b; }
+
+  /* URGENCY BADGE */
+  .urgency { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; font-family: 'Arial', sans-serif; }
+  .urgency.high { background: #fde8e8; color: #c0392b; }
+  .urgency.medium { background: #fef3cd; color: #856404; }
+  .urgency.low { background: var(--green-pale); color: var(--green); }
+
+  /* CONTACT GRID */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .contact-info-item { display: flex; gap: 14px; margin-bottom: 24px; align-items: flex-start; }
+  .contact-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .contact-detail h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 3px; font-family: 'Arial', sans-serif; }
+  .contact-detail p { font-size: 0.9rem; color: var(--text-mid); }
+
+  /* MAP PH */
+  .map-ph {
+    background: var(--warm-gray); border-radius: var(--radius);
+    height: 280px; display: flex; align-items: center; justify-content: center;
+    border: 2px dashed var(--border); flex-direction: column; gap: 8px;
+    color: var(--text-light); font-family: 'Arial', sans-serif; font-size: 0.88rem;
+  }
+
+  /* TAG */
+  .tag {
+    display: inline-block; background: var(--green-pale); color: var(--green);
+    border-radius: 20px; padding: 3px 12px; font-size: 0.78rem; font-weight: 600;
+    font-family: 'Arial', sans-serif; margin: 2px;
+  }
+  .tag.blue { background: var(--blue-pale); color: var(--blue); }
+
+  /* ALERT BOX */
+  .alert-box {
+    background: #fff8e1; border: 1px solid #f0c040; border-radius: var(--radius-sm);
+    padding: 14px 18px; font-size: 0.88rem; color: #6b4e00; margin: 12px 0;
+    font-family: 'Arial', sans-serif;
+  }
+  .info-box {
+    background: var(--blue-pale); border: 1px solid #c5d4e8; border-radius: var(--radius-sm);
+    padding: 14px 18px; font-size: 0.88rem; color: #1a3a5c; margin: 12px 0;
+    font-family: 'Arial', sans-serif;
+  }
+
+  /* 2-col layout */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .payment-strip { grid-template-columns: 1fr; }
+    .path-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .mobile-menu-btn { display: block; }
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')" style="cursor:pointer">
+      Sygma <span>House</span>
+    </div>
+    <div class="nav-links">
+      <a href="#" onclick="showPage('about')">About</a>
+      <a href="#" onclick="showPage('services')">Services</a>
+      <a href="#" onclick="showPage('living')">Living Here</a>
+      <a href="#" onclick="showPage('admissions')">Admissions</a>
+      <a href="#" onclick="showPage('pricing')">Pricing</a>
+      <a href="#" onclick="showPage('resources')">Resources</a>
+      <a href="#" onclick="showPage('compliance')">Compliance</a>
+      <a href="#" onclick="showPage('contact')">Contact</a>
+      <a href="#" onclick="showPage('tour')" class="nav-cta">Schedule a Tour</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HOME PAGE
+═══════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🏡 Small Home · Big Heart · Minnesota</div>
+      <h1>A Safe, Caring Home for<br>Your Loved One in Minnesota</h1>
+      <p>Sygma House is a small residential assisted living home offering personalized care, dignity, and a true sense of family — for up to 5 residents.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn-primary" onclick="showPage('tour')">Schedule a Tour</a>
+        <a href="#" class="btn-outline" onclick="showPage('admissions')">Start Admission</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Capacity Badge -->
+  <section style="padding: 40px 24px 0;">
+    <div class="container">
+      <div class="capacity-strip">
+        <div class="cap-icon">🏠</div>
+        <div class="cap-text">
+          <strong>Small 5-Resident Home Environment</strong><br>
+          <span style="font-size:0.9rem;color:var(--text-mid);">Unlike large facilities, Sygma House is an intimate residential setting where every resident receives personal attention and consistent care from our team.</span>
+        </div>
+        <a href="#" class="btn-green" onclick="showPage('admissions')" style="white-space:nowrap;">Check Availability</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Pillars -->
+  <section class="pillars">
+    <div class="container">
+      <div class="section-label">Why Families Choose Us</div>
+      <h2>Care That Feels Like Home</h2>
+      <p class="subtitle">We believe every resident deserves safety, dignity, and daily comfort — in a setting that truly feels like home.</p>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">🛡️</div>
+          <h3>Safety First</h3>
+          <p>Our home environment is designed with resident safety in mind — from supervised care to thoughtful layout and 24/7 staff availability.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">💛</div>
+          <h3>Dignified Care</h3>
+          <p>We honor each resident's individuality, history, and preferences. Care is always provided with respect and kindness.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">👁️</div>
+          <h3>Attentive Supervision</h3>
+          <p>With only 5 residents, our staff can truly know each person and respond to their needs quickly and consistently.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🍽️</div>
+          <h3>Daily Comfort</h3>
+          <p>Warm meals, clean spaces, comfortable rooms, and a calm daily routine help residents feel settled and at ease.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">👨‍👩‍👧</div>
+          <h3>Family Welcome</h3>
+          <p>We keep families connected and informed. You are always welcome to visit, ask questions, and be part of your loved one's care.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">📋</div>
+          <h3>Personalized Plans</h3>
+          <p>Every resident has an individual service plan tailored to their care needs, preferences, and goals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment Accepted -->
+  <section style="background: var(--white); padding: 60px 24px;">
+    <div class="container">
+      <div class="payment-strip">
+        <div>
+          <h3>Private Pay Accepted</h3>
+          <p>Straightforward private pay options for families who are ready to move forward. We'll walk you through pricing and service planning together.</p>
+          <ul class="payment-items">
+            <li>Transparent service-based pricing</li>
+            <li>Flexible care plan options</li>
+            <li>No surprise fees</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Medicaid Waiver Accepted</h3>
+          <p>We work with families navigating Elderly Waiver and other Medicaid waiver programs. Eligibility requirements apply — we're here to help guide you.</p>
+          <ul class="payment-items">
+            <li>Elderly Waiver (EW) friendly</li>
+            <li>Case manager coordination welcome</li>
+            <li>County referral process supported</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admission Steps -->
+  <section style="background: var(--cream);">
+    <div class="container">
+      <div class="section-label">Simple Process</div>
+      <h2>How Admission Works</h2>
+      <p class="subtitle">We've made the process as easy as possible for families, case managers, and discharge planners.</p>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Reach Out & Schedule a Tour</h3>
+          <p>Call us or complete our online form. We'll schedule a tour at your convenience — in person or by phone for out-of-town families.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Assessment & Documents</h3>
+          <p>We'll review care needs, gather required documents, and complete a pre-admission assessment to make sure we're the right fit for your loved one.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Move-In Day</h3>
+          <p>We coordinate a smooth transition and welcome your loved one into our home. Your family is welcome to be present and involved every step of the way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Family Reassurance -->
+  <section style="background: var(--white);">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="section-label">For Families</div>
+          <h2>We Know This Decision is Hard</h2>
+          <p style="color:var(--text-mid);margin-bottom:20px;">Choosing assisted living for someone you love is one of the most important decisions a family can make. At Sygma House, we take that trust seriously.</p>
+          <p style="color:var(--text-mid);margin-bottom:20px;">Our small 5-resident setting means your loved one will never be just a room number. They'll be known by name, cared for as an individual, and treated with dignity every single day.</p>
+          <p style="color:var(--text-mid);margin-bottom:32px;">You can visit anytime. Ask us anything. We communicate openly and welcome families as partners in care.</p>
+          <a href="#" class="btn-green" onclick="showPage('tour')">Talk to Us Today</a>
+        </div>
+        <div>
+          <div class="photo-ph" style="aspect-ratio:5/4; border-radius:16px; background:#e8f2ec;">
+            <span>🏡</span>
+            <div>Photo: Welcoming home exterior</div>
+            <div style="font-size:0.75rem; color:var(--text-light);">Add real photo here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <h2>Ready to Learn More?</h2>
+    <p>Schedule a tour, ask us questions, or begin the admission process. We're here to help — no pressure, just honest conversation.</p>
+    <div class="cta-buttons">
+      <a href="#" class="btn-primary" onclick="showPage('tour')">📅 Schedule a Tour</a>
+      <a href="#" class="btn-outline" onclick="showPage('admissions')">Start Intake Form</a>
+      <a href="#" class="btn-outline" onclick="showPage('contact')">Call Us</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT PAGE
+═══════════════════════════════════════════ -->
+<div id="page-about" class="page">
+  <div class="page-header">
+    <h1>About Sygma House</h1>
+    <p>A small, caring residential assisted living home in Minnesota — built on dignity, structure, and personal attention.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="section-label">Our Story</div>
+          <h2>A Home Built on Caring</h2>
+          <p style="color:var(--text-mid);margin-bottom:16px;">Sygma House was founded with a simple but powerful belief: that older adults and individuals needing care deserve more than an institutional setting. They deserve a real home.</p>
+          <p style="color:var(--text-mid);margin-bottom:16px;">As a small, 5-resident residential assisted living home, we provide the personal attention, consistency, and warmth that larger facilities simply cannot offer at scale.</p>
+          <div class="placeholder-box">[ Owner/operator story placeholder — add personal background, motivation for starting Sygma House, connection to community. ]</div>
+        </div>
+        <div>
+          <div class="photo-ph" style="aspect-ratio:4/3; border-radius:14px;">
+            <span>👤</span>
+            <div>Owner/Team Photo Placeholder</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--cream);">
+    <div class="container">
+      <div class="section-label">Our Foundation</div>
+      <h2>Mission, Values & Care Philosophy</h2>
+      <div class="cards-grid" style="margin-top:32px;">
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h3>Our Mission</h3>
+          <p>To provide safe, dignified, and personalized assisted living care in a genuine home environment — honoring each resident's individuality and supporting their highest quality of life.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⭐</div>
+          <h3>Our Values</h3>
+          <p><strong>Dignity</strong> — every person deserves respect.<br><strong>Safety</strong> — our first responsibility.<br><strong>Consistency</strong> — familiar faces, reliable care.<br><strong>Transparency</strong> — open communication with families.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💭</div>
+          <h3>Care Philosophy</h3>
+          <p>We believe care is more than meeting physical needs. It's about maintaining purpose, connection, and comfort — supporting the whole person, not just their diagnosis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="section-label">What Makes Us Different</div>
+      <h2>The Small Home Advantage</h2>
+      <div class="cards-grid" style="margin-top:32px;">
+        <div class="card"><div class="card-icon">🔢</div><h3>Only 5 Residents</h3><p>Our residents are never lost in a crowd. Staff know every resident by name, preference, and routine.</p></div>
+        <div class="card"><div class="card-icon">🧹</div><h3>Clean & Comfortable</h3><p>Our home is maintained to a high standard of cleanliness — a real home, not a sterile institution.</p></div>
+        <div class="card"><div class="card-icon">🕐</div><h3>24/7 Staff Availability</h3><p>Assistance is available around the clock. Residents are never alone without support nearby.</p></div>
+        <div class="card"><div class="card-icon">🤝</div><h3>Family Partnership</h3><p>We communicate proactively and welcome family involvement in care decisions.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <h2>Come See Our Home</h2>
+    <p>The best way to understand Sygma House is to visit. We welcome families, case managers, and discharge planners.</p>
+    <div class="cta-buttons">
+      <a href="#" class="btn-primary" onclick="showPage('tour')">Schedule a Tour</a>
+      <a href="#" class="btn-outline" onclick="showPage('contact')">Contact Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SERVICES PAGE
+═══════════════════════════════════════════ -->
+<div id="page-services" class="page">
+  <div class="page-header">
+    <h1>Care Services</h1>
+    <p>Personalized assistance designed around each resident's individual care needs and service plan.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="info-box" style="margin-bottom:32px;">
+        ℹ️ <strong>Please note:</strong> The services described below represent the types of care we support. Specific services provided to each resident are determined through an individual assessment and written service plan. Services are subject to our licensure and care capabilities.
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🏠</div>
+          <h3>Assisted Living Support</h3>
+          <p>Comprehensive support with daily activities in a residential home environment. We assist with the tasks of daily living while encouraging as much independence as possible.</p>
+          <div class="card-note">Provided per individual service plan</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">💊</div>
+          <h3>Medication Support</h3>
+          <p>Assistance with medication management as allowed under Minnesota assisted living regulations. Our staff support residents in taking medications safely and on schedule.</p>
+          <div class="card-note">Subject to licensure and resident service plan</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔔</div>
+          <h3>24/7 Staff Availability</h3>
+          <p>Staff are available around the clock to assist residents with needs that arise at any hour — nights, weekends, and holidays included.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🍲</div>
+          <h3>Meals & Nutritional Support</h3>
+          <p>Home-cooked meals served in a family-style setting. We accommodate dietary needs and preferences as documented in each resident's plan.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚿</div>
+          <h3>Personal Care Assistance</h3>
+          <p>Respectful assistance with bathing, grooming, dressing, and personal hygiene — provided with dignity and in accordance with each resident's service plan.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">👁️</div>
+          <h3>Safety Monitoring</h3>
+          <p>Ongoing supervision and safety monitoring tailored to each resident's needs. Our small home size means we can respond quickly to any situation.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔗</div>
+          <h3>Care Coordination</h3>
+          <p>We work with each resident's care team — including physicians, case managers, and county workers — to ensure coordinated, consistent care.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📞</div>
+          <h3>Family Communication</h3>
+          <p>Regular updates, open communication, and transparent reporting keep families informed and connected to their loved one's care and well-being.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--cream);">
+    <div class="container" style="max-width:700px;">
+      <div class="section-label">Service Planning</div>
+      <h2>Every Resident Has a Personalized Plan</h2>
+      <p style="color:var(--text-mid);margin-bottom:20px;">Before and at move-in, we complete a thorough assessment and develop a written service plan with each resident and their family. This plan outlines the specific services the resident will receive and is reviewed and updated regularly.</p>
+      <div class="alert-box">⚠️ Minnesota assisted living facilities are required to provide a written service disclosure (UDALSA) and service plan. Sygma House follows applicable requirements under Minnesota Statute Chapter 144G. Ask us for details about your specific situation.</div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <h2>Questions About Our Services?</h2>
+    <p>We're happy to discuss whether Sygma House is the right fit for your loved one's care needs.</p>
+    <div class="cta-buttons">
+      <a href="#" class="btn-primary" onclick="showPage('tour')">Schedule a Tour</a>
+      <a href="#" class="btn-outline" onclick="showPage('admissions')">Start Intake</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     LIVING PAGE
+═══════════════════════════════════════════ -->
+<div id="page-living" class="page">
+  <div class="page-header">
+    <h1>Living at Sygma House</h1>
+    <p>What daily life looks and feels like for our residents.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="section-label">Home Environment</div>
+      <h2>A Real Home, Not a Facility</h2>
+      <p class="subtitle">Sygma House is a residential home — comfortable, clean, and calm. Our residents live in a genuine neighborhood setting, not an institution.</p>
+      <div class="photo-grid" style="margin-bottom:48px;">
+        <div class="photo-ph"><span>🛏️</span><div>Private Room</div></div>
+        <div class="photo-ph"><span>🛋️</span><div>Common Living Area</div></div>
+        <div class="photo-ph"><span>🍽️</span><div>Dining Area</div></div>
+        <div class="photo-ph"><span>🌿</span><div>Outdoor / Yard Space</div></div>
+      </div>
+      <div class="alert-box">📸 Real photos of our home coming soon. Contact us to schedule an in-person tour and see the space for yourself.</div>
+    </div>
+  </section>
+
+  <section style="background:var(--cream);">
+    <div class="container">
+      <div class="section-label">Daily Life</div>
+      <h2>Structure, Comfort, and Routine</h2>
+      <div class="cards-grid" style="margin-top:28px;">
+        <div class="card"><div class="card-icon">☀️</div><h3>Daily Routine</h3><p>Consistent wake-up, meal, and activity routines help residents feel grounded and secure. Structure is balanced with flexibility for individual preferences.</p></div>
+        <div class="card"><div class="card-icon">🍳</div><h3>Home-Cooked Meals</h3><p>Three meals per day plus snacks, prepared fresh in our home kitchen. We accommodate dietary restrictions and personal preferences.</p></div>
+        <div class="card"><div class="card-icon">🎨</div><h3>Activities & Engagement</h3><p>We encourage residents to remain engaged — light activities, conversation, music, and visits from family all contribute to well-being.</p></div>
+        <div class="card"><div class="card-icon">🧺</div><h3>Housekeeping & Laundry</h3><p>Residents live in a clean, well-maintained home. Housekeeping and laundry assistance are included as part of our services.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="section-label">Safety & Comfort</div>
+      <h2>Designed with Residents in Mind</h2>
+      <div class="cards-grid" style="margin-top:28px;">
+        <div class="card"><div class="card-icon">♿</div><h3>Accessible Design</h3><p>Our home accommodates mobility aids and access needs. Discuss specific accessibility requirements during your tour.</p></div>
+        <div class="card"><div class="card-icon">🔒</div><h3>Secure Environment</h3><p>The home is maintained as a safe environment. Staff supervision and safety monitoring are part of every resident's daily care.</p></div>
+        <div class="card"><div class="card-icon">🏥</div><h3>Medical Coordination</h3><p>We coordinate with each resident's physicians and healthcare providers to ensure continuity of care.</p></div>
+        <div class="card"><div class="card-icon">💬</div><h3>Emotional Support</h3><p>Adjusting to a new home takes time. Our team provides consistent, compassionate support through the transition and beyond.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <h2>See It for Yourself</h2>
+    <p>Schedule a tour and walk through our home. We welcome families, case managers, and discharge planners.</p>
+    <div class="cta-buttons">
+      <a href="#" class="btn-primary" onclick="showPage('tour')">Book a Tour</a>
+      <a href="#" class="btn-outline" onclick="showPage('contact')">Ask a Question</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ADMISSIONS PAGE
+═══════════════════════════════════════════ -->
+<div id="page-admissions" class="page">
+  <div class="page-header">
+    <h1>Admissions & Intake</h1>
+    <p>Everything you need to know about the admission process at Sygma House.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="section-label">Good Fit</div>
+          <h2>Who May Be a Good Fit</h2>
+          <ul class="checklist" style="margin-top:20px;">
+            <li><span class="check-icon">✓</span> Adults who need daily living assistance but do not require skilled nursing or 24-hour medical oversight</li>
+            <li><span class="check-icon">✓</span> Individuals who benefit from a structured, supervised home environment</li>
+            <li><span class="check-icon">✓</span> Residents who are medically stable and whose care needs can be met within our service capabilities</li>
+            <li><span class="check-icon">✓</span> Those who prefer a small, homelike setting over a large care facility</li>
+            <li><span class="check-icon">✓</span> Private pay or Medicaid waiver eligible individuals</li>
+            <li><span class="check-icon">✓</span> Individuals transitioning from hospital, rehab, or another care setting</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label">May Not Be a Fit</div>
+          <h2>Who May Not Be a Good Fit</h2>
+          <ul class="checklist" style="margin-top:20px;">
+            <li><span class="check-icon" style="color:#c0392b;">✗</span> Individuals requiring skilled nursing services beyond our service authorization</li>
+            <li><span class="check-icon" style="color:#c0392b;">✗</span> Those requiring acute medical monitoring or hospital-level care</li>
+            <li><span class="check-icon" style="color:#c0392b;">✗</span> Individuals whose behavioral or safety needs exceed our current capabilities</li>
+            <li><span class="check-icon" style="color:#c0392b;">✗</span> Residents requiring services not authorized under our license</li>
+          </ul>
+          <div class="info-box" style="margin-top:16px;">Even if we're not the right fit, we'll do our best to point you toward appropriate resources.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--cream);">
+    <div class="container">
+      <div class="section-label">Payment Paths</div>
+      <h2>Choose Your Path to Admission</h2>
+      <div class="path-grid" style="margin-top:28px;">
+        <div class="path-card private">
+          <h3>💳 Private Pay Path</h3>
+          <p style="color:var(--text-mid);margin-bottom:14px;">For families who will be paying directly out of pocket or with personal funds.</p>
+          <ul class="checklist">
+            <li><span class="check-icon">→</span> Contact us to schedule a tour and consultation</li>
+            <li><span class="check-icon">→</span> We'll review care needs and provide service-based pricing</li>
+            <li><span class="check-icon">→</span> Complete assessment and intake documents</li>
+            <li><span class="check-icon">→</span> Sign assisted living contract and service plan</li>
+            <li><span class="check-icon">→</span> Schedule move-in</li>
+          </ul>
+        </div>
+        <div class="path-card waiver">
+          <h3>📋 Medicaid Waiver Path</h3>
+          <p style="color:var(--text-mid);margin-bottom:14px;">For individuals who may qualify for Elderly Waiver or other MN Medicaid waiver programs.</p>
+          <ul class="checklist">
+            <li><span class="check-icon">→</span> Eligibility generally requires Medical Assistance (MA) coverage</li>
+            <li><span class="check-icon">→</span> A MnCHOICES assessment is typically required for Elderly Waiver</li>
+            <li><span class="check-icon">→</span> Work with your county case manager or care coordinator</li>
+            <li><span class="check-icon">→</span> We coordinate directly with your case manager</li>
+            <li><span class="check-icon">→</span> Prior authorization may be required before services begin</li>
+          </ul>
+          <div class="alert-box" style="margin-top:12px;">Medicaid waiver eligibility is determined by the state and county — not by Sygma House. We can help guide you through the process.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--white);">
+    <div class="container" style="max-width:720px;">
+      <div class="section-label">Documents</div>
+      <h2>Required Documents Checklist</h2>
+      <p style="color:var(--text-mid);margin-bottom:24px;">Gathering these items in advance helps speed up the admission process.</p>
+      <ul class="checklist">
+        <li><span class="check-icon">📄</span> Government-issued ID (state ID or passport)</li>
+        <li><span class="check-icon">📄</span> Health insurance card(s) — Medicare, Medicaid, or private</li>
+        <li><span class="check-icon">📄</span> Physician orders and current medication list</li>
+        <li><span class="check-icon">📄</span> Recent hospital face sheet or discharge summary (if applicable)</li>
+        <li><span class="check-icon">📄</span> Social Security card (if available)</li>
+        <li><span class="check-icon">📄</span> Power of Attorney or legal guardianship documents (if applicable)</li>
+        <li><span class="check-icon">📄</span> MnCHOICES assessment results (if waiver applicant)</li>
+        <li><span class="check-icon">📄</span> Case manager contact information (if applicable)</li>
+        <li><span class="check-icon">📄</span> County authorization (if waiver-funded)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section style="background:var(--cream);">
+    <div class="container" style="text-align:center;">
+      <div class="section-label">Ready to Begin?</div>
+      <h2>Start Your Intake Today</h2>
+      <p style="color:var(--text-mid);max-width:520px;margin:0 auto 32px;">Complete our intake form and we'll follow up within 24 hours to guide you through next steps.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="#" class="btn-green" onclick="showPage('intake')">Start Intake Form</a>
+        <a href="#" class="btn-blue" onclick="showPage('tour')">Schedule a Tour First</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PRICING PAGE
+═══════════════════════════════════════════ -->
+<div id="page-pricing" class="page">
+  <div class="page-header">
+    <h1>Pricing & Payment Options</h1>
+    <p>Transparent, service-based pricing tailored to each resident's care needs.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container" style="max-width:800px;">
+      <div class="alert-box" style="margin-bottom:32px;">💡 Final pricing depends on the individual's care needs, service plan, and eligibility. We do not publish fixed rates because costs vary based on the level of assistance required. Contact us for a personalized consultation.</div>
+
+      <div class="path-grid" style="margin-bottom:40px;">
+        <div class="path-card private">
+          <h3>💳 Private Pay</h3>
+          <p style="color:var(--text-mid);margin-bottom:16px;">Private pay means you or your family will pay directly for services. Our pricing is service-based — you pay for the care you need.</p>
+          <ul class="checklist">
+            <li><span class="check-icon">✓</span> Room and board included in base rate</li>
+            <li><span class="check-icon">✓</span> Additional services priced per service plan</li>
+            <li><span class="check-icon">✓</span> No hidden fees</li>
+            <li><span class="check-icon">✓</span> Month-to-month service agreement</li>
+          </ul>
+          <div class="placeholder-box" style="margin-top:16px;">[Rate range placeholder — e.g., "Starting from $X,XXX/month depending on care level" — add when rates are confirmed]</div>
+        </div>
+        <div class="path-card waiver">
+          <h3>📋 Medicaid Waiver</h3>
+          <p style="color:var(--text-mid);margin-bottom:16px;">Medicaid waiver programs like the Elderly Waiver (EW) may cover some or all assisted living costs for eligible individuals.</p>
+          <ul class="checklist">
+            <li><span class="check-icon">✓</span> Elderly Waiver (EW) accepted</li>
+            <li><span class="check-icon">✓</span> Other MN waiver programs — inquire</li>
+            <li><span class="check-icon">✓</span> Case manager coordination included</li>
+            <li><span class="check-icon">✓</span> MA eligibility required</li>
+          </ul>
+          <div class="info-box" style="margin-top:12px;">Waiver reimbursement rates are set by the state. Eligibility and coverage are determined by your county and DHS — not by Sygma House.</div>
+        </div>
+      </div>
+
+      <div style="background:var(--warm-gray);border-radius:var(--radius);padding:32px;text-align:center;">
+        <h3 style="margin-bottom:10px;">Get a Personalized Consultation</h3>
+        <p style="color:var(--text-mid);margin-bottom:24px;">We'll review your loved one's care needs, walk you through service options, and provide clear, honest pricing information.</p>
+        <a href="#" class="btn-green" onclick="showPage('contact')">Request a Consultation</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     RESOURCES PAGE
+═══════════════════════════════════════════ -->
+<div id="page-resources" class="page">
+  <div class="page-header">
+    <h1>Family Resources</h1>
+    <p>Information to help families navigate the assisted living process with confidence.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="section-label">Frequently Asked Questions</div>
+      <h2>Common Questions from Families</h2>
+      <div style="max-width:720px;margin-top:32px;" id="faq-container">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">What is the difference between assisted living and a nursing home? <span>+</span></div>
+          <div class="faq-a">Assisted living provides help with daily activities (bathing, meals, medication reminders) in a residential setting, while nursing homes offer higher levels of medical and skilled nursing care. Sygma House is an assisted living home — residents who require skilled nursing or hospital-level care may need a different setting.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">Can families visit anytime? <span>+</span></div>
+          <div class="faq-a">Yes — families are welcome. We encourage ongoing family involvement in care. We ask that visits respect residents' rest times, but there are no rigid restrictions on family contact.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">How does the Medicaid waiver admission process work? <span>+</span></div>
+          <div class="faq-a">For Elderly Waiver (EW), the individual typically must be enrolled in Medical Assistance (MA), receive a MnCHOICES assessment that confirms nursing-home level of care need, and work with a county case manager or lead agency. Once authorized, we can receive waiver-funded residents. The timeline depends on county processes and eligibility determination.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">What happens if my loved one's care needs increase over time? <span>+</span></div>
+          <div class="faq-a">Service plans are reviewed and updated regularly. If care needs increase beyond what Sygma House can safely provide, we will work with the family and care team to make an appropriate transition plan — we will never abandon a resident without proper planning and notice.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">Is Sygma House licensed by the state of Minnesota? <span>+</span></div>
+          <div class="faq-a">Sygma House operates as a Minnesota assisted living facility. [Licensing details and license number to be confirmed and posted here once issued.] Minnesota assisted living facilities are licensed by the Minnesota Department of Health (MDH) under Chapter 144G.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">What should I bring when my loved one moves in? <span>+</span></div>
+          <div class="faq-a">We recommend bringing personal clothing and shoes, toiletry items, favorite photos or comfort items, and any personal bedding/blankets the resident prefers. Bring all medications and a current medication list. Electronics like phones or tablets are welcome. We'll provide a move-in guide with a complete list.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">How do I file a complaint or concern? <span>+</span></div>
+          <div class="faq-a">We always encourage families and residents to bring concerns to us directly first. You may also contact the Minnesota Department of Health (MDH) Office of Health Facility Complaints. The Long-Term Care Ombudsman program is available as an independent advocate for residents.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--cream);">
+    <div class="container">
+      <div class="section-label">Guidance</div>
+      <h2>Questions Families Should Ask Any Provider</h2>
+      <div class="cards-grid" style="margin-top:28px;">
+        <div class="card"><div class="card-icon">🔍</div><h3>About Licensing</h3><p>Is this facility licensed by MDH? Can I see the license? Have there been recent complaints or citations?</p></div>
+        <div class="card"><div class="card-icon">👥</div><h3>About Staffing</h3><p>How many staff are on duty overnight? What is the staff-to-resident ratio? How is staff trained?</p></div>
+        <div class="card"><div class="card-icon">📋</div><h3>About Care</h3><p>How are service plans created? How often are they reviewed? What happens if care needs increase?</p></div>
+        <div class="card"><div class="card-icon">💰</div><h3>About Costs</h3><p>What is included in the base rate? What services cost extra? What happens if I run out of funds?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <h2>Still Have Questions?</h2>
+    <p>We're happy to answer any question — no pressure, no sales pitch. Just honest information.</p>
+    <div class="cta-buttons">
+      <a href="#" class="btn-primary" onclick="showPage('contact')">Contact Us</a>
+      <a href="#" class="btn-outline" onclick="showPage('tour')">Schedule a Tour</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COMPLIANCE PAGE
+═══════════════════════════════════════════ -->
+<div id="page-compliance" class="page">
+  <div class="page-header">
+    <h1>Compliance & Resident Rights</h1>
+    <p>Important information about licensing, resident rights, and our commitment to regulatory compliance.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container" style="max-width:800px;">
+
+      <div class="compliance-box">
+        <h3>📋 Minnesota Assisted Living Licensure</h3>
+        <p style="color:var(--text-mid);margin-bottom:12px;">Sygma House operates as a Minnesota assisted living facility subject to licensure under <strong>Minnesota Statute Chapter 144G</strong>. Minnesota assisted living facilities are licensed and overseen by the Minnesota Department of Health (MDH).</p>
+        <div class="placeholder-box">License Number: [ MDH License # to be added when issued/confirmed ]<br>License Type: [ Assisted Living Facility ]<br>Licensed Capacity: 5 residents</div>
+      </div>
+
+      <div class="compliance-box">
+        <h3>⚖️ Resident Rights</h3>
+        <p style="color:var(--text-mid);margin-bottom:12px;">Residents of Minnesota assisted living facilities have legally protected rights under <strong>Minnesota Statute Section 144G.91</strong>. These include but are not limited to:</p>
+        <ul class="checklist">
+          <li><span class="check-icon">✓</span> The right to be treated with dignity and respect</li>
+          <li><span class="check-icon">✓</span> The right to privacy and confidentiality</li>
+          <li><span class="check-icon">✓</span> The right to participate in care planning decisions</li>
+          <li><span class="check-icon">✓</span> The right to receive visitors and communicate freely</li>
+          <li><span class="check-icon">✓</span> The right to file complaints without fear of retaliation</li>
+          <li><span class="check-icon">✓</span> The right to be free from abuse, neglect, and exploitation</li>
+          <li><span class="check-icon">✓</span> The right to manage personal finances (or have a representative)</li>
+        </ul>
+        <div class="placeholder-box" style="margin-top:14px;">[ Full Resident Rights document — attach or link when finalized per 144G.91 ]</div>
+        <div class="info-box" style="margin-top:10px;">This list is informational only. A complete resident rights document will be provided to each resident and their representative before or at move-in, as required by law.</div>
+      </div>
+
+      <div class="compliance-box">
+        <h3>📃 Service Disclosure (UDALSA)</h3>
+        <p style="color:var(--text-mid);margin-bottom:12px;">Prior to or at the time of signing an assisted living contract, Sygma House is required to provide a written uniform disclosure of assisted living services and amenities (UDALSA) as required under Minnesota law.</p>
+        <div class="placeholder-box">[ UDALSA Service Disclosure document — to be provided before contract signing. Contact us to request a copy. ]</div>
+      </div>
+
+      <div class="compliance-box">
+        <h3>📝 Assisted Living Contract</h3>
+        <p style="color:var(--text-mid);margin-bottom:12px;">All residents will receive a written assisted living contract prior to move-in as required under Minnesota Statute Chapter 144G. The contract will outline services, rates, and terms of residence.</p>
+        <div class="placeholder-box">[ Assisted Living Contract template — to be provided for review prior to signing. Request a copy during your tour or consultation. ]</div>
+      </div>
+
+      <div class="compliance-box">
+        <h3>🗣️ Complaints & Concerns</h3>
+        <p style="color:var(--text-mid);margin-bottom:12px;">We encourage all residents and families to bring concerns to us directly. You also have the right to contact external oversight bodies:</p>
+        <ul class="checklist">
+          <li><span class="check-icon">📞</span> <strong>MDH Office of Health Facility Complaints:</strong> 651-201-4201</li>
+          <li><span class="check-icon">📞</span> <strong>Minnesota Office of Ombudsman for Long-Term Care:</strong> 651-431-2555</li>
+          <li><span class="check-icon">📞</span> <strong>Adult Protective Services:</strong> Contact your county</li>
+        </ul>
+        <div class="info-box" style="margin-top:10px;">Contact information above is provided for informational purposes. Verify current numbers directly with the applicable agency.</div>
+      </div>
+
+      <div class="compliance-box">
+        <h3>🔒 Privacy & Confidentiality</h3>
+        <p style="color:var(--text-mid);">Resident health and personal information is treated as confidential. We follow applicable state and federal privacy requirements. Information is shared only with authorized individuals and as required by law.</p>
+        <div class="placeholder-box">[ Privacy Policy — to be added. ]</div>
+      </div>
+
+      <div class="alert-box">⚠️ <strong>Informational Only:</strong> This page is provided for general information purposes. It does not constitute legal advice and does not establish compliance with all applicable regulations. Regulatory requirements may change. Consult the Minnesota Department of Health or qualified legal counsel for compliance guidance.</div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TOUR PAGE
+═══════════════════════════════════════════ -->
+<div id="page-tour" class="page">
+  <div class="page-header">
+    <h1>Schedule a Tour</h1>
+    <p>Come see our home in person. We welcome families, case managers, discharge planners, and county workers.</p>
+  </div>
+
+  <section class="form-section">
+    <div class="container" style="max-width:680px;">
+      <div class="form-card">
+        <h2 style="margin-bottom:6px;">Book Your Visit</h2>
+        <p style="color:var(--text-mid);margin-bottom:32px;font-size:0.95rem;">Fill out the form below and we'll confirm your tour within 24 hours.</p>
+        <form onsubmit="submitTourForm(event)">
+          <div class="form-grid">
+            <div>
+              <label>Your Name *</label>
+              <input type="text" placeholder="Jane Smith" required>
+            </div>
+            <div>
+              <label>Phone Number *</label>
+              <input type="tel" placeholder="(612) 000-0000" required>
+            </div>
+            <div>
+              <label>Email Address</label>
+              <input type="email" placeholder="jane@example.com">
+            </div>
+            <div>
+              <label>Your Relationship to Resident</label>
+              <select>
+                <option>Adult Child</option>
+                <option>Spouse/Partner</option>
+                <option>Sibling</option>
+                <option>Case Manager</option>
+                <option>Discharge Planner</option>
+                <option>County Worker</option>
+                <option>Potential Resident</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label>Preferred Tour Date</label>
+              <input type="date">
+            </div>
+            <div>
+              <label>Preferred Time</label>
+              <select>
+                <option>Morning (9am–12pm)</option>
+                <option>Early Afternoon (12pm–3pm)</option>
+                <option>Late Afternoon (3pm–6pm)</option>
+                <option>I'm flexible — you choose</option>
+              </select>
+            </div>
+            <div>
+              <label>Urgency Level</label>
+              <select>
+                <option>Just exploring options</option>
+                <option>Planning within 1–3 months</option>
+                <option>Need placement within 2–4 weeks</option>
+                <option>Urgent — need placement ASAP</option>
+              </select>
+            </div>
+            <div>
+              <label>Payment Type (if known)</label>
+              <select>
+                <option>Private Pay</option>
+                <option>Medicaid Waiver (Elderly Waiver)</option>
+                <option>Other Medicaid Waiver</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-full">
+              <label>Brief Description of Care Needs</label>
+              <textarea placeholder="Tell us a bit about your loved one's current situation and care needs..."></textarea>
+            </div>
+            <div class="form-full">
+              <label>Questions You'd Like to Discuss During the Tour</label>
+              <textarea rows="3" placeholder="Any specific questions or topics you want us to address during your visit?"></textarea>
+            </div>
+          </div>
+          <div style="margin-top:28px;">
+            <button type="submit" class="btn-green">Request My Tour</button>
+          </div>
+        </form>
+      </div>
+      <div style="margin-top:24px;padding:20px 24px;background:var(--green-pale);border-radius:var(--radius);border:1px solid #b8d4c0;">
+        <strong style="color:var(--green);">📞 Prefer to call?</strong><br>
+        <span style="color:var(--text-mid);font-size:0.93rem;">Reach us directly at <strong>[Phone Number Placeholder]</strong> during business hours.</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CONTACT PAGE
+═══════════════════════════════════════════ -->
+<div id="page-contact" class="page">
+  <div class="page-header">
+    <h1>Contact Us</h1>
+    <p>We're here to answer your questions and help your family through this process.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="section-label">Reach Us</div>
+          <h2>Let's Talk</h2>
+          <div style="margin-top:28px;">
+            <div class="contact-info-item">
+              <div class="contact-icon">📞</div>
+              <div class="contact-detail">
+                <h4>Phone</h4>
+                <p>[Phone Number Placeholder]<br><small style="color:var(--text-light);">Available during business hours. For urgent matters, leave a message.</small></p>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-icon">✉️</div>
+              <div class="contact-detail">
+                <h4>Email</h4>
+                <p>[Email Placeholder]<br><small style="color:var(--text-light);">We respond within 24 business hours.</small></p>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-icon">📍</div>
+              <div class="contact-detail">
+                <h4>Address</h4>
+                <p>[Address Placeholder]<br>[City, MN ZIP]</p>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-icon">🕐</div>
+              <div class="contact-detail">
+                <h4>Business Hours</h4>
+                <p>Monday–Friday: 8:00 AM – 6:00 PM<br>Saturday: 9:00 AM – 3:00 PM<br>Sunday: By appointment</p>
+              </div>
+            </div>
+          </div>
+          <div class="alert-box" style="margin-top:16px;">🚨 <strong>Medical Emergency:</strong> If you or someone you know is experiencing a medical emergency, call 911 immediately. Do not use this contact form for emergency situations.</div>
+          <div class="map-ph" style="margin-top:24px;">
+            <span style="font-size:2rem;">🗺️</span>
+            <div>Map Placeholder</div>
+            <div style="font-size:0.78rem;">[Embed Google Maps when address is confirmed]</div>
+          </div>
+        </div>
+        <div class="form-card" style="padding:32px;">
+          <h3 style="margin-bottom:20px;">Send Us a Message</h3>
+          <form onsubmit="submitContactForm(event)">
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <div><label>Your Name *</label><input type="text" placeholder="Jane Smith" required></div>
+              <div><label>Phone Number</label><input type="tel" placeholder="(612) 000-0000"></div>
+              <div><label>Email Address *</label><input type="email" placeholder="jane@example.com" required></div>
+              <div>
+                <label>I am a...</label>
+                <select>
+                  <option>Family member</option>
+                  <option>Case manager</option>
+                  <option>Discharge planner</option>
+                  <option>County worker</option>
+                  <option>Potential resident</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div><label>Your Message *</label><textarea placeholder="How can we help you?" required></textarea></div>
+              <button type="submit" class="btn-green">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CAREERS PAGE
+═══════════════════════════════════════════ -->
+<div id="page-careers" class="page">
+  <div class="page-header">
+    <h1>Careers at Sygma House</h1>
+    <p>Join a team that truly cares. We're looking for compassionate, dedicated caregivers.</p>
+  </div>
+
+  <section style="background:var(--white);">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="section-label">Work With Us</div>
+          <h2>Make a Real Difference</h2>
+          <p style="color:var(--text-mid);margin-bottom:16px;">At Sygma House, every team member plays a vital role in the lives of our residents. Because we're a small home, each caregiver has the opportunity to build real relationships and provide meaningful, personalized care.</p>
+          <p style="color:var(--text-mid);margin-bottom:16px;">We're looking for people who are kind, dependable, patient, and genuinely motivated to help others live with dignity.</p>
+          <h3 style="margin:24px 0 12px;font-size:1.1rem;">What We Value in Our Team</h3>
+          <ul class="checklist">
+            <li><span class="check-icon">✓</span> Compassion and genuine care for elderly and vulnerable adults</li>
+            <li><span class="check-icon">✓</span> Reliability and consistency</li>
+            <li><span class="check-icon">✓</span> Good communication with residents, families, and team</li>
+            <li><span class="check-icon">✓</span> Respect for resident dignity, privacy, and rights</li>
+            <li><span class="check-icon">✓</span> Willingness to follow care plans and procedures</li>
+            <li><span class="check-icon">✓</span> Mandatory background check clearance</li>
+          </ul>
+        </div>
+        <div class="form-card">
+          <h3 style="margin-bottom:20px;">Caregiver Interest Form</h3>
+          <form onsubmit="submitCareersForm(event)">
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <div class="form-grid">
+                <div><label>First Name *</label><input type="text" required></div>
+                <div><label>Last Name *</label><input type="text" required></div>
+              </div>
+              <div><label>Phone Number *</label><input type="tel" required></div>
+              <div><label>Email Address *</label><input type="email" required></div>
+              <div>
+                <label>Position of Interest</label>
+                <select>
+                  <option>Direct Support Professional (DSP)</option>
+                  <option>Caregiver / Personal Care Attendant</option>
+                  <option>Overnight Staff</option>
+                  <option>Part-Time / On-Call</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label>Availability</label>
+                <select>
+                  <option>Full-time days</option>
+                  <option>Full-time evenings/nights</option>
+                  <option>Part-time flexible</option>
+                  <option>Weekends only</option>
+                  <option>On-call</option>
+                </select>
+              </div>
+              <div><label>Relevant Experience</label><textarea rows="3" placeholder="Brief description of your experience in caregiving, healthcare, or related fields..."></textarea></div>
+              <div><label>Why are you interested in working at Sygma House?</label><textarea rows="3" placeholder="Tell us what draws you to this kind of work..."></textarea></div>
+              <button type="submit" class="btn-green">Submit Interest</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     INTAKE FORM PAGE
+═══════════════════════════════════════════ -->
+<div id="page-intake" class="page">
+  <div class="page-header">
+    <h1>Resident Intake Form</h1>
+    <p>Help us understand your loved one's needs. This takes about 5–7 minutes.</p>
+  </div>
+
+  <section class="form-section">
+    <div class="container" style="max-width:720px;">
+      <!-- Progress bar -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-family:'Arial',sans-serif;font-size:0.82rem;color:var(--text-mid);">
+          <span id="step-label">Step 1 of 5 — Contact Information</span>
+          <span id="step-pct">20%</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;">
+          <div id="progress-bar" style="height:100%;background:var(--green);border-radius:3px;transition:width 0.3s;width:20%;"></div>
+        </div>
+      </div>
+
+      <!-- Step 1: Contact -->
+      <div id="intake-step-1" class="form-card">
+        <h3 style="margin-bottom:6px;">Contact Information</h3>
+        <p style="color:var(--text-mid);font-size:0.9rem;margin-bottom:24px;">Tell us about the person reaching out on behalf of the resident.</p>
+        <div class="form-grid">
+          <div><label>Your Name (Family/Contact) *</label><input type="text" id="i-family-name" placeholder="Jane Smith" required></div>
+          <div><label>Phone Number *</label><input type="tel" id="i-phone" placeholder="(612) 000-0000" required></div>
+          <div><label>Email Address *</label><input type="email" id="i-email" placeholder="jane@example.com" required></div>
+          <div>
+            <label>Your Relationship to Resident *</label>
+            <select id="i-relationship">
+              <option value="">Select...</option>
+              <option>Adult Child</option>
+              <option>Spouse/Partner</option>
+              <option>Sibling</option>
+              <option>Case Manager</option>
+              <option>Discharge Planner</option>
+              <option>County Worker</option>
+              <option>Self</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:24px;text-align:right;">
+          <button class="btn-green" onclick="goStep(2)">Next: Resident Profile →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Resident -->
+      <div id="intake-step-2" class="form-card" style="display:none;">
+        <h3 style="margin-bottom:6px;">Resident Profile</h3>
+        <p style="color:var(--text-mid);font-size:0.9rem;margin-bottom:24px;">Tell us about the person who will be living at Sygma House.</p>
+        <div class="form-grid">
+          <div><label>Resident Full Name *</label><input type="text" id="i-resident-name" placeholder="John Smith" required></div>
+          <div><label>Age</label><input type="number" id="i-age" placeholder="75" min="18" max="110"></div>
+          <div>
+            <label>Current Location *</label>
+            <select id="i-location">
+              <option value="">Select...</option>
+              <option value="home">Living at home</option>
+              <option value="hospital">Hospital</option>
+              <option value="rehab">Rehabilitation facility</option>
+              <option value="facility">Other care facility</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label>Mobility Level</label>
+            <select id="i-mobility">
+              <option value="">Select...</option>
+              <option>Independent</option>
+              <option>Needs minimal assistance</option>
+              <option>Needs significant assistance</option>
+              <option>Non-ambulatory / uses wheelchair</option>
+            </select>
+          </div>
+          <div class="form-full">
+            <label>Diagnosis / Medical Background (optional)</label>
+            <textarea id="i-diagnosis" rows="3" placeholder="Brief description of diagnoses, conditions, or relevant medical history..."></textarea>
+          </div>
+        </div>
+        <div style="margin-top:24px;display:flex;justify-content:space-between;">
+          <button class="btn-outline" style="border:1.5px solid var(--border);color:var(--text-mid);background:var(--white);padding:12px 24px;border-radius:8px;cursor:pointer;" onclick="goStep(1)">← Back</button>
+          <button class="btn-green" onclick="goStep(3)">Next: Care Needs →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Care Needs -->
+      <div id="intake-step-3" class="form-card" style="display:none;">
+        <h3 style="margin-bottom:6px;">Care Needs</h3>
+        <p style="color:var(--text-mid);font-size:0.9rem;margin-bottom:24px;">Help us understand what level of care and support the resident needs.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <label>Care Needs (check all that apply)</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-family:'Arial',sans-serif;font-size:0.88rem;">
+              <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="bathing"> Personal care / bathing</label>
+              <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="medications"> Medication management</label>
+              <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="meals"> Meal preparation</label>
+              <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="mobility"> Mobility assistance</label>
+              <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="supervision"> Supervision / safety monitoring</label>
+              <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="dressing"> Dressing assistance</label>
+              <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="incontinence"> Incontinence care</label>
+              <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="socialization"> Socialization support</label>
+            </div>
+          </div>
+          <div>
+            <label>Behaviors or Safety Concerns (optional)</label>
+            <textarea id="i-behaviors" rows="3" placeholder="E.g., history of falls, wandering, aggression, cognitive changes, elopement risk..."></textarea>
+          </div>
+          <div>
+            <label>Is medication support/management needed?</label>
+            <select id="i-meds">
+              <option value="">Select...</option>
+              <option>Yes — assistance with taking medications</option>
+              <option>Yes — full medication management needed</option>
+              <option>No — manages independently</option>
+              <option>Unsure</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:24px;display:flex;justify-content:space-between;">
+          <button class="btn-outline" style="border:1.5px solid var(--border);color:var(--text-mid);background:var(--white);padding:12px 24px;border-radius:8px;cursor:pointer;" onclick="goStep(2)">← Back</button>
+          <button class="btn-green" onclick="goStep(4)">Next: Payment Path →</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Payment -->
+      <div id="intake-step-4" class="form-card" style="display:none;">
+        <h3 style="margin-bottom:6px;">Payment & Coverage</h3>
+        <p style="color:var(--text-mid);font-size:0.9rem;margin-bottom:24px;">This helps us understand how care will be funded and who needs to be part of the conversation.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <label>Payment Type *</label>
+            <select id="i-payment" onchange="showPaymentDetails()">
+              <option value="">Select...</option>
+              <option value="private_pay">Private Pay (personal funds)</option>
+              <option value="medicaid_waiver">Medicaid Waiver (e.g., Elderly Waiver)</option>
+              <option value="unsure">Not sure yet</option>
+            </select>
+          </div>
+          <div id="waiver-fields" style="display:none;flex-direction:column;gap:16px;">
+            <div class="info-box">For Medicaid waiver admissions, we'll need to coordinate with your case manager and county. Please provide their information below if available.</div>
+            <div class="form-grid">
+              <div><label>Waiver Type (if known)</label>
+                <select id="i-waiver-type">
+                  <option>Elderly Waiver (EW)</option>
+                  <option>CADI Waiver</option>
+                  <option>BI Waiver</option>
+                  <option>DD Waiver</option>
+                  <option>Not sure</option>
+                </select>
+              </div>
+              <div><label>County</label><input type="text" id="i-county" placeholder="e.g., Hennepin"></div>
+              <div><label>Case Manager Name</label><input type="text" id="i-cm-name"></div>
+              <div><label>Case Manager Phone</label><input type="tel" id="i-cm-phone"></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:24px;display:flex;justify-content:space-between;">
+          <button class="btn-outline" style="border:1.5px solid var(--border);color:var(--text-mid);background:var(--white);padding:12px 24px;border-radius:8px;cursor:pointer;" onclick="goStep(3)">← Back</button>
+          <button class="btn-green" onclick="goStep(5)">Next: Timing & Consent →</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Timing & Consent -->
+      <div id="intake-step-5" class="form-card" style="display:none;">
+        <h3 style="margin-bottom:6px;">Timing & Final Details</h3>
+        <p style="color:var(--text-mid);font-size:0.9rem;margin-bottom:24px;">Last step — almost there!</p>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <label>Desired Move-In Timeline *</label>
+            <select id="i-timeline">
+              <option value="">Select...</option>
+              <option value="asap">As soon as possible (urgent)</option>
+              <option value="1_2_weeks">Within 1–2 weeks</option>
+              <option value="1_month">Within 1 month</option>
+              <option value="3_months">1–3 months</option>
+              <option value="exploring">Just exploring options</option>
+            </select>
+          </div>
+          <div>
+            <label>Would you like to schedule a tour?</label>
+            <select id="i-tour">
+              <option value="yes">Yes — please contact me to schedule</option>
+              <option value="no">Not right now — I'll reach out when ready</option>
+            </select>
+          </div>
+          <div><label>Anything else you'd like us to know?</label><textarea id="i-notes" rows="3" placeholder="Additional context, questions, or special circumstances..."></textarea></div>
+          <div style="background:var(--warm-gray);border-radius:8px;padding:16px;">
+            <label style="font-weight:normal;display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-family:'Arial',sans-serif;font-size:0.88rem;">
+              <input type="checkbox" id="i-consent" style="margin-top:3px;width:auto;flex-shrink:0;">
+              <span>I consent to Sygma House collecting and using this information to contact me about assisted living services and follow up on this inquiry. I understand this is not a medical record or care agreement.</span>
+            </label>
+          </div>
+        </div>
+        <div style="margin-top:24px;display:flex;justify-content:space-between;">
+          <button class="btn-outline" style="border:1.5px solid var(--border);color:var(--text-mid);background:var(--white);padding:12px 24px;border-radius:8px;cursor:pointer;" onclick="goStep(4)">← Back</button>
+          <button class="btn-green" onclick="submitIntake()">Submit Intake Form ✓</button>
+        </div>
+      </div>
+
+      <!-- Confirmation -->
+      <div id="intake-confirmation" class="form-card" style="display:none;text-align:center;">
+        <div style="font-size:3rem;margin-bottom:16px;">✅</div>
+        <h2 style="margin-bottom:12px;">Thank You!</h2>
+        <p style="color:var(--text-mid);margin-bottom:20px;">We've received your intake form. A member of our team will reach out within <strong>24 hours</strong>.</p>
+        <div id="confirmation-message" style="background:var(--green-pale);border:1px solid #b8d4c0;border-radius:10px;padding:20px;margin-bottom:24px;text-align:left;font-size:0.92rem;"></div>
+        <a href="#" class="btn-green" onclick="showPage('home')">Return to Home</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Sygma House</div>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.55);max-width:260px;line-height:1.6;">A small residential assisted living home in Minnesota. Caring for up to 5 residents with dignity, safety, and personal attention.</p>
+      <p style="font-size:0.78rem;margin-top:12px;color:rgba(255,255,255,0.4);">MN License #: [Placeholder]<br>Licensed by Minnesota Dept. of Health</p>
+    </div>
+    <div>
+      <h4>Site</h4>
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('about')">About</a>
+      <a href="#" onclick="showPage('services')">Services</a>
+      <a href="#" onclick="showPage('living')">Living Here</a>
+    </div>
+    <div>
+      <h4>Admissions</h4>
+      <a href="#" onclick="showPage('admissions')">How It Works</a>
+      <a href="#" onclick="showPage('pricing')">Pricing</a>
+      <a href="#" onclick="showPage('tour')">Schedule a Tour</a>
+      <a href="#" onclick="showPage('intake')">Start Intake Form</a>
+    </div>
+    <div>
+      <h4>Information</h4>
+      <a href="#" onclick="showPage('resources')">Family Resources</a>
+      <a href="#" onclick="showPage('compliance')">Compliance & Rights</a>
+      <a href="#" onclick="showPage('careers')">Careers</a>
+      <a href="#" onclick="showPage('contact')">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Sygma House. All rights reserved. | This website is for informational purposes only and does not constitute legal, medical, or financial advice. Medicaid waiver eligibility is determined by the state of Minnesota and applicable county agencies. Services are provided per individual assessment and written service plan. Minnesota assisted living facilities are regulated under Minn. Stat. Chapter 144G.</p>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + id);
+  if (el) { el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+}
+
+// ═══════════════════════════════════════════
+// FAQ ACCORDION
+// ═══════════════════════════════════════════
+function toggleFAQ(el) {
+  const answer = el.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-q span').forEach(s => s.textContent = '+');
+  if (!isOpen) {
+    answer.classList.add('open');
+    el.querySelector('span').textContent = '−';
+  }
+}
+
+// ═══════════════════════════════════════════
+// INTAKE FORM MULTI-STEP
+// ═══════════════════════════════════════════
+const steps = ['','Step 1 of 5 — Contact Information','Step 2 of 5 — Resident Profile','Step 3 of 5 — Care Needs','Step 4 of 5 — Payment & Coverage','Step 5 of 5 — Timing & Consent'];
+const pcts = ['','20%','40%','60%','80%','100%'];
+
+function goStep(n) {
+  for(let i=1;i<=5;i++) {
+    const el = document.getElementById('intake-step-'+i);
+    if(el) el.style.display = (i===n) ? 'block' : 'none';
+  }
+  document.getElementById('step-label').textContent = steps[n];
+  document.getElementById('step-pct').textContent = pcts[n];
+  document.getElementById('progress-bar').style.width = pcts[n];
+  window.scrollTo({top:200,behavior:'smooth'});
+}
+
+function showPaymentDetails() {
+  const val = document.getElementById('i-payment').value;
+  const wf = document.getElementById('waiver-fields');
+  wf.style.display = (val === 'medicaid_waiver') ? 'flex' : 'none';
+}
+
+function calcUrgency() {
+  const timeline = document.getElementById('i-timeline').value;
+  const location = document.getElementById('i-location').value;
+  const payment = document.getElementById('i-payment').value;
+  const scores = {asap:5,'1_2_weeks':4,'1_month':3,'3_months':2,'exploring':1};
+  let score = scores[timeline] || 1;
+  if (location === 'hospital') score = Math.min(5, score + 2);
+  if (location === 'rehab') score = Math.min(5, score + 1);
+  if (payment === 'private_pay') score = Math.min(5, score + 1);
+  return score;
+}
+
+function getConfirmationMessage(payment, urgency, tour) {
+  let msg = '<strong>What happens next:</strong><ul style="margin-top:10px;padding-left:18px;list-style:disc;">';
+  msg += '<li style="margin-bottom:6px;">A team member will contact you within 24 hours</li>';
+  if (tour === 'yes') msg += '<li style="margin-bottom:6px;">We\'ll reach out to schedule your tour</li>';
+  if (payment === 'private_pay') msg += '<li style="margin-bottom:6px;">We\'ll send information about our services and pricing consultation</li>';
+  if (payment === 'medicaid_waiver') msg += '<li style="margin-bottom:6px;">We\'ll send information about the Medicaid waiver process and coordinate with your case manager</li>';
+  if (payment === 'unsure') msg += '<li style="margin-bottom:6px;">We\'ll send resources to help you understand your payment options</li>';
+  if (urgency >= 4) msg += '<li style="margin-bottom:6px;color:#c0392b;"><strong>Your inquiry has been marked urgent — we\'ll prioritize your call</strong></li>';
+  msg += '</ul>';
+  return msg;
+}
+
+function submitIntake() {
+  const consent = document.getElementById('i-consent').checked;
+  if (!consent) { alert('Please check the consent box to continue.'); return; }
+  const payment = document.getElementById('i-payment').value;
+  const tour = document.getElementById('i-tour').value;
+  const urgency = calcUrgency();
+  for(let i=1;i<=5;i++) {
+    const el = document.getElementById('intake-step-'+i);
+    if(el) el.style.display = 'none';
+  }
+  document.getElementById('step-label').textContent = 'Complete!';
+  document.getElementById('step-pct').textContent = '✓';
+  document.getElementById('progress-bar').style.width = '100%';
+  document.getElementById('progress-bar').style.background = '#27ae60';
+  document.getElementById('confirmation-message').innerHTML = getConfirmationMessage(payment, urgency, tour);
+  document.getElementById('intake-confirmation').style.display = 'block';
+  window.scrollTo({top:200,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════
+// FORM SUBMISSIONS (Mock)
+// ═══════════════════════════════════════════
+function submitTourForm(e) {
+  e.preventDefault();
+  e.target.innerHTML = '<div style="text-align:center;padding:40px;"><div style="font-size:3rem;margin-bottom:16px;">📅</div><h3>Tour Request Received!</h3><p style="color:var(--text-mid);margin-top:10px;">We\'ll contact you within 24 hours to confirm your tour date and time.</p></div>';
+}
+
+function submitContactForm(e) {
+  e.preventDefault();
+  e.target.innerHTML = '<div style="text-align:center;padding:24px;"><div style="font-size:2rem;margin-bottom:12px;">✉️</div><h3>Message Sent!</h3><p style="color:var(--text-mid);margin-top:8px;">We\'ll reply within 24 business hours.</p></div>';
+}
+
+function submitCareersForm(e) {
+  e.preventDefault();
+  e.target.innerHTML = '<div style="text-align:center;padding:24px;"><div style="font-size:2rem;margin-bottom:12px;">🎉</div><h3>Application Received!</h3><p style="color:var(--text-mid);margin-top:8px;">Thank you for your interest. We\'ll be in touch if there\'s a match.</p></div>';
+}
+</script>
+</body>
+</html>
