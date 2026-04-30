@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "name": "sygma-house",
+  "public": true,
+  "rewrites": [
+    { "source": "/", "destination": "/public-website.html" },
+    { "source": "/admin", "destination": "/admin-dashboard.html" }
+  ]
+}

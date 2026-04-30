@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sygma House — Admin Dashboard</title>
+<style>
+  :root {
+    --sidebar: #1e2d23;
+    --sidebar-hover: #2d4033;
+    --sidebar-active: #3d6b4a;
+    --green: #4a7c59;
+    --green-light: #6a9e78;
+    --green-pale: #e8f2ec;
+    --blue: #4a6fa5;
+    --blue-pale: #e8eef7;
+    --cream: #faf8f4;
+    --white: #ffffff;
+    --border: #e0dbd2;
+    --text-dark: #2c2c2c;
+    --text-mid: #555;
+    --text-light: #999;
+    --bg: #f4f2ee;
+    --shadow: 0 2px 8px rgba(0,0,0,0.07);
+    --radius: 10px;
+    --urgent-red: #e74c3c;
+    --urgent-bg: #fde8e8;
+    --medium-bg: #fef3cd;
+    --medium: #e0a800;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Arial', sans-serif; background: var(--bg); color: var(--text-dark); display: flex; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px; background: var(--sidebar); flex-shrink: 0;
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; left: 0; height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    padding: 20px 18px 16px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    color: white;
+  }
+  .sidebar-logo h2 { font-size: 1.1rem; font-weight: 700; }
+  .sidebar-logo span { font-size: 0.72rem; color: rgba(255,255,255,0.5); display: block; margin-top: 2px; }
+  .nav-section { padding: 14px 10px 4px; font-size: 0.65rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .sidebar a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 16px; color: rgba(255,255,255,0.72);
+    text-decoration: none; font-size: 0.87rem; border-radius: 6px; margin: 1px 8px;
+    transition: all 0.15s;
+  }
+  .sidebar a:hover { background: var(--sidebar-hover); color: white; }
+  .sidebar a.active { background: var(--sidebar-active); color: white; }
+  .sidebar-icon { width: 18px; text-align: center; font-size: 0.95rem; }
+
+  /* MAIN */
+  .main { margin-left: 220px; flex: 1; min-height: 100vh; }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--white); border-bottom: 1px solid var(--border);
+    padding: 0 28px; height: 56px; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 10;
+    box-shadow: var(--shadow);
+  }
+  .topbar-title { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); }
+  .topbar-right { display: flex; gap: 10px; align-items: center; }
+  .avatar { width: 32px; height: 32px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+
+  /* CONTENT */
+  .content { padding: 24px 28px; }
+
+  /* VIEWS */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* STATS GRID */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 18px 20px; border: 1px solid var(--border); box-shadow: var(--shadow);
+  }
+  .stat-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 6px; }
+  .stat-value { font-size: 2rem; font-weight: 700; color: var(--text-dark); }
+  .stat-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 3px; }
+  .stat-card.green .stat-value { color: var(--green); }
+  .stat-card.red .stat-value { color: var(--urgent-red); }
+  .stat-card.blue .stat-value { color: var(--blue); }
+
+  /* CAPACITY */
+  .capacity-widget {
+    background: var(--white); border-radius: var(--radius);
+    padding: 20px 24px; border: 1px solid var(--border); box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+  .capacity-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 14px; }
+  .bed-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .bed {
+    width: 52px; height: 52px; border-radius: 8px; border: 2px solid;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; cursor: pointer; transition: all 0.15s;
+  }
+  .bed.occupied { background: #fde8e8; border-color: #e74c3c; }
+  .bed.available { background: var(--green-pale); border-color: var(--green); }
+  .bed.pending { background: var(--medium-bg); border-color: var(--medium); }
+  .bed-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 0.75rem; color: var(--text-mid); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 4px; }
+
+  /* TABLE */
+  .table-card {
+    background: var(--white); border-radius: var(--radius);
+    border: 1px solid var(--border); box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .table-header {
+    padding: 14px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .table-title { font-size: 0.95rem; font-weight: 700; }
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .filter-select {
+    padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px;
+    font-size: 0.78rem; background: var(--cream); color: var(--text-dark);
+    outline: none; cursor: pointer;
+  }
+  .search-input {
+    padding: 5px 12px; border: 1px solid var(--border); border-radius: 6px;
+    font-size: 0.78rem; background: var(--cream); outline: none; width: 180px;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th { padding: 10px 16px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-light); background: var(--cream); border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  td { padding: 11px 16px; border-bottom: 1px solid #f0ece6; font-size: 0.85rem; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #faf8f5; cursor: pointer; }
+  .badge {
+    display: inline-block; padding: 2px 9px; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 700;
+  }
+  .badge.urgent { background: var(--urgent-bg); color: var(--urgent-red); }
+  .badge.medium { background: var(--medium-bg); color: #856404; }
+  .badge.low { background: var(--green-pale); color: var(--green); }
+  .badge.private { background: #fff3cd; color: #6b4e00; }
+  .badge.waiver { background: var(--blue-pale); color: var(--blue); }
+  .badge.unsure { background: #f0f0f0; color: #666; }
+  .status-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 600; white-space: nowrap;
+  }
+  .s-new { background: #e8eef7; color: #2c4a7c; }
+  .s-contacted { background: #fff3cd; color: #7a5a00; }
+  .s-tour { background: #e8f5e9; color: #1b5e20; }
+  .s-assess { background: #e8f2ec; color: #2d5a3d; }
+  .s-docs { background: #fce8d8; color: #8b3a0a; }
+  .s-payment { background: #f3e8ff; color: #5a1a8c; }
+  .s-approved { background: #d4edda; color: #155724; }
+  .s-movein { background: #cce5ff; color: #004085; }
+  .s-closed { background: #f0f0f0; color: #666; }
+
+  /* PIPELINE */
+  .pipeline-wrap { overflow-x: auto; padding-bottom: 8px; }
+  .pipeline { display: flex; gap: 14px; min-width: max-content; padding: 4px; }
+  .pipeline-col {
+    width: 200px; background: var(--white); border-radius: var(--radius);
+    border: 1px solid var(--border); flex-shrink: 0;
+  }
+  .col-header {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; color: var(--text-mid); display: flex;
+    align-items: center; justify-content: space-between;
+  }
+  .col-count { background: var(--bg); border-radius: 20px; padding: 1px 8px; font-size: 0.72rem; }
+  .col-body { padding: 10px; min-height: 80px; }
+  .pipeline-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; margin-bottom: 8px; cursor: pointer;
+    transition: box-shadow 0.15s; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .pipeline-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.1); transform: translateY(-1px); }
+  .pipeline-card-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+  .pipeline-card-meta { font-size: 0.72rem; color: var(--text-light); }
+  .pipeline-card-footer { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+
+  /* LEAD DETAIL */
+  .lead-detail-grid { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start; }
+  .detail-card {
+    background: var(--white); border-radius: var(--radius);
+    border: 1px solid var(--border); padding: 20px 24px; box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+  .detail-section-title {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  .detail-row { display: flex; gap: 16px; margin-bottom: 10px; flex-wrap: wrap; }
+  .detail-field { flex: 1; min-width: 140px; }
+  .detail-label { font-size: 0.72rem; font-weight: 700; color: var(--text-light); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .detail-value { font-size: 0.9rem; }
+
+  /* TASK LIST */
+  .task-item {
+    display: flex; align-items: center; gap: 10px; padding: 8px 0;
+    border-bottom: 1px solid #f0ece6; font-size: 0.85rem;
+  }
+  .task-checkbox { width: 16px; height: 16px; accent-color: var(--green); cursor: pointer; }
+  .task-item.done { text-decoration: line-through; color: var(--text-light); }
+
+  /* NOTES */
+  .note-input {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
+    border-radius: 6px; font-family: inherit; font-size: 0.85rem;
+    background: var(--cream); resize: vertical; min-height: 80px; outline: none;
+  }
+  .note-input:focus { border-color: var(--green); }
+
+  /* DOC CHECKLIST */
+  .doc-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px solid #f0ece6; font-size: 0.84rem;
+  }
+  .doc-status { font-size: 0.72rem; font-weight: 700; }
+  .doc-status.received { color: var(--green); }
+  .doc-status.pending { color: var(--medium); }
+  .doc-status.missing { color: var(--urgent-red); }
+
+  /* PIPELINE SELECT */
+  .pipeline-select {
+    width: 100%; padding: 8px 12px; border: 1.5px solid var(--border);
+    border-radius: 6px; font-size: 0.85rem; background: var(--cream);
+    font-family: inherit; outline: none; cursor: pointer; margin-bottom: 12px;
+  }
+  .pipeline-select:focus { border-color: var(--green); }
+
+  /* BUTTON */
+  .btn { padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.15s; }
+  .btn-g { background: var(--green); color: white; }
+  .btn-g:hover { background: var(--green-light); }
+  .btn-ghost { background: transparent; color: var(--text-mid); border: 1.5px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--green); color: var(--green); }
+  .btn-sm { padding: 4px 12px; font-size: 0.75rem; }
+
+  /* ANALYTICS MINI */
+  .analytics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .mini-stat { background: var(--cream); border-radius: 8px; padding: 12px 14px; border: 1px solid var(--border); }
+  .mini-stat-val { font-size: 1.6rem; font-weight: 700; }
+  .mini-stat-label { font-size: 0.72rem; color: var(--text-light); margin-top: 2px; }
+
+  .section-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+  .section-title { font-size: 1rem; font-weight: 700; }
+  .back-btn { color: var(--green); cursor: pointer; font-size: 0.85rem; font-weight: 600; border: none; background: none; display: flex; align-items: center; gap: 4px; }
+  .urgency-bar { display: flex; gap: 4px; align-items: center; }
+  .urge-pip { width: 8px; height: 20px; border-radius: 3px; }
+
+  /* CALENDAR */
+  .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-header { text-align: center; font-size: 0.72rem; font-weight: 700; color: var(--text-light); padding: 6px; }
+  .cal-day {
+    min-height: 70px; background: var(--white); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px;
+  }
+  .cal-day.today { border-color: var(--green); background: var(--green-pale); }
+  .cal-day.other-month { background: #f5f2ee; }
+  .cal-date { font-size: 0.75rem; font-weight: 600; margin-bottom: 4px; }
+  .cal-event { background: var(--green); color: white; border-radius: 4px; padding: 2px 6px; font-size: 0.65rem; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  @media (max-width: 768px) {
+    .sidebar { width: 60px; }
+    .sidebar-logo h2, .nav-section, .sidebar a span { display: none; }
+    .main { margin-left: 60px; }
+    .lead-detail-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h2>Sygma House</h2>
+    <span>Admin Portal</span>
+  </div>
+  <div class="nav-section">Overview</div>
+  <a href="#" class="active" onclick="showView('dashboard',this)"><span class="sidebar-icon">📊</span><span>Dashboard</span></a>
+  <a href="#" onclick="showView('leads',this)"><span class="sidebar-icon">👥</span><span>All Leads</span></a>
+  <a href="#" onclick="showView('pipeline',this)"><span class="sidebar-icon">📋</span><span>Pipeline</span></a>
+  <a href="#" onclick="showView('calendar',this)"><span class="sidebar-icon">📅</span><span>Tour Calendar</span></a>
+  <div class="nav-section">Tools</div>
+  <a href="#" onclick="showView('leads',this)"><span class="sidebar-icon">🔔</span><span>Tasks</span></a>
+  <a href="#" onclick="alert('Settings — coming soon')"><span class="sidebar-icon">⚙️</span><span>Settings</span></a>
+  <div style="flex:1;"></div>
+  <a href="public-website.html" target="_blank" style="border-top:1px solid rgba(255,255,255,0.08);margin-top:8px;"><span class="sidebar-icon">🌐</span><span>View Website</span></a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title" id="topbar-title">Dashboard</span>
+    <div class="topbar-right">
+      <button class="btn btn-g btn-sm" onclick="showView('leads',null);setTimeout(()=>openIntake(),100)">+ New Lead</button>
+      <div class="avatar">SH</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══ DASHBOARD VIEW ═══ -->
+    <div id="view-dashboard" class="view active">
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card green">
+          <div class="stat-label">Available Beds</div>
+          <div class="stat-value">2</div>
+          <div class="stat-sub">of 5 total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Occupied Beds</div>
+          <div class="stat-value">2</div>
+          <div class="stat-sub">active residents</div>
+        </div>
+        <div class="stat-card" style="border-left:3px solid var(--medium);">
+          <div class="stat-label">Pending</div>
+          <div class="stat-value">1</div>
+          <div class="stat-sub">in admission process</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">New Leads</div>
+          <div class="stat-value">4</div>
+          <div class="stat-sub">this week</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-label">Urgent</div>
+          <div class="stat-value">2</div>
+          <div class="stat-sub">priority 4–5</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Tours Booked</div>
+          <div class="stat-value">3</div>
+          <div class="stat-sub">this week</div>
+        </div>
+      </div>
+
+      <!-- Capacity Visual -->
+      <div class="capacity-widget">
+        <div class="capacity-title">🏠 Bed Capacity — 5 Max</div>
+        <div class="bed-row">
+          <div class="bed occupied" title="Bed 1 — Occupied">🛏️</div>
+          <div class="bed occupied" title="Bed 2 — Occupied">🛏️</div>
+          <div class="bed pending" title="Bed 3 — Pending (Move-In Scheduled)">⏳</div>
+          <div class="bed available" title="Bed 4 — Available">✅</div>
+          <div class="bed available" title="Bed 5 — Available">✅</div>
+        </div>
+        <div class="bed-legend">
+          <span><span class="legend-dot" style="background:#e74c3c;"></span>Occupied (2)</span>
+          <span><span class="legend-dot" style="background:var(--medium);"></span>Pending (1)</span>
+          <span><span class="legend-dot" style="background:var(--green);"></span>Available (2)</span>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <!-- Analytics -->
+        <div class="detail-card">
+          <div class="detail-section-title">Analytics — This Week</div>
+          <div class="analytics-row">
+            <div class="mini-stat"><div class="mini-stat-val">4</div><div class="mini-stat-label">Total Leads</div></div>
+            <div class="mini-stat"><div class="mini-stat-val">3</div><div class="mini-stat-label">Tours Booked</div></div>
+            <div class="mini-stat"><div class="mini-stat-val">2</div><div class="mini-stat-label">Private Pay</div></div>
+            <div class="mini-stat"><div class="mini-stat-val">2</div><div class="mini-stat-label">Waiver Leads</div></div>
+          </div>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+            <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:6px;">Conversion Rate (placeholder)</div>
+            <div style="height:8px;background:var(--border);border-radius:4px;">
+              <div style="height:100%;background:var(--green);border-radius:4px;width:42%;"></div>
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-mid);margin-top:4px;">42% lead → tour rate</div>
+          </div>
+        </div>
+
+        <!-- Upcoming Tasks -->
+        <div class="detail-card">
+          <div class="detail-section-title">Upcoming Tasks</div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" onchange="this.parentElement.classList.toggle('done')">
+            <span><strong>Call</strong> Maria Johnson — follow up on tour</span>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" onchange="this.parentElement.classList.toggle('done')">
+            <span><strong>Request documents</strong> — Chen family (ID, physician orders)</span>
+          </div>
+          <div class="task-item" style="border-left:2px solid var(--urgent-red);padding-left:8px;">
+            <input type="checkbox" class="task-checkbox" onchange="this.parentElement.classList.toggle('done')">
+            <span><strong style="color:var(--urgent-red);">URGENT</strong> — Robert Davis hospital discharge pending</span>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" onchange="this.parentElement.classList.toggle('done')">
+            <span>Confirm waiver auth — Hennepin County for Williams</span>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" class="task-checkbox" onchange="this.parentElement.classList.toggle('done')">
+            <span>Send move-in prep packet to Thompson family</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Leads -->
+      <div class="table-card" style="margin-top:20px;">
+        <div class="table-header">
+          <span class="table-title">Recent Leads</span>
+          <button class="btn btn-ghost btn-sm" onclick="showView('leads',null)">View All →</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th><th>Payment</th><th>Urgency</th><th>Status</th><th>Submitted</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="openLead('1')">
+              <td><strong>Maria Johnson</strong><br><span style="color:var(--text-light);font-size:0.75rem;">Daughter inquiring</span></td>
+              <td><span class="badge private">Private Pay</span></td>
+              <td><span class="badge medium">Med (3)</span></td>
+              <td><span class="status-pill s-tour">Tour Scheduled</span></td>
+              <td style="color:var(--text-light);">Apr 28</td>
+            </tr>
+            <tr onclick="openLead('2')">
+              <td><strong>Robert Davis</strong><br><span style="color:var(--text-light);font-size:0.75rem;">Self-referral, hospital</span></td>
+              <td><span class="badge waiver">EW Waiver</span></td>
+              <td><span class="badge urgent">Urgent (5)</span></td>
+              <td><span class="status-pill s-new">New Lead</span></td>
+              <td style="color:var(--text-light);">Apr 30</td>
+            </tr>
+            <tr onclick="openLead('3')">
+              <td><strong>Linda Chen</strong><br><span style="color:var(--text-light);font-size:0.75rem;">Son inquiring</span></td>
+              <td><span class="badge private">Private Pay</span></td>
+              <td><span class="badge low">Low (2)</span></td>
+              <td><span class="status-pill s-docs">Documents Pending</span></td>
+              <td style="color:var(--text-light);">Apr 25</td>
+            </tr>
+            <tr onclick="openLead('4')">
+              <td><strong>James Williams</strong><br><span style="color:var(--text-light);font-size:0.75rem;">Case manager referral</span></td>
+              <td><span class="badge waiver">EW Waiver</span></td>
+              <td><span class="badge medium">Med (4)</span></td>
+              <td><span class="status-pill s-payment">Payment Review</span></td>
+              <td style="color:var(--text-light);">Apr 22</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ LEADS VIEW ═══ -->
+    <div id="view-leads" class="view">
+      <div class="section-row">
+        <span class="section-title">All Leads</span>
+        <button class="btn btn-g btn-sm" onclick="openIntake()">+ Add Lead</button>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="filter-bar">
+            <input class="search-input" placeholder="🔍 Search name..." oninput="filterLeads(this.value)">
+            <select class="filter-select" onchange="filterLeads()">
+              <option value="">All Payments</option>
+              <option>Private Pay</option>
+              <option>EW Waiver</option>
+              <option>Unsure</option>
+            </select>
+            <select class="filter-select" onchange="filterLeads()">
+              <option value="">All Urgency</option>
+              <option>Urgent (4-5)</option>
+              <option>Medium (2-3)</option>
+              <option>Low (1)</option>
+            </select>
+            <select class="filter-select" onchange="filterLeads()">
+              <option value="">All Statuses</option>
+              <option>New Lead</option>
+              <option>Tour Scheduled</option>
+              <option>Documents Pending</option>
+              <option>Approved</option>
+            </select>
+          </div>
+        </div>
+        <table id="leads-table">
+          <thead>
+            <tr>
+              <th>Resident</th><th>Contact</th><th>Payment</th><th>Urgency</th><th>Status</th><th>Location</th><th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="openLead('1')">
+              <td><strong>Maria Johnson</strong><br><span style="font-size:0.75rem;color:var(--text-light);">Age 78 • Home</span></td>
+              <td>Susan Johnson (daughter)<br><span style="font-size:0.75rem;color:var(--text-light);">(612) 555-0101</span></td>
+              <td><span class="badge private">Private Pay</span></td>
+              <td><span class="badge medium">3</span></td>
+              <td><span class="status-pill s-tour">Tour Scheduled</span></td>
+              <td>Home</td>
+              <td>Apr 28</td>
+            </tr>
+            <tr onclick="openLead('2')">
+              <td><strong>Robert Davis</strong><br><span style="font-size:0.75rem;color:var(--text-light);">Age 82 • Hospital</span></td>
+              <td>Robert Davis (self)<br><span style="font-size:0.75rem;color:var(--text-light);">(651) 555-0202</span></td>
+              <td><span class="badge waiver">EW Waiver</span></td>
+              <td><span class="badge urgent">5</span></td>
+              <td><span class="status-pill s-new">New Lead</span></td>
+              <td>Hospital</td>
+              <td>Apr 30</td>
+            </tr>
+            <tr onclick="openLead('3')">
+              <td><strong>Linda Chen</strong><br><span style="font-size:0.75rem;color:var(--text-light);">Age 74 • Rehab</span></td>
+              <td>David Chen (son)<br><span style="font-size:0.75rem;color:var(--text-light);">(763) 555-0303</span></td>
+              <td><span class="badge private">Private Pay</span></td>
+              <td><span class="badge low">2</span></td>
+              <td><span class="status-pill s-docs">Documents Pending</span></td>
+              <td>Rehab</td>
+              <td>Apr 25</td>
+            </tr>
+            <tr onclick="openLead('4')">
+              <td><strong>James Williams</strong><br><span style="font-size:0.75rem;color:var(--text-light);">Age 79 • Facility</span></td>
+              <td>Karen Olson (case mgr)<br><span style="font-size:0.75rem;color:var(--text-light);">(952) 555-0404</span></td>
+              <td><span class="badge waiver">EW Waiver</span></td>
+              <td><span class="badge medium">4</span></td>
+              <td><span class="status-pill s-payment">Payment Review</span></td>
+              <td>Facility</td>
+              <td>Apr 22</td>
+            </tr>
+            <tr onclick="openLead('5')">
+              <td><strong>Dorothy Thompson</strong><br><span style="font-size:0.75rem;color:var(--text-light);">Age 85 • Home</span></td>
+              <td>Mark Thompson (son)<br><span style="font-size:0.75rem;color:var(--text-light);">(612) 555-0505</span></td>
+              <td><span class="badge private">Private Pay</span></td>
+              <td><span class="badge medium">3</span></td>
+              <td><span class="status-pill s-approved">Approved</span></td>
+              <td>Home</td>
+              <td>Apr 18</td>
+            </tr>
+            <tr onclick="openLead('6')">
+              <td><strong>Eugene Park</strong><br><span style="font-size:0.75rem;color:var(--text-light);">Age 71 • Home</span></td>
+              <td>Amy Park (spouse)<br><span style="font-size:0.75rem;color:var(--text-light);">(651) 555-0606</span></td>
+              <td><span class="badge unsure">Unsure</span></td>
+              <td><span class="badge low">1</span></td>
+              <td><span class="status-pill s-contacted">Contacted</span></td>
+              <td>Home</td>
+              <td>Apr 15</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ LEAD DETAIL VIEW ═══ -->
+    <div id="view-lead-detail" class="view">
+      <div class="section-row">
+        <button class="back-btn" onclick="showView('leads',null)">← Back to Leads</button>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost btn-sm">Send Email</button>
+          <button class="btn btn-g btn-sm">Log Note</button>
+        </div>
+      </div>
+      <div class="lead-detail-grid">
+        <!-- Left column -->
+        <div>
+          <!-- Header card -->
+          <div class="detail-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+              <div>
+                <h2 id="detail-name" style="font-size:1.5rem;margin-bottom:4px;">Maria Johnson</h2>
+                <div style="color:var(--text-mid);font-size:0.9rem;" id="detail-sub">Age 78 · Home · Submitted Apr 28</div>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;" id="detail-badges">
+                <span class="badge private">Private Pay</span>
+                <span class="badge medium">Urgency 3</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact info -->
+          <div class="detail-card">
+            <div class="detail-section-title">Contact Information</div>
+            <div class="detail-row">
+              <div class="detail-field"><div class="detail-label">Contact Name</div><div class="detail-value" id="detail-contact">Susan Johnson</div></div>
+              <div class="detail-field"><div class="detail-label">Relationship</div><div class="detail-value">Adult Child</div></div>
+              <div class="detail-field"><div class="detail-label">Phone</div><div class="detail-value">(612) 555-0101</div></div>
+              <div class="detail-field"><div class="detail-label">Email</div><div class="detail-value">susan@email.com</div></div>
+            </div>
+          </div>
+
+          <!-- Care needs -->
+          <div class="detail-card">
+            <div class="detail-section-title">Care Needs & Profile</div>
+            <div class="detail-row">
+              <div class="detail-field"><div class="detail-label">Mobility</div><div class="detail-value">Needs minimal assistance</div></div>
+              <div class="detail-field"><div class="detail-label">Medications</div><div class="detail-value">Yes — management needed</div></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-field" style="min-width:100%"><div class="detail-label">Diagnoses / Notes</div><div class="detail-value">Mild dementia, controlled hypertension, history of falls</div></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-field" style="min-width:100%">
+                <div class="detail-label">Care Needs</div>
+                <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;">
+                  <span class="badge low" style="font-size:0.72rem;">Bathing</span>
+                  <span class="badge low" style="font-size:0.72rem;">Medications</span>
+                  <span class="badge low" style="font-size:0.72rem;">Supervision</span>
+                  <span class="badge low" style="font-size:0.72rem;">Meal prep</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="detail-card">
+            <div class="detail-section-title">Notes & Log</div>
+            <div style="margin-bottom:12px;">
+              <div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:0.84rem;">
+                <span style="color:var(--text-light);font-size:0.75rem;">Apr 28 · Admin</span><br>
+                Initial intake received. Tour scheduled for May 3 at 10am. Susan very engaged and motivated.
+              </div>
+              <div style="padding:10px 0;font-size:0.84rem;">
+                <span style="color:var(--text-light);font-size:0.75rem;">Apr 29 · Admin</span><br>
+                Confirmation email sent. Requested physician orders and medication list.
+              </div>
+            </div>
+            <textarea class="note-input" placeholder="Add a note..."></textarea>
+            <button class="btn btn-g btn-sm" style="margin-top:8px;">Save Note</button>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div>
+          <!-- Pipeline status -->
+          <div class="detail-card">
+            <div class="detail-section-title">Pipeline Status</div>
+            <select class="pipeline-select" id="detail-status-select">
+              <option>New Lead</option>
+              <option selected>Tour Scheduled</option>
+              <option>Assessment Needed</option>
+              <option>Documents Pending</option>
+              <option>Payment Review</option>
+              <option>Approved</option>
+              <option>Move-In Scheduled</option>
+              <option>Closed / Not Fit</option>
+            </select>
+            <button class="btn btn-g" style="width:100%;font-size:0.85rem;" onclick="alert('Status updated!')">Update Status</button>
+          </div>
+
+          <!-- Tasks -->
+          <div class="detail-card">
+            <div class="detail-section-title">Tasks</div>
+            <div class="task-item">
+              <input type="checkbox" class="task-checkbox" onchange="this.parentElement.classList.toggle('done')">
+              <span>Confirm tour May 3 · 10am</span>
+            </div>
+            <div class="task-item">
+              <input type="checkbox" class="task-checkbox" onchange="this.parentElement.classList.toggle('done')">
+              <span>Request physician orders</span>
+            </div>
+            <div class="task-item">
+              <input type="checkbox" class="task-checkbox" onchange="this.parentElement.classList.toggle('done')">
+              <span>Send pricing consultation email</span>
+            </div>
+            <div style="margin-top:12px;">
+              <input type="text" placeholder="Add a task..." style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:0.82rem;background:var(--cream);">
+            </div>
+          </div>
+
+          <!-- Document checklist -->
+          <div class="detail-card">
+            <div class="detail-section-title">Document Checklist</div>
+            <div class="doc-item">
+              <span>Government-issued ID</span>
+              <span class="doc-status received">✓ Received</span>
+            </div>
+            <div class="doc-item">
+              <span>Health insurance card</span>
+              <span class="doc-status received">✓ Received</span>
+            </div>
+            <div class="doc-item">
+              <span>Physician orders</span>
+              <span class="doc-status pending">⏳ Requested</span>
+            </div>
+            <div class="doc-item">
+              <span>Medication list</span>
+              <span class="doc-status pending">⏳ Requested</span>
+            </div>
+            <div class="doc-item">
+              <span>POA / Legal docs</span>
+              <span class="doc-status missing">✗ Missing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PIPELINE VIEW ═══ -->
+    <div id="view-pipeline" class="view">
+      <div class="section-row">
+        <span class="section-title">Admission Pipeline</span>
+        <button class="btn btn-g btn-sm" onclick="openIntake()">+ Add Lead</button>
+      </div>
+      <div class="pipeline-wrap">
+        <div class="pipeline">
+          <div class="pipeline-col">
+            <div class="col-header">New Lead <span class="col-count">2</span></div>
+            <div class="col-body">
+              <div class="pipeline-card" onclick="openLead('2')">
+                <div class="pipeline-card-name">Robert Davis</div>
+                <div class="pipeline-card-meta">Age 82 · Hospital</div>
+                <div class="pipeline-card-footer"><span class="badge urgent" style="font-size:0.65rem;">Urgent 5</span><span class="badge waiver" style="font-size:0.65rem;">EW</span></div>
+              </div>
+              <div class="pipeline-card" onclick="openLead('6')">
+                <div class="pipeline-card-name">Eugene Park</div>
+                <div class="pipeline-card-meta">Age 71 · Home</div>
+                <div class="pipeline-card-footer"><span class="badge low" style="font-size:0.65rem;">Low 1</span><span class="badge unsure" style="font-size:0.65rem;">Unsure</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pipeline-col">
+            <div class="col-header">Contacted <span class="col-count">1</span></div>
+            <div class="col-body">
+              <div class="pipeline-card">
+                <div class="pipeline-card-name">Eugene Park</div>
+                <div class="pipeline-card-meta">Called Apr 16</div>
+                <div class="pipeline-card-footer"><span class="badge low" style="font-size:0.65rem;">Low</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pipeline-col">
+            <div class="col-header">Tour Scheduled <span class="col-count">1</span></div>
+            <div class="col-body">
+              <div class="pipeline-card" onclick="openLead('1')">
+                <div class="pipeline-card-name">Maria Johnson</div>
+                <div class="pipeline-card-meta">May 3 · 10:00 AM</div>
+                <div class="pipeline-card-footer"><span class="badge medium" style="font-size:0.65rem;">Med 3</span><span class="badge private" style="font-size:0.65rem;">Private</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pipeline-col">
+            <div class="col-header">Assessment Needed <span class="col-count">0</span></div>
+            <div class="col-body"></div>
+          </div>
+          <div class="pipeline-col">
+            <div class="col-header">Docs Pending <span class="col-count">1</span></div>
+            <div class="col-body">
+              <div class="pipeline-card" onclick="openLead('3')">
+                <div class="pipeline-card-name">Linda Chen</div>
+                <div class="pipeline-card-meta">Physician orders pending</div>
+                <div class="pipeline-card-footer"><span class="badge low" style="font-size:0.65rem;">Low</span><span class="badge private" style="font-size:0.65rem;">Private</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pipeline-col">
+            <div class="col-header">Payment Review <span class="col-count">1</span></div>
+            <div class="col-body">
+              <div class="pipeline-card" onclick="openLead('4')">
+                <div class="pipeline-card-name">James Williams</div>
+                <div class="pipeline-card-meta">Awaiting county auth</div>
+                <div class="pipeline-card-footer"><span class="badge medium" style="font-size:0.65rem;">Med 4</span><span class="badge waiver" style="font-size:0.65rem;">EW</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pipeline-col">
+            <div class="col-header">Approved <span class="col-count">1</span></div>
+            <div class="col-body">
+              <div class="pipeline-card" onclick="openLead('5')">
+                <div class="pipeline-card-name">Dorothy Thompson</div>
+                <div class="pipeline-card-meta">Contract sent</div>
+                <div class="pipeline-card-footer"><span class="badge medium" style="font-size:0.65rem;">Med 3</span><span class="badge private" style="font-size:0.65rem;">Private</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pipeline-col">
+            <div class="col-header">Move-In Scheduled <span class="col-count">0</span></div>
+            <div class="col-body"></div>
+          </div>
+          <div class="pipeline-col">
+            <div class="col-header">Closed / Not Fit <span class="col-count">0</span></div>
+            <div class="col-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CALENDAR VIEW ═══ -->
+    <div id="view-calendar" class="view">
+      <div class="section-row">
+        <span class="section-title">Tour Calendar — May 2024</span>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost btn-sm">← Previous</button>
+          <button class="btn btn-ghost btn-sm">Next →</button>
+        </div>
+      </div>
+      <div class="detail-card">
+        <div class="calendar-grid" style="margin-bottom:8px;">
+          <div class="cal-header">Sun</div><div class="cal-header">Mon</div><div class="cal-header">Tue</div><div class="cal-header">Wed</div><div class="cal-header">Thu</div><div class="cal-header">Fri</div><div class="cal-header">Sat</div>
+        </div>
+        <div class="calendar-grid">
+          <!-- Week 1 -->
+          <div class="cal-day other-month"><div class="cal-date" style="color:var(--text-light);">28</div></div>
+          <div class="cal-day other-month"><div class="cal-date" style="color:var(--text-light);">29</div></div>
+          <div class="cal-day other-month"><div class="cal-date" style="color:var(--text-light);">30</div></div>
+          <div class="cal-day today"><div class="cal-date">1</div></div>
+          <div class="cal-day"><div class="cal-date">2</div></div>
+          <div class="cal-day"><div class="cal-date">3</div><div class="cal-event">10am Maria J.</div></div>
+          <div class="cal-day"><div class="cal-date">4</div></div>
+          <!-- Week 2 -->
+          <div class="cal-day"><div class="cal-date">5</div></div>
+          <div class="cal-day"><div class="cal-date">6</div></div>
+          <div class="cal-day"><div class="cal-date">7</div><div class="cal-event">2pm Intake Call</div></div>
+          <div class="cal-day"><div class="cal-date">8</div></div>
+          <div class="cal-day"><div class="cal-date">9</div></div>
+          <div class="cal-day"><div class="cal-date">10</div><div class="cal-event">11am Tour — TBD</div></div>
+          <div class="cal-day"><div class="cal-date">11</div></div>
+          <!-- Week 3 -->
+          <div class="cal-day"><div class="cal-date">12</div></div>
+          <div class="cal-day"><div class="cal-date">13</div></div>
+          <div class="cal-day"><div class="cal-date">14</div></div>
+          <div class="cal-day"><div class="cal-date">15</div></div>
+          <div class="cal-day"><div class="cal-date">16</div></div>
+          <div class="cal-day"><div class="cal-date">17</div></div>
+          <div class="cal-day"><div class="cal-date">18</div></div>
+          <!-- Week 4 -->
+          <div class="cal-day"><div class="cal-date">19</div></div>
+          <div class="cal-day"><div class="cal-date">20</div></div>
+          <div class="cal-day"><div class="cal-date">21</div></div>
+          <div class="cal-day"><div class="cal-date">22</div></div>
+          <div class="cal-day"><div class="cal-date">23</div></div>
+          <div class="cal-day"><div class="cal-date">24</div></div>
+          <div class="cal-day"><div class="cal-date">25</div></div>
+          <!-- Week 5 -->
+          <div class="cal-day"><div class="cal-date">26</div></div>
+          <div class="cal-day"><div class="cal-date">27</div></div>
+          <div class="cal-day"><div class="cal-date">28</div></div>
+          <div class="cal-day"><div class="cal-date">29</div></div>
+          <div class="cal-day"><div class="cal-date">30</div></div>
+          <div class="cal-day"><div class="cal-date">31</div></div>
+          <div class="cal-day other-month"><div class="cal-date" style="color:var(--text-light);">1</div></div>
+        </div>
+      </div>
+      <div class="detail-card" style="margin-top:0;">
+        <div class="detail-section-title">Upcoming Tours</div>
+        <div class="task-item" style="flex-direction:column;align-items:flex-start;gap:4px;">
+          <div style="display:flex;justify-content:space-between;width:100%;">
+            <strong>Maria Johnson Tour</strong>
+            <span class="badge low">Confirmed</span>
+          </div>
+          <div style="color:var(--text-mid);font-size:0.82rem;">May 3 · 10:00 AM · Susan Johnson attending · Private Pay inquiry</div>
+        </div>
+        <div class="task-item" style="flex-direction:column;align-items:flex-start;gap:4px;">
+          <div style="display:flex;justify-content:space-between;width:100%;">
+            <strong>Intake Call — Davis Family</strong>
+            <span class="badge medium">Pending</span>
+          </div>
+          <div style="color:var(--text-mid);font-size:0.82rem;">May 7 · 2:00 PM · Phone tour (hospital patient) · EW Waiver</div>
+        </div>
+        <div class="task-item" style="flex-direction:column;align-items:flex-start;gap:4px;">
+          <div style="display:flex;justify-content:space-between;width:100%;">
+            <strong>In-Person Tour — TBD</strong>
+            <span class="badge unsure">Unconfirmed</span>
+          </div>
+          <div style="color:var(--text-mid);font-size:0.82rem;">May 10 · 11:00 AM · Awaiting family confirmation</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const views = ['dashboard','leads','pipeline','calendar','lead-detail'];
+const titles = {
+  dashboard:'Dashboard',leads:'All Leads',pipeline:'Admission Pipeline',
+  calendar:'Tour Calendar','lead-detail':'Lead Detail'
+};
+
+function showView(id, el) {
+  views.forEach(v => {
+    document.getElementById('view-'+v).classList.toggle('active', v===id);
+  });
+  document.getElementById('topbar-title').textContent = titles[id] || id;
+  if (el) {
+    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+  }
+  window.scrollTo(0,0);
+}
+
+function openLead(id) {
+  showView('lead-detail', null);
+}
+
+function openIntake() {
+  if (confirm('Open public intake form in a new tab?')) {
+    window.open('public-website.html#intake', '_blank');
+  }
+}
+
+function filterLeads(val) {
+  // Mock filter — in production this hits the API
+  const rows = document.querySelectorAll('#leads-table tbody tr');
+  rows.forEach(r => r.style.display = '');
+}
+</script>
+</body>
+</html>
