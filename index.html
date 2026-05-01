@@ -82,12 +82,23 @@ nav {
   position: relative;
   overflow: hidden;
 }
+.hero-bg-photo {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1600&auto=format&fit=crop&q=80');
+  background-size: cover;
+  background-position: center 40%;
+  opacity: 0.18;
+  filter: saturate(0.6);
+}
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(64,145,108,0.15) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 30%, rgba(45,106,79,0.1) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 30% 50%, rgba(64,145,108,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 30%, rgba(45,106,79,0.12) 0%, transparent 50%),
+              linear-gradient(to bottom, rgba(28,51,38,0.5) 0%, rgba(28,51,38,0.2) 100%);
+  z-index: 1;
 }
+.hero-inner { z-index: 2 !important; }
 .hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
 .hero h1 { font-size: 3.2rem; font-weight: 700; line-height: 1.18; margin-bottom: 20px; }
 .hero h1 em { font-style: normal; color: #86c9a3; }
@@ -354,6 +365,66 @@ footer ul li a { color: rgba(255,255,255,0.7); text-decoration: none; font-size:
 footer ul li a:hover { color: #86c9a3; }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 0.8rem; opacity: 0.55; }
 
+/* PHOTO SECTIONS */
+.photo-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 40px 0;
+}
+.photo-strip-wide {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+  margin: 40px 0;
+}
+.photo-item {
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4/3;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.photo-item:hover { transform: scale(1.02); box-shadow: 0 8px 32px rgba(0,0,0,0.16); }
+.photo-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.photo-item:hover img { transform: scale(1.05); }
+.photo-item-tall { aspect-ratio: 3/4; }
+.photo-item-wide { aspect-ratio: 16/9; }
+.photo-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.55));
+  color: white; padding: 24px 14px 12px;
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.02em;
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.photo-item:hover .photo-caption { opacity: 1; }
+.home-photo-hero {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 16/7;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.13);
+  margin-bottom: 40px;
+}
+.home-photo-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+@media(max-width:700px) {
+  .photo-strip, .photo-strip-wide { grid-template-columns: 1fr 1fr; }
+  .photo-item-tall { aspect-ratio: 4/3; }
+}
+@media(max-width:480px) {
+  .photo-strip, .photo-strip-wide { grid-template-columns: 1fr; }
+}
+
 /* ALERT BOX */
 .alert { padding: 14px 18px; border-radius: 10px; margin-bottom: 18px; font-size: 0.9rem; }
 .alert-info { background: rgba(58,95,138,0.12); border: 1px solid rgba(58,95,138,0.25); color: var(--blue); }
@@ -453,6 +524,7 @@ footer ul li a:hover { color: #86c9a3; }
 <!-- ═══════════════════════════════════════════════ -->
 <div id="page-home" class="page active">
   <div class="hero">
+    <div class="hero-bg-photo"></div>
     <div class="hero-inner">
       <div class="trust-row" style="justify-content:center;margin-bottom:20px;">
         <span class="trust-badge">🏠 Licensed Minnesota ALF</span>
@@ -538,6 +610,41 @@ footer ul li a:hover { color: #86c9a3; }
     </div>
   </div>
 
+  <!-- Home Photo Gallery -->
+  <div class="section" style="padding-top:0;">
+    <p class="section-sub" style="margin-bottom:8px;font-size:0.88rem;text-transform:uppercase;font-weight:600;letter-spacing:0.07em;color:var(--green);">Our Home</p>
+    <h2 class="section-title">A Warm, Welcoming Place to Live</h2>
+    <p class="section-sub">Real residential comfort — not a clinical facility. Burnsville, Minnesota.</p>
+    <div class="photo-strip-wide">
+      <div class="photo-item photo-item-wide" style="aspect-ratio:unset;grid-row:span 2;">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&auto=format&fit=crop&q=80" alt="Welcoming home exterior" loading="lazy">
+        <div class="photo-caption">Home Exterior</div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=80" alt="Cozy living room" loading="lazy">
+        <div class="photo-caption">Living Room</div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&auto=format&fit=crop&q=80" alt="Dining and kitchen" loading="lazy">
+        <div class="photo-caption">Kitchen & Dining</div>
+      </div>
+    </div>
+    <div class="photo-strip">
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=600&auto=format&fit=crop&q=80" alt="Private bedroom" loading="lazy">
+        <div class="photo-caption">Private Bedroom</div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&auto=format&fit=crop&q=80" alt="Bathroom" loading="lazy">
+        <div class="photo-caption">Clean Bathrooms</div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=80" alt="Backyard and outdoor space" loading="lazy">
+        <div class="photo-caption">Outdoor Space</div>
+      </div>
+    </div>
+  </div>
+
   <div class="section" style="text-align:center;">
     <h2 class="section-title">Ready to Get Started?</h2>
     <p class="section-sub" style="margin-left:auto;margin-right:auto;">Complete our intake form and we'll respond within 24 hours. Urgent situations receive same-day contact.</p>
@@ -601,6 +708,25 @@ footer ul li a:hover { color: #86c9a3; }
         </div>
       </div>
     </div>
+    <!-- Home Photo Strip -->
+    <div class="home-photo-hero" style="margin-top:48px;">
+      <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&auto=format&fit=crop&q=80" alt="Warm residential home exterior — Sygma House" loading="lazy">
+    </div>
+    <div class="photo-strip" style="margin-top:0;">
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&auto=format&fit=crop&q=80" alt="Cozy living room" loading="lazy">
+        <div class="photo-caption">Comfortable Common Areas</div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80" alt="Home kitchen and dining" loading="lazy">
+        <div class="photo-caption">Home-Cooked Meals Daily</div>
+      </div>
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&auto=format&fit=crop&q=80" alt="Private bedroom" loading="lazy">
+        <div class="photo-caption">Private Bedrooms</div>
+      </div>
+    </div>
+
     <div style="margin-top:48px;">
       <h2 class="section-title" style="margin-bottom:24px;">Our License & Compliance</h2>
       <div class="grid-3">
@@ -854,6 +980,10 @@ footer ul li a:hover { color: #86c9a3; }
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:18px;">
+        <div class="photo-item" style="border-radius:14px;aspect-ratio:4/3;">
+          <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=700&auto=format&fit=crop&q=80" alt="Family style dining" loading="lazy">
+          <div class="photo-caption">Family-Style Dining</div>
+        </div>
         <div class="glass feature-card">
           <div class="feature-icon">🍳</div>
           <h3>Home-Cooked Meals</h3>
@@ -1138,7 +1268,7 @@ footer ul li a:hover { color: #86c9a3; }
           </div>
           <div class="form-group">
             <label>Phone Number</label>
-            <input type="tel" placeholder="(612) 000-0000">
+            <input type="tel" placeholder="507-222-9055">
           </div>
           <div class="form-group">
             <label>Email Address</label>
@@ -1183,21 +1313,21 @@ footer ul li a:hover { color: #86c9a3; }
             <div class="contact-icon">📞</div>
             <div>
               <div class="contact-label">Phone</div>
-              <div class="contact-value">[Phone Number]</div>
+              <div class="contact-value"><a href="tel:5072229055" style="color:inherit;text-decoration:none;">507-222-9055</a></div>
             </div>
           </div>
           <div class="contact-info-row">
             <div class="contact-icon">✉️</div>
             <div>
               <div class="contact-label">Email</div>
-              <div class="contact-value">hello@sygmahouse.com</div>
+              <div class="contact-value"><a href="mailto:hello@sygmahouse.com" style="color:inherit;text-decoration:none;">hello@sygmahouse.com</a></div>
             </div>
           </div>
           <div class="contact-info-row">
             <div class="contact-icon">📍</div>
             <div>
               <div class="contact-label">Address</div>
-              <div class="contact-value">[Address] — Minnesota</div>
+              <div class="contact-value"><a href="https://maps.google.com/?q=14827+Interlachen+Ln+Burnsville+MN+55306" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">14827 Interlachen Ln<br>Burnsville, MN 55306</a></div>
             </div>
           </div>
           <div class="contact-info-row">
@@ -1209,7 +1339,13 @@ footer ul li a:hover { color: #86c9a3; }
           </div>
         </div>
         <div class="alert alert-warn">
-          <strong>Urgent placement needs?</strong> Call us directly. Hospital discharge situations receive same-day priority response.
+          <strong>Urgent placement needs?</strong> Call us directly at <a href="tel:5072229055" style="color:inherit;font-weight:700;">507-222-9055</a>. Hospital discharge situations receive same-day priority response.
+        </div>
+        <div style="margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+          <iframe
+            src="https://www.google.com/maps?q=14827+Interlachen+Ln,+Burnsville,+MN+55306&output=embed"
+            width="100%" height="280" style="border:0;display:block;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" title="Sygma House Location"></iframe>
         </div>
       </div>
       <div class="glass" style="padding:32px;">
@@ -1250,7 +1386,7 @@ footer ul li a:hover { color: #86c9a3; }
     <div class="glass" style="padding:32px;max-width:600px;">
       <h3 style="margin-bottom:20px;">Apply Now</h3>
       <div class="form-group"><label>Name</label><input type="text" placeholder="Full name"></div>
-      <div class="form-group"><label>Phone</label><input type="tel" placeholder="(612) 000-0000"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="507-222-9055"></div>
       <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com"></div>
       <div class="form-group">
         <label>Position of Interest</label>
@@ -1303,7 +1439,7 @@ footer ul li a:hover { color: #86c9a3; }
             </div>
           </div>
           <div class="form-grid">
-            <div class="form-group"><label>Phone Number *</label><input type="tel" id="f-family-phone" placeholder="(612) 000-0000"></div>
+            <div class="form-group"><label>Phone Number *</label><input type="tel" id="f-family-phone" placeholder="507-222-9055"></div>
             <div class="form-group"><label>Email Address *</label><input type="email" id="f-family-email" placeholder="email@example.com"></div>
           </div>
           <div class="form-nav"><div></div><button class="btn btn-green" onclick="nextStep(2)">Next →</button></div>
@@ -1480,7 +1616,9 @@ footer ul li a:hover { color: #86c9a3; }
           <li><a href="#" onclick="showPage('compliance')">Compliance</a></li>
           <li><a href="#" onclick="showPage('careers')">Careers</a></li>
         </ul>
-        <p style="margin-top:16px;font-size:0.82rem;opacity:0.6;">MN Ombudsman for Long-Term Care: 1-800-657-3591</p>
+        <p style="margin-top:12px;font-size:0.85rem;opacity:0.75;"><a href="tel:5072229055" style="color:inherit;text-decoration:none;">📞 507-222-9055</a></p>
+        <p style="margin-top:6px;font-size:0.82rem;opacity:0.55;"><a href="mailto:hello@sygmahouse.com" style="color:inherit;text-decoration:none;">✉️ hello@sygmahouse.com</a></p>
+        <p style="margin-top:16px;font-size:0.78rem;opacity:0.45;">MN Ombudsman for Long-Term Care: 1-800-657-3591</p>
       </div>
     </div>
     <div class="footer-bottom">
