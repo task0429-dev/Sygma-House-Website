@@ -171,16 +171,20 @@ nav {
   transition: all 0.3s;
 }
 .room-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
-.room-img {
-  width: 100%; height: 220px; object-fit: cover; display: block;
-  background: linear-gradient(135deg, #c8d4c0, #a8b8a0);
+.room-img-wrapper {
+  position: relative; height: 220px; overflow: hidden;
 }
 .room-img-placeholder {
-  width: 100%; height: 220px;
-  background: linear-gradient(135deg, #c8d4c0, #a8b8a0);
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #c0ccb8, #a8b8a0);
   display: flex; align-items: center; justify-content: center;
-  font-size: 2.5rem;
+  font-size: 2.8rem; color: rgba(255,255,255,0.7);
 }
+.room-img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0; transition: opacity 0.4s;
+}
+.room-img.loaded { opacity: 1; }
 .room-info { padding: 18px 20px; }
 .room-info h3 { font-size: 1.05rem; margin-bottom: 4px; }
 .room-info p { font-size: 0.87rem; color: var(--text-mid); }
@@ -195,10 +199,21 @@ nav {
   overflow: hidden;
   box-shadow: var(--shadow);
 }
-.floorplan-card img {
-  width: 100%; display: block;
-  background: #dde4ec;
+.floorplan-img-wrapper {
+  position: relative; min-height: 280px; background: linear-gradient(135deg, #c8d4c0, #a8b8a0);
+  overflow: hidden;
 }
+.floorplan-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; font-size: 2.5rem; color: rgba(255,255,255,0.6);
+}
+.floorplan-placeholder span { font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.5); font-family: 'Inter',sans-serif; }
+.floorplan-card img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0; transition: opacity 0.4s; display: block;
+}
+.floorplan-card img.loaded { opacity: 1; }
 .floorplan-info { padding: 20px 24px; }
 .floorplan-info h3 { font-size: 1.1rem; margin-bottom: 6px; }
 .floorplan-info p { font-size: 0.9rem; color: var(--text-mid); }
@@ -683,40 +698,50 @@ footer ul li a:hover { color: #86c9a3; }
     <p class="section-sub">Each resident has their own private room. Bring your own furniture, photos, and personal items — this is your home.</p>
     <div class="room-grid">
       <div class="room-card">
-        <img src="images/bedroom-1.jpg" alt="Bedroom 1" class="room-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="room-img-placeholder" style="display:none;">🛏️</div>
+        <div class="room-img-wrapper">
+          <div class="room-img-placeholder">🛏️</div>
+          <img src="images/bedroom-1.jpg" alt="Bedroom 1" class="room-img" onload="this.classList.add('loaded')">
+        </div>
         <div class="room-info">
           <h3>Room 1</h3>
           <p>Spacious private room with natural light. Fits a full or queen bed. Closet storage included.</p>
         </div>
       </div>
       <div class="room-card">
-        <img src="images/bedroom-2.jpg" alt="Bedroom 2" class="room-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="room-img-placeholder" style="display:none;">🛏️</div>
+        <div class="room-img-wrapper">
+          <div class="room-img-placeholder">🛏️</div>
+          <img src="images/bedroom-2.jpg" alt="Bedroom 2" class="room-img" onload="this.classList.add('loaded')">
+        </div>
         <div class="room-info">
           <h3>Room 2</h3>
           <p>Comfortable room with easy access to shared bathroom. Warm, residential feel.</p>
         </div>
       </div>
       <div class="room-card">
-        <img src="images/bedroom-3.jpg" alt="Bedroom 3" class="room-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="room-img-placeholder" style="display:none;">🛏️</div>
+        <div class="room-img-wrapper">
+          <div class="room-img-placeholder">🛏️</div>
+          <img src="images/bedroom-3.jpg" alt="Bedroom 3" class="room-img" onload="this.classList.add('loaded')">
+        </div>
         <div class="room-info">
           <h3>Room 3</h3>
           <p>Quiet room ideal for residents who prefer extra privacy. Personalize freely.</p>
         </div>
       </div>
       <div class="room-card">
-        <img src="images/bedroom-4.jpg" alt="Bedroom 4" class="room-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="room-img-placeholder" style="display:none;">🛏️</div>
+        <div class="room-img-wrapper">
+          <div class="room-img-placeholder">🛏️</div>
+          <img src="images/bedroom-4.jpg" alt="Bedroom 4" class="room-img" onload="this.classList.add('loaded')">
+        </div>
         <div class="room-info">
           <h3>Room 4</h3>
           <p>Well-lit room with great ventilation. Accessible layout for walkers and wheelchairs.</p>
         </div>
       </div>
       <div class="room-card">
-        <img src="images/bedroom-5.jpg" alt="Bedroom 5" class="room-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="room-img-placeholder" style="display:none;">🛏️</div>
+        <div class="room-img-wrapper">
+          <div class="room-img-placeholder">🛏️</div>
+          <img src="images/bedroom-5.jpg" alt="Bedroom 5" class="room-img" onload="this.classList.add('loaded')">
+        </div>
         <div class="room-info">
           <h3>Room 5</h3>
           <p>Corner room with additional space. Great for residents who use mobility equipment.</p>
@@ -736,14 +761,20 @@ footer ul li a:hover { color: #86c9a3; }
     <p class="section-sub">Explore the layout of our home — common areas, bedrooms, and outdoor spaces.</p>
     <div class="floorplan-grid">
       <div class="floorplan-card">
-        <img src="images/floorplan-main.jpg" alt="Main Floor Plan" onerror="this.src='';this.style.background='linear-gradient(135deg,#c8d4c0,#a8b8a0)';this.style.minHeight='280px'">
+        <div class="floorplan-img-wrapper">
+          <div class="floorplan-placeholder">🏠<span>Main Floor Plan</span></div>
+          <img src="images/floorplan-main.jpg" alt="Main Floor Plan" onload="this.classList.add('loaded')">
+        </div>
         <div class="floorplan-info">
           <h3>Main Floor</h3>
           <p>Living room, dining area, kitchen, main bathroom, and bedrooms 1–3. Full accessible layout with wide hallways and grab bars.</p>
         </div>
       </div>
       <div class="floorplan-card">
-        <img src="images/floorplan-basement.jpg" alt="Basement / Lower Floor Plan" onerror="this.src='';this.style.background='linear-gradient(135deg,#b8c8d0,#98a8b8)';this.style.minHeight='280px'">
+        <div class="floorplan-img-wrapper" style="background:linear-gradient(135deg,#b8c8d8,#98aab8);">
+          <div class="floorplan-placeholder">🏗️<span>Lower Level Plan</span></div>
+          <img src="images/floorplan-basement.jpg" alt="Lower Level Floor Plan" onload="this.classList.add('loaded')">
+        </div>
         <div class="floorplan-info">
           <h3>Lower Level</h3>
           <p>Bedrooms 4–5, second bathroom, laundry, and additional common space. Stair lift and accessible entry available.</p>
