@@ -548,35 +548,41 @@ footer ul li a:hover { color: #86c9a3; }
 @media(max-width:768px) {
 
   /* NAV */
-  .nav-inner { height: 64px; position: relative; }
+  nav { position: sticky; top: 0; z-index: 200; }
+  .nav-inner { height: 64px; position: relative; flex-wrap: wrap; align-items: center; }
   .nav-logo-wrap img { height: 64px; width: 220px; }
   .mobile-menu-btn { display: flex; }
   .nav-links-wrap {
     display: none;
-    position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
-    background: rgba(216,221,230,0.97);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    width: 100%;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 16px 20px 40px;
-    gap: 4px;
-    overflow-y: auto;
-    z-index: 199;
-    border-top: 1px solid rgba(255,255,255,0.6);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    align-items: stretch;
+    gap: 0;
+    background: rgba(216,221,230,0.98);
+    border-top: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+    padding: 8px 16px 20px;
+    order: 3;
   }
   .nav-links-wrap.mobile-open { display: flex; }
   .nav-links-wrap a {
-    width: 100%; padding: 14px 16px !important;
-    font-size: 1rem !important; border-radius: 12px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: block !important;
+    width: 100% !important;
+    padding: 15px 16px !important;
+    font-size: 1rem !important;
+    border-radius: 10px !important;
+    border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+    color: var(--text-dark) !important;
+    text-align: left !important;
   }
+  .nav-links-wrap a:last-child { border-bottom: none !important; }
   .nav-links-wrap .nav-cta {
-    margin-top: 12px; text-align: center;
-    justify-content: center; width: 100%;
-    padding: 16px !important; font-size: 1rem !important;
+    margin-top: 10px !important;
+    text-align: center !important;
+    border-bottom: none !important;
+    padding: 16px !important;
     border-radius: 12px !important;
+    font-size: 1rem !important;
   }
 
   /* HERO */
@@ -1914,31 +1920,22 @@ function submitIntake() {
 
 // ─── MOBILE MENU ───
 function toggleMobileMenu() {
-  const btn = document.getElementById('mobileMenuBtn');
-  const nav = document.getElementById('navLinks');
-  btn.classList.toggle('open');
-  nav.classList.toggle('mobile-open');
-  document.body.style.overflow = nav.classList.contains('mobile-open') ? 'hidden' : '';
+  var btn = document.getElementById('mobileMenuBtn');
+  var nav = document.getElementById('navLinks');
+  var isOpen = nav.classList.contains('mobile-open');
+  if (isOpen) {
+    nav.classList.remove('mobile-open');
+    btn.classList.remove('open');
+  } else {
+    nav.classList.add('mobile-open');
+    btn.classList.add('open');
+  }
 }
 function navTo(page) {
   showPage(page);
-  const btn = document.getElementById('mobileMenuBtn');
-  const nav = document.getElementById('navLinks');
-  btn.classList.remove('open');
-  nav.classList.remove('mobile-open');
-  document.body.style.overflow = '';
+  document.getElementById('navLinks').classList.remove('mobile-open');
+  document.getElementById('mobileMenuBtn').classList.remove('open');
 }
-// Close menu on outside tap
-document.addEventListener('click', function(e) {
-  const nav = document.getElementById('navLinks');
-  const btn = document.getElementById('mobileMenuBtn');
-  if (nav && nav.classList.contains('mobile-open') &&
-      !nav.contains(e.target) && !btn.contains(e.target)) {
-    btn.classList.remove('open');
-    nav.classList.remove('mobile-open');
-    document.body.style.overflow = '';
-  }
-});
 </script>
 
 </body>
