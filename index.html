@@ -47,20 +47,27 @@ nav {
   box-shadow: 0 2px 20px rgba(0,0,0,0.08);
 }
 .nav-inner {
-  max-width: 1200px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 28px; height: 80px;
+  display: flex; align-items: stretch; justify-content: space-between;
+  height: 80px; padding: 0;
 }
 .nav-logo-wrap {
-  display: flex; align-items: center; gap: 12px;
-  text-decoration: none; height: 100%;
-  overflow: hidden;
+  display: flex; align-items: stretch;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 .nav-logo-wrap img {
-  height: 64px; width: auto; display: block;
-  mix-blend-mode: multiply;
+  height: 80px; width: auto; display: block;
+  object-fit: cover;
 }
-@media(max-width:768px) { .nav-inner { height: 72px; } .nav-logo-wrap img { height: 56px; } }
+.nav-links-wrap {
+  flex: 1;
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 24px; gap: 4px;
+}
+@media(max-width:768px) {
+  .nav-inner { height: 68px; }
+  .nav-logo-wrap img { height: 68px; }
+}
 .logo { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 700; color: var(--green); letter-spacing: -0.3px; }
 .logo span { color: var(--text-mid); font-weight: 400; font-size: 1rem; }
 .nav-links { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
@@ -515,7 +522,7 @@ footer ul li a:hover { color: #86c9a3; }
     <a href="#" onclick="showPage('home')" class="nav-logo-wrap">
       <img src="images/logo-nav.png" alt="Sygma House — A Real Home for Real People">
     </a>
-    <div class="nav-links">
+    <div class="nav-links-wrap nav-links">
       <a href="#" onclick="showPage('home')">Home</a>
       <a href="#" onclick="showPage('about')">About</a>
       <a href="#" onclick="showPage('services')">Services</a>
