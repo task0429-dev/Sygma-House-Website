@@ -635,35 +635,37 @@ footer ul li a:hover { color: #86c9a3; }
     <p class="section-sub" style="margin-bottom:8px;font-size:0.88rem;text-transform:uppercase;font-weight:600;letter-spacing:0.07em;color:var(--green);">Our Home</p>
     <h2 class="section-title">A Warm, Welcoming Place to Live</h2>
     <p class="section-sub">Real residential comfort — not a clinical facility. Burnsville, Minnesota.</p>
-    <div class="photo-strip-wide">
-      <div class="photo-item photo-item-wide" style="aspect-ratio:unset;grid-row:span 2;">
+    <!-- Row 1: 3 equal columns, exterior large left -->
+    <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div class="photo-item" style="aspect-ratio:4/3;">
         <img src="images/house-exterior-1.webp" alt="Sygma House exterior — Burnsville, MN" loading="lazy">
         <div class="photo-caption">Home Exterior</div>
       </div>
-      <div class="photo-item">
-        <img src="images/living-room.png" alt="Sygma House living room — fireplace, leather sofas" loading="lazy">
+      <div class="photo-item" style="aspect-ratio:4/3;">
+        <img src="images/living-room.png" alt="Sygma House living room" loading="lazy">
         <div class="photo-caption">Living Room</div>
       </div>
-      <div class="photo-item">
-        <img src="images/Kitchen.png" alt="Sygma House kitchen — granite counters, island, hardwood floors" loading="lazy">
+      <div class="photo-item" style="aspect-ratio:4/3;">
+        <img src="images/Kitchen.png" alt="Sygma House kitchen" loading="lazy">
         <div class="photo-caption">Kitchen</div>
       </div>
     </div>
-    <div class="photo-strip" style="grid-template-columns:repeat(4,1fr);">
-      <div class="photo-item">
+    <!-- Row 2: 4 equal columns -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+      <div class="photo-item" style="aspect-ratio:4/3;">
         <img src="images/dining-room.png" alt="Sygma House dining room" loading="lazy" style="object-position:center top;">
         <div class="photo-caption">Dining Room</div>
       </div>
-      <div class="photo-item">
-        <img src="images/bathroom-real.jpg" alt="Sygma House bathroom — granite vanity, walk-in shower" loading="lazy">
+      <div class="photo-item" style="aspect-ratio:4/3;">
+        <img src="images/bathroom-real.jpg" alt="Sygma House bathroom" loading="lazy">
         <div class="photo-caption">Bathroom</div>
       </div>
-      <div class="photo-item">
-        <img src="images/Backyard.jpg" alt="Sygma House backyard patio — stone patio, fire pit" loading="lazy">
+      <div class="photo-item" style="aspect-ratio:4/3;">
+        <img src="images/backyard-1.jpg" alt="Sygma House backyard patio" loading="lazy">
         <div class="photo-caption">Backyard Patio</div>
       </div>
-      <div class="photo-item">
-        <img src="images/backyard-2.jpg" alt="Sygma House backyard — deck, lush garden, evening lights" loading="lazy">
+      <div class="photo-item" style="aspect-ratio:4/3;">
+        <img src="images/backyard-2.jpg" alt="Sygma House garden & deck" loading="lazy">
         <div class="photo-caption">Garden & Deck</div>
       </div>
     </div>
