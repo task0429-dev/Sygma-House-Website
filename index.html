@@ -49,8 +49,39 @@ nav {
 .nav-inner {
   max-width: 1200px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 28px; height: 72px;
+  padding: 0 28px; height: 80px;
 }
+.nav-logo-wrap {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; height: 100%;
+  overflow: hidden;
+}
+.nav-logo-wrap img {
+  height: 80px; width: auto; display: block;
+  object-fit: cover; object-position: center;
+  /* crop the baked-in border by pulling it out of bounds */
+  margin: -4px -6px;
+  mix-blend-mode: multiply;
+}
+.nav-slogan {
+  display: flex; flex-direction: column; justify-content: center;
+  border-left: 1.5px solid rgba(74,124,89,0.25);
+  padding-left: 14px;
+  line-height: 1.25;
+}
+.nav-slogan span:first-child {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--green); letter-spacing: -0.2px;
+}
+.nav-slogan span:last-child {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem; font-weight: 500;
+  color: var(--text-light); letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+@media(max-width:900px) { .nav-slogan { display: none; } }
+@media(max-width:768px) { .nav-inner { height: 72px; } .nav-logo-wrap img { height: 72px; } }
 .logo { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 700; color: var(--green); letter-spacing: -0.3px; }
 .logo span { color: var(--text-mid); font-weight: 400; font-size: 1rem; }
 .nav-links { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
@@ -502,7 +533,13 @@ footer ul li a:hover { color: #86c9a3; }
 <!-- NAVIGATION -->
 <nav>
   <div class="nav-inner">
-    <a href="#" onclick="showPage('home')" style="display:flex;align-items:stretch;text-decoration:none;height:100%;"><img src="images/logo-header.png" alt="Sygma House" style="height:72px;width:auto;display:block;mix-blend-mode:multiply;padding:0;"></a>
+    <a href="#" onclick="showPage('home')" class="nav-logo-wrap">
+      <img src="images/logo-header.png" alt="Sygma House">
+      <div class="nav-slogan">
+        <span>Sygma House</span>
+        <span>A Real Home for Real People</span>
+      </div>
+    </a>
     <div class="nav-links">
       <a href="#" onclick="showPage('home')">Home</a>
       <a href="#" onclick="showPage('about')">About</a>
