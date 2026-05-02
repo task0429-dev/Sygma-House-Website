@@ -512,6 +512,173 @@ footer ul li a:hover { color: #86c9a3; }
 .resource-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
 .resource-desc { font-size: 0.87rem; color: var(--text-mid); }
 .resource-tag { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 50px; background: rgba(45,106,79,0.12); color: var(--green); margin-top: 8px; }
+
+/* ═══════════════════════════════════════
+   MOBILE HAMBURGER MENU
+═══════════════════════════════════════ */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 10px; border: none;
+  background: transparent; margin-right: 8px;
+  flex-shrink: 0;
+}
+.mobile-menu-btn span {
+  display: block; width: 24px; height: 2px;
+  background: var(--text-dark); border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.mobile-menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+.mobile-menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ═══════════════════════════════════════
+   TABLET — 1024px
+═══════════════════════════════════════ */
+@media(max-width:1024px) {
+  .section { padding: 56px 24px; }
+  .hero { padding: 80px 24px 70px; }
+  .hero h1 { font-size: 2.6rem; }
+  .stat-bar { gap: 36px; padding: 28px 24px; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE — 768px (phone + small tablet)
+═══════════════════════════════════════ */
+@media(max-width:768px) {
+
+  /* NAV */
+  .nav-inner { height: 64px; position: relative; }
+  .nav-logo-wrap img { height: 64px; width: 220px; }
+  .mobile-menu-btn { display: flex; }
+  .nav-links-wrap {
+    display: none;
+    position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+    background: rgba(216,221,230,0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px 40px;
+    gap: 4px;
+    overflow-y: auto;
+    z-index: 199;
+    border-top: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+  .nav-links-wrap.mobile-open { display: flex; }
+  .nav-links-wrap a {
+    width: 100%; padding: 14px 16px !important;
+    font-size: 1rem !important; border-radius: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .nav-links-wrap .nav-cta {
+    margin-top: 12px; text-align: center;
+    justify-content: center; width: 100%;
+    padding: 16px !important; font-size: 1rem !important;
+    border-radius: 12px !important;
+  }
+
+  /* HERO */
+  .hero { padding: 64px 20px 60px; }
+  .hero h1 { font-size: 2rem; line-height: 1.2; }
+  .hero p { font-size: 1rem; margin-bottom: 28px; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
+  .hero-actions .btn { width: 100%; max-width: 320px; justify-content: center; }
+  .trust-row { justify-content: center; }
+
+  /* STAT BAR */
+  .stat-bar { gap: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; }
+  .stat { padding: 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+  .stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.15); }
+  .stat-num { font-size: 2rem; }
+
+  /* SECTIONS */
+  .section { padding: 48px 20px; }
+  .section-sm { padding: 36px 20px; }
+  .section-title { font-size: 1.7rem; }
+  .section-sub { font-size: 0.95rem; margin-bottom: 28px; }
+
+  /* PAGE HERO */
+  .page-hero { padding: 40px 20px 32px; }
+  .page-hero h1 { font-size: 1.9rem; }
+  .page-hero p { font-size: 0.95rem; }
+
+  /* GRIDS → single column */
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; gap: 14px; }
+
+  /* PHOTO GALLERY */
+  .photo-strip, .photo-strip-wide { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns:1.6fr"] { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr 1fr !important; }
+
+  /* FEATURE CARDS */
+  .feature-card { padding: 20px; }
+  .feature-icon { font-size: 1.6rem; margin-bottom: 10px; }
+
+  /* ROOM GRID */
+  .room-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  .room-img-wrapper { height: 200px; }
+
+  /* FLOORPLAN */
+  .floorplan-grid { grid-template-columns: 1fr; }
+
+  /* FORMS */
+  .form-grid { grid-template-columns: 1fr !important; }
+  .form-group { margin-bottom: 14px; }
+  input, select, textarea { font-size: 16px !important; } /* prevents iOS zoom */
+
+  /* BUTTONS */
+  .btn { padding: 14px 20px; font-size: 0.95rem; }
+  .btn-green, .btn-primary { width: 100%; justify-content: center; }
+
+  /* CONTACT */
+  .contact-info-row { gap: 12px; }
+  .contact-value { font-size: 0.95rem; }
+
+  /* PRICING */
+  .pricing-card { padding: 24px 20px; }
+  .price-amount { font-size: 2rem; }
+
+  /* TOUR OPTIONS */
+  .tour-option { flex-direction: row; gap: 14px; padding: 18px; }
+
+  /* RESOURCE CARDS */
+  .resource-card { padding: 18px 20px; gap: 14px; }
+
+  /* FOOTER */
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px; }
+  footer { padding: 40px 20px 24px; }
+  .footer-brand img { width: 180px; }
+  .footer-bottom { flex-direction: column; gap: 6px; font-size: 0.75rem; }
+
+  /* ABOUT PHOTO STRIP */
+  .home-photo-hero { aspect-ratio: 16/9; border-radius: 12px; }
+
+  /* TIMELINE */
+  .timeline { padding-left: 0; }
+  .tl-item { gap: 14px; }
+
+  /* CTA BUTTONS in sections */
+  [style*="display:flex;gap:14px;justify-content:center"] { flex-direction: column; align-items: stretch; }
+}
+
+/* ═══════════════════════════════════════
+   SMALL PHONE — 480px
+═══════════════════════════════════════ */
+@media(max-width:480px) {
+  .hero h1 { font-size: 1.75rem; }
+  .section-title { font-size: 1.5rem; }
+  .nav-logo-wrap img { width: 180px; height: 60px; }
+  .nav-inner { height: 60px; }
+  .nav-links-wrap { top: 60px; }
+  .stat-bar { grid-template-columns: 1fr 1fr; }
+  [style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr !important; }
+  .footer-grid { grid-template-columns: 1fr !important; }
+  .trust-row { gap: 6px; }
+  .trust-badge { font-size: 0.76rem; padding: 5px 10px; }
+  .glass { border-radius: 12px; }
+}
 </style>
 </head>
 <body>
@@ -522,18 +689,21 @@ footer ul li a:hover { color: #86c9a3; }
     <a href="#" onclick="showPage('home')" class="nav-logo-wrap">
       <img src="images/logo-nav.png" alt="Sygma House — A Real Home for Real People">
     </a>
-    <div class="nav-links-wrap nav-links">
-      <a href="#" onclick="showPage('home')">Home</a>
-      <a href="#" onclick="showPage('about')">About</a>
-      <a href="#" onclick="showPage('services')">Services</a>
-      <a href="#" onclick="showPage('rooms')">Rooms</a>
-      <a href="#" onclick="showPage('living')">Daily Living</a>
-      <a href="#" onclick="showPage('admissions')">Admissions</a>
-      <a href="#" onclick="showPage('pricing')">Pricing</a>
-      <a href="#" onclick="showPage('resources')">Resources</a>
-      <a href="#" onclick="showPage('compliance')">Compliance</a>
-      <a href="#" onclick="showPage('contact')">Contact</a>
-      <a href="#" onclick="showPage('intake')" class="nav-cta">Apply Now</a>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links-wrap nav-links" id="navLinks">
+      <a href="#" onclick="navTo('home')">Home</a>
+      <a href="#" onclick="navTo('about')">About</a>
+      <a href="#" onclick="navTo('services')">Services</a>
+      <a href="#" onclick="navTo('rooms')">Rooms</a>
+      <a href="#" onclick="navTo('living')">Daily Living</a>
+      <a href="#" onclick="navTo('admissions')">Admissions</a>
+      <a href="#" onclick="navTo('pricing')">Pricing</a>
+      <a href="#" onclick="navTo('resources')">Resources</a>
+      <a href="#" onclick="navTo('compliance')">Compliance</a>
+      <a href="#" onclick="navTo('contact')">Contact</a>
+      <a href="#" onclick="navTo('intake')" class="nav-cta">Apply Now</a>
     </div>
   </div>
 </nav>
@@ -1741,6 +1911,34 @@ function submitIntake() {
   notes += `<li>A confirmation email has been sent to your address.</li></ul>`;
   document.getElementById('confirmation-notes').innerHTML = notes;
 }
+
+// ─── MOBILE MENU ───
+function toggleMobileMenu() {
+  const btn = document.getElementById('mobileMenuBtn');
+  const nav = document.getElementById('navLinks');
+  btn.classList.toggle('open');
+  nav.classList.toggle('mobile-open');
+  document.body.style.overflow = nav.classList.contains('mobile-open') ? 'hidden' : '';
+}
+function navTo(page) {
+  showPage(page);
+  const btn = document.getElementById('mobileMenuBtn');
+  const nav = document.getElementById('navLinks');
+  btn.classList.remove('open');
+  nav.classList.remove('mobile-open');
+  document.body.style.overflow = '';
+}
+// Close menu on outside tap
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('mobileMenuBtn');
+  if (nav && nav.classList.contains('mobile-open') &&
+      !nav.contains(e.target) && !btn.contains(e.target)) {
+    btn.classList.remove('open');
+    nav.classList.remove('mobile-open');
+    document.body.style.overflow = '';
+  }
+});
 </script>
 
 </body>
