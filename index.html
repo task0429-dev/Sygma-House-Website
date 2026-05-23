@@ -1523,33 +1523,33 @@ footer ul li a:hover { color: #86c9a3; }
           <h3 style="margin-bottom:20px;">Request a Tour</h3>
           <div class="form-group">
             <label>Your Name</label>
-            <input type="text" placeholder="Full name">
+            <input type="text" id="tour-name" placeholder="Full name">
           </div>
           <div class="form-group">
             <label>Phone Number</label>
-            <input type="tel" placeholder="507-222-9055">
+            <input type="tel" id="tour-phone" placeholder="507-222-9055">
           </div>
           <div class="form-group">
             <label>Email Address</label>
-            <input type="email" placeholder="email@example.com">
+            <input type="email" id="tour-email" placeholder="email@example.com">
           </div>
           <div class="form-group">
             <label>Preferred Tour Type</label>
-            <select>
-              <option>In-Person Tour</option>
-              <option>Phone Consultation</option>
-              <option>Video Tour</option>
+            <select id="tour-type">
+              <option value="in_person">In-Person Tour</option>
+              <option value="phone">Phone Consultation</option>
+              <option value="video">Video Tour</option>
             </select>
           </div>
           <div class="form-group">
             <label>Preferred Date / Time</label>
-            <input type="text" placeholder="e.g. Mon–Wed mornings, or any weekday">
+            <input type="text" id="tour-preferred-time" placeholder="e.g. Mon-Wed mornings, or any weekday">
           </div>
           <div class="form-group">
             <label>Any questions or notes?</label>
-            <textarea rows="3" placeholder="Optional — tell us anything you'd like us to know"></textarea>
+            <textarea rows="3" id="tour-notes" placeholder="Optional - tell us anything you'd like us to know"></textarea>
           </div>
-          <button class="btn btn-green" style="width:100%;justify-content:center;" onclick="alert('Thank you! We will contact you within 24 hours to confirm your tour.')">Request Tour</button>
+          <button class="btn btn-green" style="width:100%;justify-content:center;" onclick="submitTourRequest(this)">Request Tour</button>
         </div>
       </div>
     </div>
@@ -1609,11 +1609,11 @@ footer ul li a:hover { color: #86c9a3; }
       </div>
       <div class="glass" style="padding:32px;">
         <h3 style="margin-bottom:20px;">Send a Message</h3>
-        <div class="form-group"><label>Name</label><input type="text" placeholder="Your name"></div>
-        <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com"></div>
-        <div class="form-group"><label>Phone</label><input type="tel" placeholder="Optional"></div>
-        <div class="form-group"><label>Message</label><textarea rows="4" placeholder="How can we help you?"></textarea></div>
-        <button class="btn btn-green" style="width:100%;justify-content:center;" onclick="alert('Message sent! We will respond within 24 hours.')">Send Message</button>
+        <div class="form-group"><label>Name</label><input type="text" id="contact-name" placeholder="Your name"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="contact-email" placeholder="email@example.com"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" id="contact-phone" placeholder="Optional"></div>
+        <div class="form-group"><label>Message</label><textarea rows="4" id="contact-message" placeholder="How can we help you?"></textarea></div>
+        <button class="btn btn-green" style="width:100%;justify-content:center;" onclick="submitContactMessage(this)">Send Message</button>
       </div>
     </div>
   </div>
@@ -1887,12 +1887,77 @@ footer ul li a:hover { color: #86c9a3; }
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+let sygmaDb = null;
+let sygmaConfig = { supabaseUrl: '', supabaseAnonKey: '' };
+
+async function initSygmaBackend() {
+  try {
+    const response = await fetch('/api/config', { cache: 'no-store' });
+    sygmaConfig = await response.json();
+    if (sygmaConfig.supabaseUrl && sygmaConfig.supabaseAnonKey && window.supabase) {
+      sygmaDb = window.supabase.createClient(sygmaConfig.supabaseUrl, sygmaConfig.supabaseAnonKey);
+      trackVisit();
+    }
+  } catch (error) {
+    console.warn('Sygma backend config unavailable', error);
+  }
+}
+
+function requiredValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function selectedValues(selector) {
+  return Array.from(document.querySelectorAll(selector + ' input:checked')).map(input => input.value);
+}
+
+async function safeAlert(payload) {
+  try {
+    await fetch('/api/alert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch (error) {
+    console.warn('Alert endpoint unavailable', error);
+  }
+}
+
+async function trackVisit() {
+  if (!sygmaDb) return;
+  const sessionId = sessionStorage.getItem('sygma_session_id') || crypto.randomUUID();
+  const visitorId = localStorage.getItem('sygma_visitor_id') || crypto.randomUUID();
+  sessionStorage.setItem('sygma_session_id', sessionId);
+  localStorage.setItem('sygma_visitor_id', visitorId);
+  const params = new URLSearchParams(window.location.search);
+  await sygmaDb.from('traffic_events').insert({
+    session_id: sessionId,
+    visitor_id: visitorId,
+    page: window.location.pathname + window.location.hash,
+    referrer: document.referrer || null,
+    source: params.get('utm_source'),
+    medium: params.get('utm_medium'),
+    campaign: params.get('utm_campaign'),
+    user_agent: navigator.userAgent,
+    screen_width: window.screen.width,
+    screen_height: window.screen.height,
+    metadata: { title: document.title },
+  });
+}
+
+initSygmaBackend();
+
 // ─── NAVIGATION ───
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (sygmaDb) {
+    setTimeout(trackVisit, 0);
+  }
 }
 
 // ─── TABS ───
@@ -1942,16 +2007,71 @@ function calculateUrgency(timeline, location, payment) {
   return score;
 }
 
-function submitIntake() {
+async function submitIntake() {
+  if (!sygmaDb) {
+    alert('The intake system is still loading. Please try again in a moment.');
+    return;
+  }
+
   const timeline = document.getElementById('f-timeline').value;
   const location = document.getElementById('f-location').value;
   const payment = document.getElementById('f-payment').value;
   const tourYes = document.getElementById('f-tour-yes').checked;
-  const name = document.getElementById('f-family-name').value;
+  const familyName = requiredValue('f-family-name');
+  const familyPhone = requiredValue('f-family-phone');
+  const familyEmail = requiredValue('f-family-email');
+  const residentName = requiredValue('f-resident-name');
+  const consent = document.getElementById('f-consent').checked;
+
+  if (!familyName || !familyPhone || !familyEmail || !residentName || !timeline || !location || !payment || !consent) {
+    alert('Please complete all required fields and consent before submitting.');
+    return;
+  }
 
   const score = calculateUrgency(timeline, location, payment);
   const isHigh = score >= 4;
   const isMed = score >= 2 && score < 4;
+
+  const lead = {
+    family_name: familyName,
+    family_phone: familyPhone,
+    family_email: familyEmail,
+    relationship: requiredValue('f-relationship'),
+    resident_name: residentName,
+    resident_age: Number(requiredValue('f-resident-age')) || null,
+    current_location: location,
+    care_needs: selectedValues('#step-2 .checkbox-group'),
+    mobility_level: requiredValue('f-mobility'),
+    payment_type: payment,
+    waiver_type: requiredValue('f-waiver-type') || null,
+    case_manager_name: requiredValue('f-case-manager') || null,
+    county: requiredValue('f-county') || null,
+    move_in_timeline: timeline,
+    urgency_score: score,
+    tour_requested: tourYes,
+    consent_given: consent,
+    notes: [requiredValue('f-payment-notes'), requiredValue('f-notes')].filter(Boolean).join('\n\n') || null,
+    status: tourYes ? 'tour_scheduled' : 'new_lead',
+  };
+
+  const intakeResponse = await fetch('/api/intake', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(lead),
+  });
+  const intakeResult = await intakeResponse.json().catch(() => ({}));
+  if (!intakeResponse.ok) {
+    alert('Something went wrong submitting the intake. Please call Sygma House directly.');
+    console.error(intakeResult);
+    return;
+  }
+
+  safeAlert({
+    subject: `New Sygma House intake: ${residentName}`,
+    title: `New intake submitted for ${residentName}`,
+    summary: `${familyName} submitted an intake. Urgency score: ${score}.`,
+    details: lead,
+  });
 
   nextStep(5);
 
@@ -1970,8 +2090,88 @@ function submitIntake() {
   if (payment === 'private_pay') notes += `<li>We will share information about our services and current private pay rates.</li>`;
   if (payment === 'unsure') notes += `<li>We will help you understand your payment options including Medicaid eligibility.</li>`;
   if (location === 'hospital') notes += `<li>Hospital discharge cases are our highest priority — expect same-day contact.</li>`;
-  notes += `<li>A confirmation email has been sent to your address.</li></ul>`;
+  notes += `<li>Your inquiry is now in the Sygma House admin dashboard.</li></ul>`;
   document.getElementById('confirmation-notes').innerHTML = notes;
+}
+
+async function submitTourRequest(button) {
+  if (!sygmaDb) {
+    alert('The tour system is still loading. Please try again in a moment.');
+    return;
+  }
+  const payload = {
+    visitor_name: requiredValue('tour-name'),
+    visitor_phone: requiredValue('tour-phone'),
+    visitor_email: requiredValue('tour-email'),
+    tour_type: requiredValue('tour-type') || 'in_person',
+    preferred_time: requiredValue('tour-preferred-time'),
+    notes: requiredValue('tour-notes'),
+    status: 'requested',
+  };
+  if (!payload.visitor_name || !payload.visitor_phone) {
+    alert('Please enter your name and phone number.');
+    return;
+  }
+  button.disabled = true;
+  button.textContent = 'Sending...';
+  const response = await fetch('/api/tour', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  button.disabled = false;
+  button.textContent = 'Request Tour';
+  if (!response.ok) {
+    alert('Tour request failed. Please call Sygma House directly.');
+    console.error(await response.json().catch(() => ({})));
+    return;
+  }
+  safeAlert({
+    subject: `New Sygma House tour request: ${payload.visitor_name}`,
+    title: 'New tour request',
+    summary: `${payload.visitor_name} requested a ${payload.tour_type.replace('_', ' ')}.`,
+    details: payload,
+  });
+  alert('Thank you. Your tour request is now in our admin dashboard.');
+}
+
+async function submitContactMessage(button) {
+  if (!sygmaDb) {
+    alert('The message system is still loading. Please try again in a moment.');
+    return;
+  }
+  const payload = {
+    name: requiredValue('contact-name'),
+    email: requiredValue('contact-email'),
+    phone: requiredValue('contact-phone'),
+    message: requiredValue('contact-message'),
+    source: 'contact_form',
+  };
+  if (!payload.name || !payload.message) {
+    alert('Please enter your name and message.');
+    return;
+  }
+  button.disabled = true;
+  button.textContent = 'Sending...';
+  const response = await fetch('/api/message', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  button.disabled = false;
+  button.textContent = 'Send Message';
+  if (!response.ok) {
+    alert('Message failed. Please call Sygma House directly.');
+    console.error(await response.json().catch(() => ({})));
+    return;
+  }
+  safeAlert({
+    subject: `New Sygma House message: ${payload.name}`,
+    title: 'New website message',
+    summary: payload.message,
+    details: payload,
+  });
+  alert('Message sent. We will respond within 24 hours.');
 }
 
 // ─── MOBILE MENU ───
