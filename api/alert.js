@@ -41,6 +41,38 @@ async function sendResendEmail(payload) {
   return { sent: true };
 }
 
+async function sendTwilioSms(payload) {
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const from = process.env.TWILIO_FROM_NUMBER;
+  const to = process.env.ADMIN_PHONE;
+
+  if (!accountSid || !authToken || !from || !to) {
+    return { sent: false, reason: 'sms_provider_not_configured' };
+  }
+
+  const message = [
+    payload.title || payload.subject || 'New Sygma House alert',
+    payload.summary || '',
+  ].filter(Boolean).join(' - ').slice(0, 1200);
+
+  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString('base64')}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({ From: from, To: to, Body: message }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    return { sent: false, reason: 'sms_provider_error', error: errorText };
+  }
+
+  return { sent: true };
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return json(res, 405, { error: 'method_not_allowed' });
@@ -52,8 +84,11 @@ export default async function handler(req, res) {
       return json(res, 400, { error: 'invalid_payload' });
     }
 
-    const result = await sendResendEmail(payload);
-    return json(res, 200, result);
+    const [email, sms] = await Promise.all([
+      sendResendEmail(payload),
+      sendTwilioSms(payload),
+    ]);
+    return json(res, 200, { email, sms, sent: Boolean(email.sent || sms.sent) });
   } catch (error) {
     return json(res, 500, { error: 'alert_failed', message: error.message });
   }

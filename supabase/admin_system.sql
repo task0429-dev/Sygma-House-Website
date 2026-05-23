@@ -31,6 +31,11 @@ CREATE TABLE IF NOT EXISTS public.leads (
   consent_given BOOLEAN DEFAULT false,
   notes TEXT,
   tags TEXT[],
+  source TEXT,
+  medium TEXT,
+  campaign TEXT,
+  landing_page TEXT,
+  referrer TEXT,
   confirmation_sent BOOLEAN DEFAULT false,
   admin_notified BOOLEAN DEFAULT false,
   followup_email_sent BOOLEAN DEFAULT false,
@@ -46,6 +51,10 @@ CREATE TABLE IF NOT EXISTS public.messages (
   subject TEXT,
   message TEXT NOT NULL,
   source TEXT DEFAULT 'contact_form',
+  medium TEXT,
+  campaign TEXT,
+  landing_page TEXT,
+  referrer TEXT,
   status TEXT DEFAULT 'new' CHECK (status IN ('new','read','replied','archived')),
   lead_id UUID REFERENCES public.leads(id) ON DELETE SET NULL
 );
@@ -65,6 +74,11 @@ CREATE TABLE IF NOT EXISTS public.tours (
   visitor_phone TEXT,
   resident_name TEXT,
   notes TEXT,
+  source TEXT,
+  medium TEXT,
+  campaign TEXT,
+  landing_page TEXT,
+  referrer TEXT,
   google_event_id TEXT,
   calendar_sync_status TEXT DEFAULT 'pending'
 );

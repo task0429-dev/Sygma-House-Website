@@ -593,6 +593,42 @@ footer ul li a:hover { color: #92d4b0; }
 .page-hero h1 { font-size: 2.6rem; margin-bottom: 12px; position: relative; z-index: 1; }
 .page-hero p  { font-size: 1.02rem; opacity: 0.78; max-width: 560px; margin: 0 auto; position: relative; z-index: 1; }
 
+.ad-tour-hero {
+  min-height: 72vh;
+  display: grid;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(13,31,22,0.82) 0%, rgba(13,31,22,0.56) 46%, rgba(13,31,22,0.16) 100%),
+    url('images/living-room.png') center/cover no-repeat;
+  color: #fff;
+  padding: 84px 28px 54px;
+}
+.ad-tour-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
+.ad-tour-copy { max-width: 650px; }
+.ad-tour-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.24);
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 18px; backdrop-filter: blur(16px);
+}
+.ad-tour-copy h1 { font-size: clamp(2.4rem, 6vw, 4.7rem); line-height: 0.98; margin-bottom: 20px; }
+.ad-tour-copy p { font-size: 1.08rem; line-height: 1.75; max-width: 580px; color: rgba(255,255,255,0.86); margin-bottom: 26px; }
+.ad-tour-trust { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.ad-tour-trust span {
+  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px; padding: 10px 12px; font-size: 0.86rem; color: rgba(255,255,255,0.86);
+}
+.ad-tour-band { background: #fbfaf6; padding: 42px 28px; }
+.ad-tour-band-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ad-tour-proof { padding: 24px; border-left: 3px solid var(--green); background: rgba(255,255,255,0.72); }
+.ad-tour-proof h3 { margin-bottom: 8px; font-size: 1.02rem; }
+.ad-tour-proof p { color: var(--text-mid); font-size: 0.92rem; line-height: 1.65; }
+@media(max-width:760px) {
+  .ad-tour-hero { min-height: 68vh; padding: 64px 20px 44px; background-position: 58% center; }
+  .ad-tour-band-inner { grid-template-columns: 1fr; }
+}
+
 /* ─── CONTACT ─── */
 .contact-card { padding: 32px; }
 .contact-info-row  { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
@@ -822,7 +858,7 @@ footer ul li a:hover { color: #92d4b0; }
       <a href="#" onclick="navTo('resources')">Resources</a>
       <a href="#" onclick="navTo('compliance')">Compliance</a>
       <a href="#" onclick="navTo('contact')">Contact</a>
-      <a href="#" onclick="navTo('intake')" class="nav-cta">Apply Now</a>
+      <a href="#" onclick="navTo('tour')" class="nav-cta">Schedule Tour</a>
     </div>
   </div>
 </nav>
@@ -967,6 +1003,47 @@ footer ul li a:hover { color: #92d4b0; }
       <a href="#" onclick="showPage('intake')" class="btn btn-green">Complete Intake Form</a>
       <a href="#" onclick="showPage('tour')" class="btn" style="background:var(--glass);border:1px solid var(--glass-border);color:var(--text-dark);backdrop-filter:var(--blur);">Schedule a Tour</a>
       <a href="#" onclick="showPage('contact')" class="btn" style="background:var(--glass);border:1px solid var(--glass-border);color:var(--text-dark);backdrop-filter:var(--blur);">Contact Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- AD TOUR LANDING PAGE -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="page-ad-tour" class="page">
+  <div class="ad-tour-hero">
+    <div class="ad-tour-inner">
+      <div class="ad-tour-copy">
+        <div class="ad-tour-eyebrow">Licensed Minnesota Assisted Living</div>
+        <h1>Tour a real home built for personal care.</h1>
+        <p>Choosing care for someone you love is personal. Sygma House is a small residential assisted living home in Burnsville where adults 18+ receive daily support, dignity, and calm family-style attention.</p>
+        <div class="hero-actions" style="justify-content:flex-start;">
+          <a href="#" onclick="showPage('tour')" class="btn btn-primary">Schedule a Tour</a>
+          <a href="tel:5072229055" class="btn btn-outline">Call 507-222-9055</a>
+        </div>
+        <div class="ad-tour-trust">
+          <span>5-resident home</span>
+          <span>24/7 staffing</span>
+          <span>Medication support</span>
+          <span>Waiver-friendly admissions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ad-tour-band">
+    <div class="ad-tour-band-inner">
+      <div class="ad-tour-proof">
+        <h3>See the Home</h3>
+        <p>Walk through the rooms, common spaces, kitchen, and outdoor areas so your family can picture daily life clearly.</p>
+      </div>
+      <div class="ad-tour-proof">
+        <h3>Meet the Team</h3>
+        <p>Ask questions about routines, meals, medication assistance, staffing, and how we communicate with families.</p>
+      </div>
+      <div class="ad-tour-proof">
+        <h3>Understand Next Steps</h3>
+        <p>After the tour, we can help with intake, timing, payment questions, and coordination with case managers when applicable.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -1947,16 +2024,19 @@ footer ul li a:hover { color: #92d4b0; }
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 let sygmaDb = null;
-let sygmaConfig = { supabaseUrl: '', supabaseAnonKey: '' };
+let sygmaConfig = { supabaseUrl: '', supabaseAnonKey: '', metaPixelId: '' };
 
 async function initSygmaBackend() {
   try {
     const response = await fetch('/api/config', { cache: 'no-store' });
     sygmaConfig = await response.json();
+    ensureMetaPixel();
     if (sygmaConfig.supabaseUrl && sygmaConfig.supabaseAnonKey && window.supabase) {
       sygmaDb = window.supabase.createClient(sygmaConfig.supabaseUrl, sygmaConfig.supabaseAnonKey);
       trackVisit();
     }
+    routeInitialLanding();
+    trackConversionEvent('ViewContent', { content_name: document.title, page: currentPageId() });
   } catch (error) {
     console.warn('Sygma backend config unavailable', error);
   }
@@ -1983,6 +2063,85 @@ async function safeAlert(payload) {
   }
 }
 
+function currentPageId() {
+  const active = document.querySelector('.page.active');
+  return active ? active.id.replace('page-', '') : 'home';
+}
+
+function getCookie(name) {
+  return document.cookie
+    .split('; ')
+    .find(row => row.startsWith(name + '='))
+    ?.split('=')
+    .slice(1)
+    .join('=');
+}
+
+function getAttribution() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    source: params.get('utm_source') || params.get('source') || null,
+    medium: params.get('utm_medium') || null,
+    campaign: params.get('utm_campaign') || null,
+    landing_page: window.location.pathname + window.location.search + window.location.hash,
+    referrer: document.referrer || null,
+  };
+}
+
+function ensureMetaPixel() {
+  if (!sygmaConfig.metaPixelId || window.fbq) return;
+  window.fbq = function() {
+    window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : window.fbq.queue.push(arguments);
+  };
+  if (!window._fbq) window._fbq = window.fbq;
+  window.fbq.push = window.fbq;
+  window.fbq.loaded = true;
+  window.fbq.version = '2.0';
+  window.fbq.queue = [];
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+  document.head.appendChild(script);
+  window.fbq('init', sygmaConfig.metaPixelId);
+}
+
+async function trackConversionEvent(eventName, customData = {}, userData = {}) {
+  const eventId = crypto.randomUUID();
+  const eventSourceUrl = window.location.href;
+  const mergedData = {
+    ...customData,
+    ...getAttribution(),
+  };
+
+  if (window.fbq) {
+    if (eventName === 'ViewContent') {
+      window.fbq('track', eventName, mergedData, { eventID: eventId });
+    } else {
+      window.fbq('trackCustom', eventName, mergedData, { eventID: eventId });
+    }
+  }
+
+  try {
+    await fetch('/api/meta-event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: eventSourceUrl,
+        user_data: {
+          ...userData,
+          fbp: getCookie('_fbp'),
+          fbc: getCookie('_fbc'),
+        },
+        custom_data: mergedData,
+      }),
+    });
+  } catch (error) {
+    console.warn('Meta event endpoint unavailable', error);
+  }
+}
+
 async function trackVisit() {
   if (!sygmaDb) return;
   const sessionId = sessionStorage.getItem('sygma_session_id') || crypto.randomUUID();
@@ -2001,7 +2160,7 @@ async function trackVisit() {
     user_agent: navigator.userAgent,
     screen_width: window.screen.width,
     screen_height: window.screen.height,
-    metadata: { title: document.title },
+    metadata: { title: document.title, page_id: currentPageId() },
   });
 }
 
@@ -2009,11 +2168,31 @@ initSygmaBackend();
 
 // ─── NAVIGATION ───
 function showPage(id) {
+  const page = document.getElementById('page-' + id);
+  if (!page) return;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
+  page.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (sygmaDb) {
     setTimeout(trackVisit, 0);
+  }
+  if (id === 'tour') {
+    sessionStorage.setItem('sygma_tour_started', 'true');
+    trackConversionEvent('ScheduleTourStart', { content_name: 'Schedule Tour', page: id });
+  }
+  if (id === 'intake') {
+    sessionStorage.setItem('sygma_intake_started', 'true');
+    trackConversionEvent('IntakeStart', { content_name: 'Intake Form', page: id });
+  }
+  if (id === 'ad-tour') {
+    trackConversionEvent('ViewContent', { content_name: 'Ad Tour Landing', page: id });
+  }
+}
+
+function routeInitialLanding() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('landing') === 'tour' || window.location.hash === '#schedule-tour') {
+    showPage('ad-tour');
   }
 }
 
@@ -2109,6 +2288,7 @@ async function submitIntake() {
     consent_given: consent,
     notes: [requiredValue('f-payment-notes'), requiredValue('f-notes')].filter(Boolean).join('\n\n') || null,
     status: tourYes ? 'tour_scheduled' : 'new_lead',
+    attribution: getAttribution(),
   };
 
   const intakeResponse = await fetch('/api/intake', {
@@ -2128,6 +2308,15 @@ async function submitIntake() {
     title: `New intake submitted for ${residentName}`,
     summary: `${familyName} submitted an intake. Urgency score: ${score}.`,
     details: lead,
+  });
+  trackConversionEvent('IntakeSubmit', {
+    content_name: 'Intake Form',
+    urgency_score: score,
+    tour_requested: tourYes,
+    payment_type: payment,
+  }, {
+    email: familyEmail,
+    phone: familyPhone,
   });
 
   nextStep(5);
@@ -2164,6 +2353,7 @@ async function submitTourRequest(button) {
     preferred_time: requiredValue('tour-preferred-time'),
     notes: requiredValue('tour-notes'),
     status: 'requested',
+    attribution: getAttribution(),
   };
   if (!payload.visitor_name || !payload.visitor_phone) {
     alert('Please enter your name and phone number.');
@@ -2189,6 +2379,13 @@ async function submitTourRequest(button) {
     summary: `${payload.visitor_name} requested a ${payload.tour_type.replace('_', ' ')}.`,
     details: payload,
   });
+  trackConversionEvent('ScheduleTourSubmit', {
+    content_name: 'Tour Request',
+    tour_type: payload.tour_type,
+  }, {
+    email: payload.visitor_email,
+    phone: payload.visitor_phone,
+  });
   alert('Thank you. Your tour request is now in our admin dashboard.');
 }
 
@@ -2203,6 +2400,7 @@ async function submitContactMessage(button) {
     phone: requiredValue('contact-phone'),
     message: requiredValue('contact-message'),
     source: 'contact_form',
+    attribution: getAttribution(),
   };
   if (!payload.name || !payload.message) {
     alert('Please enter your name and message.');

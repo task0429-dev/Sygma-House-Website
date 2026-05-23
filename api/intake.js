@@ -5,6 +5,17 @@ function requireText(payload, key) {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+function normalizeAttribution(payload) {
+  const attribution = payload?.attribution && typeof payload.attribution === 'object' ? payload.attribution : {};
+  return {
+    source: attribution.source || payload?.source || null,
+    medium: attribution.medium || payload?.medium || null,
+    campaign: attribution.campaign || payload?.campaign || null,
+    landing_page: attribution.landing_page || payload?.landing_page || null,
+    referrer: attribution.referrer || payload?.referrer || null,
+  };
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return json(res, 405, { error: 'method_not_allowed' });
 
@@ -19,7 +30,20 @@ export default async function handler(req, res) {
       return json(res, 400, { error: 'missing_required_fields' });
     }
 
-    const leadRows = await supabaseInsert('leads', payload, 'id');
+    const attribution = normalizeAttribution(payload);
+    const leadPayload = {
+      ...payload,
+      ...attribution,
+      tags: Array.from(new Set([
+        ...(Array.isArray(payload.tags) ? payload.tags : []),
+        attribution.source ? `source:${attribution.source}` : null,
+        attribution.campaign ? `campaign:${attribution.campaign}` : null,
+        payload.tour_requested ? 'tour_requested' : null,
+      ].filter(Boolean))),
+    };
+    delete leadPayload.attribution;
+
+    const leadRows = await supabaseInsert('leads', leadPayload, 'id');
     const leadId = leadRows?.[0]?.id;
 
     if (leadId && payload.tour_requested) {
@@ -32,6 +56,10 @@ export default async function handler(req, res) {
         tour_type: 'in_person',
         status: 'requested',
         notes: 'Tour requested from intake form',
+        source: attribution.source,
+        medium: attribution.medium,
+        campaign: attribution.campaign,
+        landing_page: attribution.landing_page,
       }, 'id');
     }
 
