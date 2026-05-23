@@ -15,6 +15,12 @@ export default function handler(req, res) {
       process.env.GOOGLE_CLIENT_SECRET &&
       process.env.GOOGLE_CALENDAR_REFRESH_TOKEN
     ),
+    tiktokPixelId: process.env.TIKTOK_PIXEL_ID || '',
+    tiktokPixelEnabled: Boolean(process.env.TIKTOK_PIXEL_ID),
+    tiktokEventsApiEnabled: Boolean(process.env.TIKTOK_PIXEL_ID && process.env.TIKTOK_ACCESS_TOKEN),
+    snapchatPixelId: process.env.SNAPCHAT_PIXEL_ID || '',
+    snapchatPixelEnabled: Boolean(process.env.SNAPCHAT_PIXEL_ID),
+    snapchatCapiEnabled: Boolean(process.env.SNAPCHAT_PIXEL_ID && process.env.SNAPCHAT_ACCESS_TOKEN),
     metaPixelId: process.env.META_PIXEL_ID || '',
     metaPixelEnabled: Boolean(process.env.META_PIXEL_ID),
     metaCapiEnabled: Boolean(process.env.META_PIXEL_ID && process.env.META_CAPI_ACCESS_TOKEN),

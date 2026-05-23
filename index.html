@@ -2024,12 +2024,14 @@ footer ul li a:hover { color: #92d4b0; }
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 let sygmaDb = null;
-let sygmaConfig = { supabaseUrl: '', supabaseAnonKey: '', metaPixelId: '' };
+let sygmaConfig = { supabaseUrl: '', supabaseAnonKey: '', tiktokPixelId: '', snapchatPixelId: '', metaPixelId: '' };
 
 async function initSygmaBackend() {
   try {
     const response = await fetch('/api/config', { cache: 'no-store' });
     sygmaConfig = await response.json();
+    ensureTikTokPixel();
+    ensureSnapchatPixel();
     ensureMetaPixel();
     if (sygmaConfig.supabaseUrl && sygmaConfig.supabaseAnonKey && window.supabase) {
       sygmaDb = window.supabase.createClient(sygmaConfig.supabaseUrl, sygmaConfig.supabaseAnonKey);
@@ -2105,6 +2107,80 @@ function ensureMetaPixel() {
   window.fbq('init', sygmaConfig.metaPixelId);
 }
 
+function ensureTikTokPixel() {
+  if (!sygmaConfig.tiktokPixelId || window.ttq) return;
+  window.TiktokAnalyticsObject = 'ttq';
+  const ttq = window.ttq = window.ttq || [];
+  ttq.methods = ['page','track','identify','instances','debug','on','off','once','ready','alias','group','enableCookie','disableCookie','holdConsent','revokeConsent','grantConsent'];
+  ttq.setAndDefer = function(target, method) {
+    target[method] = function() {
+      target.push([method].concat(Array.prototype.slice.call(arguments, 0)));
+    };
+  };
+  for (let i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
+  ttq.instance = function(pixelId) {
+    const instance = ttq._i[pixelId] || [];
+    for (let i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(instance, ttq.methods[i]);
+    return instance;
+  };
+  ttq.load = function(pixelId) {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = 'https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=' + pixelId + '&lib=ttq';
+    const firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode.insertBefore(script, firstScript);
+    ttq._i = ttq._i || {};
+    ttq._i[pixelId] = [];
+    ttq._i[pixelId]._u = script.src;
+    ttq._t = ttq._t || {};
+    ttq._t[pixelId] = +new Date();
+    ttq._o = ttq._o || {};
+    ttq._o[pixelId] = {};
+  };
+  ttq.load(sygmaConfig.tiktokPixelId);
+  ttq.page();
+}
+
+function ensureSnapchatPixel() {
+  if (!sygmaConfig.snapchatPixelId || window.snaptr) return;
+  (function(e,t,n){
+    if(e.snaptr) return;
+    const a=e.snaptr=function(){a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
+    a.queue=[];
+    const s='script';
+    const r=t.createElement(s);
+    r.async=true;
+    r.src=n;
+    const u=t.getElementsByTagName(s)[0];
+    u.parentNode.insertBefore(r,u);
+  })(window, document, 'https://sc-static.net/scevent.min.js');
+  window.snaptr('init', sygmaConfig.snapchatPixelId);
+  window.snaptr('track', 'PAGE_VIEW');
+}
+
+function mapTikTokBrowserEvent(eventName) {
+  const map = {
+    ViewContent: 'ViewContent',
+    ScheduleTourStart: 'ClickButton',
+    ScheduleTourSubmit: 'SubmitForm',
+    IntakeStart: 'ClickButton',
+    IntakeSubmit: 'SubmitForm',
+  };
+  return map[eventName] || eventName;
+}
+
+function mapSnapBrowserEvent(eventName) {
+  const map = {
+    ViewContent: 'VIEW_CONTENT',
+    ScheduleTourStart: 'CUSTOM_EVENT_1',
+    ScheduleTourSubmit: 'SIGN_UP',
+    IntakeStart: 'CUSTOM_EVENT_2',
+    IntakeSubmit: 'SIGN_UP',
+  };
+  return map[eventName] || 'CUSTOM_EVENT_3';
+}
+
 async function trackConversionEvent(eventName, customData = {}, userData = {}) {
   const eventId = crypto.randomUUID();
   const eventSourceUrl = window.location.href;
@@ -2121,11 +2197,27 @@ async function trackConversionEvent(eventName, customData = {}, userData = {}) {
     }
   }
 
+  if (window.ttq) {
+    window.ttq.track(mapTikTokBrowserEvent(eventName), {
+      ...mergedData,
+      event_id: eventId,
+      original_event_name: eventName,
+    });
+  }
+
+  if (window.snaptr) {
+    window.snaptr('track', mapSnapBrowserEvent(eventName), {
+      ...mergedData,
+      event_id: eventId,
+      original_event_name: eventName,
+    });
+  }
+
+  const tiktokClickId = new URLSearchParams(window.location.search).get('ttclid');
+  const snapClickId = new URLSearchParams(window.location.search).get('ScCid') || new URLSearchParams(window.location.search).get('sccid');
+
   try {
-    await fetch('/api/meta-event', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    const eventBody = {
         event_name: eventName,
         event_id: eventId,
         event_source_url: eventSourceUrl,
@@ -2133,12 +2225,32 @@ async function trackConversionEvent(eventName, customData = {}, userData = {}) {
           ...userData,
           fbp: getCookie('_fbp'),
           fbc: getCookie('_fbc'),
+          ttp: getCookie('_ttp'),
+          ttclid: tiktokClickId,
+          sc_click_id: snapClickId,
         },
         custom_data: mergedData,
+      };
+
+    await Promise.allSettled([
+      fetch('/api/tiktok-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventBody),
       }),
-    });
+      fetch('/api/snapchat-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventBody),
+      }),
+      fetch('/api/meta-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventBody),
+      }),
+    ]);
   } catch (error) {
-    console.warn('Meta event endpoint unavailable', error);
+    console.warn('Ad event endpoints unavailable', error);
   }
 }
 

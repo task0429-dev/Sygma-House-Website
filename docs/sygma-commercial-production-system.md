@@ -2,11 +2,11 @@
 
 ## Executive Summary
 
-The first Sygma House campaign is a real-filmed 60-second cinematic healthcare commercial designed to drive tour scheduling from Meta/Facebook. The creative must feel warm, local, premium, and human, with no AI-avatar, stock-footage, corporate healthcare, or overly dramatic tone.
+The first Sygma House campaign is a real-filmed 60-second cinematic healthcare commercial designed to drive tour scheduling from TikTok and Snapchat traffic. The creative must feel warm, local, premium, and human, with no AI-avatar, stock-footage, corporate healthcare, or overly dramatic tone.
 
 Current production status: `PARTIALLY READY`.
 
-The website now supports the required ad funnel architecture in code. Final launch still depends on activating provider credentials in Vercel for Meta Pixel, Meta Conversion API, email/SMS alerts, and Google Calendar OAuth.
+The website now supports the required ad funnel architecture in code. Final launch depends on adding provider credentials in Vercel for TikTok Pixel, TikTok Events API, Snapchat Pixel, Snapchat CAPI, email/SMS alerts, and Google Calendar OAuth.
 
 ## Production Validation Gate
 
@@ -38,13 +38,13 @@ Validation scores:
 
 ```mermaid
 flowchart LR
-  A["Meta/Facebook Ad"] --> B["SygmaHouse.com/?landing=tour"]
+  A["TikTok / Snapchat Ad"] --> B["SygmaHouse.com/?landing=tour"]
   B --> C["Schedule Tour CTA"]
   C --> D["Tour Form Submit"]
   D --> E["Supabase tours table"]
   D --> F["Admin dashboard"]
   D --> G["Email/SMS alert when provider is configured"]
-  D --> H["Meta Pixel + Conversion API event"]
+  D --> H["TikTok Events API + Snapchat CAPI event"]
   F --> I["Google Calendar sync when OAuth is configured"]
   B --> J["Retargeting audience"]
 ```
@@ -58,6 +58,16 @@ flowchart LR
 | `ScheduleTourSubmit` | Tour request is accepted by the backend |
 | `IntakeStart` | User opens the intake form |
 | `IntakeSubmit` | Intake form is accepted by the backend |
+
+## Platform Event Mapping
+
+| Sygma event | TikTok browser/API event | Snapchat browser/API event |
+| --- | --- | --- |
+| `ViewContent` | `ViewContent` | `VIEW_CONTENT` |
+| `ScheduleTourStart` | `ClickButton` | `CUSTOM_EVENT_1` |
+| `ScheduleTourSubmit` | `SubmitForm` | `SIGN_UP` |
+| `IntakeStart` | `ClickButton` | `CUSTOM_EVENT_2` |
+| `IntakeSubmit` | `SubmitForm` | `SIGN_UP` |
 
 ## Storyboard
 
@@ -107,16 +117,18 @@ Male narrator:
 
 | Platform | Format | Notes |
 | --- | --- | --- |
-| Facebook Feed | 60s and 30s | Primary family decision-maker version |
 | Instagram Reels | 30s vertical | Faster doorway hook, captions on |
 | TikTok | 20-30s vertical | Less polished, more natural, no corporate feel |
+| Snapchat | 15-25s vertical | Fastest hook, mobile-first CTA, simple captions |
 | YouTube Shorts | 30s vertical | CTA visible by final 5 seconds |
 | Retargeting | 15s | "Still exploring care options? Schedule a tour." |
 
 ## Lead Funnel Checklist
 
-- Meta Pixel installed through `META_PIXEL_ID`.
-- Meta Conversion API installed through `META_CAPI_ACCESS_TOKEN`.
+- TikTok Pixel installs through `TIKTOK_PIXEL_ID`.
+- TikTok Events API sends through `TIKTOK_ACCESS_TOKEN`.
+- Snapchat Pixel installs through `SNAPCHAT_PIXEL_ID`.
+- Snapchat CAPI sends through `SNAPCHAT_ACCESS_TOKEN`.
 - Tour request writes to Supabase.
 - Intake request writes to Supabase.
 - UTM attribution persists on leads, tours, messages, and traffic events.
@@ -127,8 +139,23 @@ Male narrator:
 
 ## Launch Risks
 
-- Meta Pixel/CAPI cannot send until production env vars are set.
+- TikTok Pixel/Events API cannot send until production env vars are set.
+- Snapchat Pixel/CAPI cannot send until production env vars are set.
 - Google Calendar sync cannot create events until OAuth refresh token is created.
 - SMS cannot send until Twilio credentials and admin phone are set.
 - Real filming requires signed releases for residents, family actors, and staff.
 - Any waiver-funded eligibility copy must remain careful and non-promissory.
+
+## Final Video Build Package
+
+Master deliverables:
+
+- `60s master`: cinematic documentary, 16:9, center-safe for 9:16.
+- `30s TikTok/Snap cut`: starts with the doorway greeting and reaches CTA by second 24.
+- `15s retargeting cut`: starts with resident comfort/payoff, then "Still exploring care options?"
+- `Caption file`: burned-in vertical-safe captions plus editable SRT.
+- `End card`: Sygma House logo, `SygmaHouse.com`, "Schedule a Tour."
+
+Production note:
+
+This package is ready for real filming or for a dedicated video-generation pipeline. It intentionally does not rely on fake AI residents, synthetic healthcare scenes, or stock-footage energy.
