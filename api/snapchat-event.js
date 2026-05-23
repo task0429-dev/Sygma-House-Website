@@ -14,6 +14,11 @@ function cleanObject(input) {
   return Object.fromEntries(Object.entries(input).filter(([, value]) => value !== undefined && value !== null && value !== ''));
 }
 
+function hashArray(value) {
+  const hashed = sha256(value);
+  return hashed ? [hashed] : undefined;
+}
+
 function mapSnapEvent(eventName) {
   const map = {
     ViewContent: 'VIEW_CONTENT',
@@ -52,10 +57,11 @@ export default async function handler(req, res) {
           action_source: 'WEB',
           event_source_url: payload.event_source_url,
           user_data: cleanObject({
-            em: sha256(userData.email),
-            ph: sha256(userData.phone),
+            em: hashArray(userData.email),
+            ph: hashArray(userData.phone),
             client_ip_address: req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress,
             client_user_agent: req.headers['user-agent'],
+            sc_cookie1: userData.sc_cookie1,
             sc_click_id: userData.sc_click_id,
           }),
           custom_data: {
