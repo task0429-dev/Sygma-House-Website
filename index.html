@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sygma House — Residential Assisted Living in Minnesota</title>
+<meta name="description" content="Sygma House is a small residential assisted living home in Burnsville, Minnesota, offering daily support, dignity, and a warm home setting. Schedule a tour today.">
+<meta name="theme-color" content="#f6efe5">
+<meta property="og:title" content="Sygma House — Assisted Living That Feels Like Home">
+<meta property="og:description" content="A small Minnesota assisted living home where care feels personal, calm, and family-centered.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.sygmahouse.com/">
+<meta property="og:image" content="https://www.sygmahouse.com/images/home-living-warm.webp">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -371,6 +379,7 @@ nav {
 .progress-dot.done { background: var(--brand); }
 .form-group { margin-bottom: 18px; }
 .form-group label { display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-1); margin-bottom: 6px; letter-spacing: 0.01em; }
+.form-group-label { display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-1); margin-bottom: 6px; letter-spacing: 0.01em; }
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -834,6 +843,425 @@ footer ul li a:hover { color: #92d4b0; }
   .trust-badge { font-size: 0.76rem; padding: 5px 10px; justify-content: center; }
   .glass { border-radius: var(--radius-sm); }
 }
+
+/* ═══════════════════════════════════════
+   WARM HEALTHCARE HOMEPAGE v3
+═══════════════════════════════════════ */
+:focus-visible {
+  outline: 3px solid rgba(201,162,39,0.72);
+  outline-offset: 4px;
+}
+
+.nav-links-wrap .nav-secondary { display: none; }
+
+.warm-home {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255,244,218,0.78), transparent 34%),
+    linear-gradient(180deg, #fbf7ef 0%, #f4ebdf 45%, #fbf9f4 100%);
+}
+
+.warm-hero {
+  position: relative;
+  min-height: calc(100vh - 74px);
+  display: grid;
+  align-items: center;
+  padding: 82px 28px 70px;
+  overflow: hidden;
+}
+.warm-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255,249,239,0.98) 0%, rgba(255,249,239,0.90) 44%, rgba(255,249,239,0.58) 100%),
+    radial-gradient(circle at 82% 18%, rgba(221,179,82,0.16), transparent 30%);
+  pointer-events: none;
+}
+.warm-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: 56px;
+  align-items: center;
+}
+.warm-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6f5a25;
+  background: rgba(201,162,39,0.14);
+  border: 1px solid rgba(201,162,39,0.25);
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.warm-hero h1 {
+  font-size: clamp(3rem, 7vw, 5.9rem);
+  line-height: 0.92;
+  color: #241e17;
+  margin-bottom: 24px;
+  max-width: 760px;
+  letter-spacing: -0.025em;
+}
+.warm-hero h1 span { color: #2d6a4f; }
+.warm-hero-copy {
+  font-size: 1.12rem;
+  line-height: 1.85;
+  color: #554a41;
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+.warm-hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.warm-btn-secondary {
+  background: rgba(255,255,255,0.64);
+  color: #2d493b;
+  border: 1px solid rgba(45,106,79,0.28);
+}
+.warm-btn-secondary:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+}
+.warm-microcopy {
+  color: #756b61;
+  font-size: 0.93rem;
+  line-height: 1.7;
+  max-width: 560px;
+}
+.warm-trust-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 28px;
+  max-width: 720px;
+}
+.warm-trust-pill {
+  background: rgba(255,255,255,0.70);
+  border: 1px solid rgba(83,77,71,0.12);
+  border-radius: 16px;
+  padding: 14px 13px;
+  box-shadow: 0 10px 30px rgba(70,54,34,0.06);
+}
+.warm-trust-pill strong {
+  display: block;
+  color: #2d6a4f;
+  font-size: 1.18rem;
+  line-height: 1.1;
+}
+.warm-trust-pill span {
+  display: block;
+  color: #665e55;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin-top: 4px;
+}
+.hero-photo-story {
+  position: relative;
+  min-height: 640px;
+}
+.hero-photo-main,
+.hero-photo-small,
+.hero-photo-card {
+  position: absolute;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(66,48,31,0.16);
+  border: 8px solid rgba(255,255,255,0.78);
+  background: #fff;
+}
+.hero-photo-main {
+  inset: 30px 0 70px 70px;
+  border-radius: 30px;
+}
+.hero-photo-main img,
+.hero-photo-small img,
+.hero-photo-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: sepia(0.06) saturate(0.92) brightness(1.04);
+  transform: scale(1.012);
+  animation: warmImageDrift 16s ease-in-out infinite alternate;
+}
+.hero-photo-small {
+  left: 0;
+  top: 0;
+  width: 45%;
+  aspect-ratio: 4/3;
+  border-radius: 24px;
+}
+.hero-photo-card {
+  right: 22px;
+  bottom: 0;
+  width: 48%;
+  aspect-ratio: 4/3;
+  border-radius: 24px;
+}
+.hero-note {
+  position: absolute;
+  left: 18px;
+  bottom: 94px;
+  max-width: 280px;
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(83,77,71,0.12);
+  border-radius: 18px;
+  padding: 16px 18px;
+  color: #4a4038;
+  box-shadow: 0 18px 48px rgba(60,44,29,0.12);
+}
+.hero-note strong { display: block; color: #2d6a4f; margin-bottom: 4px; }
+.home-section {
+  padding: 86px 28px;
+}
+.home-section.alt {
+  background: rgba(255,255,255,0.44);
+}
+.home-section-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.section-kicker {
+  color: #8a6a1d;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.home-heading {
+  font-size: clamp(2.15rem, 4vw, 3.5rem);
+  line-height: 1.04;
+  color: #2a221b;
+  margin-bottom: 18px;
+  max-width: 780px;
+}
+.home-lede {
+  color: #5c5148;
+  font-size: 1.03rem;
+  line-height: 1.85;
+  max-width: 720px;
+}
+.trust-grid {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.trust-card {
+  padding: 26px;
+  background: rgba(255,255,255,0.70);
+  border: 1px solid rgba(83,77,71,0.11);
+  border-radius: 18px;
+  box-shadow: 0 16px 44px rgba(68,51,35,0.06);
+}
+.trust-card h3,
+.care-row h3,
+.question-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.02rem;
+  margin-bottom: 8px;
+  color: #2d493b;
+}
+.trust-card p,
+.care-row p,
+.question-card p {
+  color: #665e55;
+  line-height: 1.72;
+  font-size: 0.94rem;
+}
+.story-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  gap: 52px;
+  align-items: center;
+}
+.story-image {
+  border-radius: 26px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  box-shadow: 0 26px 70px rgba(66,48,31,0.13);
+  background: #fff;
+}
+.story-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.care-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+.care-row {
+  padding: 20px 22px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.66);
+  border: 1px solid rgba(83,77,71,0.10);
+}
+.environment-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.85fr;
+  gap: 18px;
+  margin-top: 36px;
+}
+.environment-grid .story-image { min-height: 260px; }
+.environment-stack {
+  display: grid;
+  gap: 18px;
+}
+.warm-cta-band {
+  background: linear-gradient(135deg, #2d6a4f 0%, #3c7a5c 62%, #b99636 160%);
+  color: #fff;
+  border-radius: 28px;
+  padding: clamp(30px, 5vw, 54px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  box-shadow: 0 26px 70px rgba(45,106,79,0.20);
+}
+.warm-cta-band h2 {
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  line-height: 1.02;
+  margin-bottom: 12px;
+}
+.warm-cta-band p {
+  color: rgba(255,255,255,0.86);
+  max-width: 620px;
+}
+.question-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 34px;
+}
+.question-card {
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(83,77,71,0.11);
+  border-radius: 18px;
+  padding: 24px;
+}
+.mobile-sticky-cta {
+  display: none;
+}
+
+@keyframes warmImageDrift {
+  from { transform: scale(1.012) translate3d(0,0,0); }
+  to { transform: scale(1.045) translate3d(-6px,-5px,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media(max-width:900px) {
+  .warm-hero { min-height: auto; padding: 46px 20px 60px; }
+  .warm-hero-inner,
+  .story-split,
+  .environment-grid,
+  .warm-cta-band {
+    grid-template-columns: 1fr;
+  }
+  .hero-photo-story {
+    min-height: 500px;
+  }
+  .hero-photo-main { inset: 84px 0 42px 42px; }
+  .hero-photo-small { width: 52%; }
+  .hero-photo-card { width: 50%; }
+  .warm-trust-row,
+  .trust-grid,
+  .question-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(max-width:768px) {
+  body { padding-bottom: 78px; }
+  .nav-links-wrap .nav-secondary { display: block; }
+  .warm-hero h1 { font-size: 3.08rem; }
+  .warm-hero-copy { font-size: 1rem; }
+  .warm-hero-actions .btn { width: 100%; justify-content: center; }
+  .home-section { padding: 64px 20px; }
+  .hero-photo-story { min-height: 360px; }
+  .hero-note { left: 0; bottom: 60px; max-width: 250px; }
+  .warm-trust-row,
+  .trust-grid,
+  .question-grid {
+    grid-template-columns: 1fr;
+  }
+  .environment-grid { gap: 14px; }
+  .mobile-sticky-cta {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 260;
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 18px;
+    background: rgba(255,250,242,0.94);
+    border: 1px solid rgba(83,77,71,0.14);
+    box-shadow: 0 18px 48px rgba(42,34,27,0.18);
+    backdrop-filter: blur(16px);
+  }
+  .mobile-sticky-cta a {
+    min-height: 46px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 800;
+    color: #fff;
+    background: var(--brand);
+  }
+  .mobile-sticky-cta a:last-child {
+    background: #fff;
+    color: var(--brand);
+    border: 1px solid rgba(45,106,79,0.22);
+  }
+}
+
+@media(max-width:520px) {
+  .warm-hero h1 { font-size: 2.5rem; }
+  .hero-photo-story { min-height: 320px; }
+  .hero-photo-main {
+    inset: 70px 0 34px 28px;
+    border-radius: 22px;
+    border-width: 6px;
+  }
+  .hero-photo-small,
+  .hero-photo-card {
+    border-radius: 18px;
+    border-width: 6px;
+  }
+  .hero-note {
+    font-size: 0.84rem;
+    padding: 13px 14px;
+    max-width: 220px;
+  }
+}
 </style>
 </head>
 <body>
@@ -851,160 +1279,188 @@ footer ul li a:hover { color: #92d4b0; }
       <a href="#" onclick="navTo('home')">Home</a>
       <a href="#" onclick="navTo('about')">About</a>
       <a href="#" onclick="navTo('services')">Services</a>
-      <a href="#" onclick="navTo('rooms')">Rooms</a>
-      <a href="#" onclick="navTo('living')">Daily Living</a>
-      <a href="#" onclick="navTo('admissions')">Admissions</a>
-      <a href="#" onclick="navTo('pricing')">Pricing</a>
-      <a href="#" onclick="navTo('resources')">Resources</a>
-      <a href="#" onclick="navTo('compliance')">Compliance</a>
+      <a href="#" onclick="navTo('tour')">Tour</a>
       <a href="#" onclick="navTo('contact')">Contact</a>
-      <a href="#" onclick="navTo('tour')" class="nav-cta">Schedule Tour</a>
+      <a href="#" onclick="navTo('rooms')" class="nav-secondary">Rooms</a>
+      <a href="#" onclick="navTo('admissions')" class="nav-secondary">Admissions</a>
+      <a href="#" onclick="navTo('pricing')" class="nav-secondary">Pricing</a>
+      <a href="#" onclick="navTo('tour')" class="nav-cta">Schedule a Tour</a>
     </div>
   </div>
 </nav>
 
+<div class="mobile-sticky-cta" aria-label="Quick contact actions">
+  <a href="#" onclick="showPage('tour')">Schedule Tour</a>
+  <a href="tel:5072229055">Call Now</a>
+</div>
+
 <!-- ═══════════════════════════════════════════════ -->
 <!-- HOME PAGE -->
 <!-- ═══════════════════════════════════════════════ -->
-<div id="page-home" class="page active">
-  <div class="hero">
-    <div class="hero-bg-photo"></div>
-    <div class="hero-inner">
-      <div class="trust-row" style="justify-content:center;margin-bottom:20px;">
-        <span class="trust-badge">🏠 Licensed Minnesota ALF</span>
-        <span class="trust-badge">🌿 5-Resident Home</span>
-        <span class="trust-badge">✅ Medicaid Waiver Accepted</span>
-        <span class="trust-badge">👤 Serving Adults 18+</span>
+<div id="page-home" class="page active warm-home">
+  <section class="warm-hero" aria-labelledby="home-hero-title">
+    <div class="warm-hero-inner">
+      <div>
+        <div class="warm-eyebrow">Small residential assisted living in Burnsville</div>
+        <h1 id="home-hero-title">A real home where care feels <span>personal.</span></h1>
+        <p class="warm-hero-copy">Sygma House is a small residential assisted living home in Burnsville, Minnesota, where adults receive daily support, dignity, and the calm feeling of being known.</p>
+        <div class="warm-hero-actions" aria-label="Primary actions">
+          <a href="#" onclick="showPage('tour')" class="btn btn-green">Schedule a Tour</a>
+          <a href="#" onclick="showPage('contact')" class="btn warm-btn-secondary">Speak With Our Team</a>
+        </div>
+        <p class="warm-microcopy">No pressure. Ask questions, see the home, and decide at your own pace. We respond within 24 hours, and urgent placement needs receive same-day priority.</p>
+        <div class="warm-trust-row" aria-label="Sygma House trust indicators">
+          <div class="warm-trust-pill"><strong>5</strong><span>resident beds in a smaller home setting</span></div>
+          <div class="warm-trust-pill"><strong>24/7</strong><span>supportive staff presence</span></div>
+          <div class="warm-trust-pill"><strong>144G</strong><span>Minnesota assisted living license</span></div>
+          <div class="warm-trust-pill"><strong>18+</strong><span>serving adults with daily support needs</span></div>
+        </div>
       </div>
-      <h1>A Real Home for <em>Real People</em></h1>
-      <p>Sygma House provides personalized residential assisted living in a warm, family-style setting for adults <strong style="color:#86c9a3;">18+</strong> in Minnesota.</p>
-      <div class="hero-actions">
-        <a href="#" onclick="showPage('intake')" class="btn btn-primary">Start Intake Form</a>
-        <a href="#" onclick="showPage('tour')" class="btn btn-outline">Schedule a Tour</a>
-        <a href="#" onclick="showPage('rooms')" class="btn btn-outline">View Rooms</a>
+      <div class="hero-photo-story" aria-label="Warm views inside Sygma House">
+        <div class="hero-photo-main">
+          <img src="images/home-living-warm.webp" alt="Sunlit living room inside Sygma House" width="1100" height="825" decoding="async" fetchpriority="high">
+        </div>
+        <div class="hero-photo-small">
+          <img src="images/home-exterior-warm.webp" alt="Sygma House residential exterior in Burnsville" width="960" height="720" decoding="async">
+        </div>
+        <div class="hero-photo-card">
+          <img src="images/home-kitchen-warm.webp" alt="Warm kitchen space where daily meals are prepared" width="900" height="1200" decoding="async">
+        </div>
+        <div class="hero-note"><strong>A quieter setting.</strong> A smaller home gives families space to ask questions and residents room to feel known.</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="stat-bar">
-    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Resident Beds</div></div>
-    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Staffing</div></div>
-    <div class="stat"><div class="stat-num">144G</div><div class="stat-label">MN Licensed</div></div>
-    <div class="stat"><div class="stat-num">EW</div><div class="stat-label">Waiver Accepted</div></div>
-  </div>
-
-  <div class="section">
-    <p class="section-sub" style="margin-bottom:8px;font-size:0.88rem;text-transform:uppercase;font-weight:600;letter-spacing:0.07em;color:var(--green);">Why Families Choose Us</p>
-    <h2 class="section-title">Care That Feels Like Family</h2>
-    <p class="section-sub">With only 5 residents, every person receives individualized attention. We are not a facility — we are a home.</p>
-    <div class="grid-3">
-      <div class="glass feature-card">
-        <div class="feature-icon">👨‍👩‍👧</div>
-        <h3>Small & Intimate</h3>
-        <p>Only 5 residents means your loved one is never lost in the crowd. Staff know each resident personally — their preferences, routines, and what brings them joy.</p>
-      </div>
-      <div class="glass feature-card">
-        <div class="feature-icon">🏡</div>
-        <h3>Real Home Environment</h3>
-        <p>A genuine residential home in a neighborhood setting. Shared meals at the dining table, cozy common areas, and private bedrooms that residents can personalize.</p>
-      </div>
-      <div class="glass feature-card">
-        <div class="feature-icon">🛡️</div>
-        <h3>Licensed & Compliant</h3>
-        <p>Fully licensed under Minnesota Chapter 144G. We follow UDALSA standards including 144G.91 resident rights and required disclosure practices.</p>
-      </div>
-      <div class="glass feature-card">
-        <div class="feature-icon">💊</div>
-        <h3>Medication Management</h3>
-        <p>Trained staff assist with medication administration, coordination with prescribers, and pharmacy relationships to keep residents safe and healthy.</p>
-      </div>
-      <div class="glass feature-card">
-        <div class="feature-icon">🤝</div>
-        <h3>Waiver-Friendly</h3>
-        <p>We work with Elderly Waiver (EW), CADI, and other MA waivers. Our team can coordinate with county case managers and MnCHOICES assessors.</p>
-      </div>
-      <div class="glass feature-card">
-        <div class="feature-icon">📞</div>
-        <h3>Family Communication</h3>
-        <p>Regular updates, open-door policy, and responsive staff. We believe families are partners in care, not visitors.</p>
+  <section class="home-section" aria-labelledby="trust-title">
+    <div class="home-section-inner">
+      <p class="section-kicker">Why families trust us</p>
+      <h2 id="trust-title" class="home-heading">Care feels safer when the setting feels familiar.</h2>
+      <p class="home-lede">Families do not need more pressure when they are searching for care. They need clear answers, a calm environment, and people who take the time to understand what daily life should feel like.</p>
+      <div class="trust-grid">
+        <article class="trust-card">
+          <h3>Small enough to know each person</h3>
+          <p>With five resident beds, care can stay personal. Staff have more room to notice routines, preferences, changes, and small details that matter.</p>
+        </article>
+        <article class="trust-card">
+          <h3>A home, not a hallway</h3>
+          <p>The setting is residential, quiet, and familiar. Families can picture real meals, conversation, rest, and ordinary days instead of an institutional routine.</p>
+        </article>
+        <article class="trust-card">
+          <h3>Professional support without coldness</h3>
+          <p>Sygma House follows Minnesota assisted living standards while keeping communication and daily care grounded, respectful, and human.</p>
+        </article>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div style="background: rgba(255,255,255,0.35); backdrop-filter: var(--blur); padding: 56px 28px; margin-bottom: 0;">
-    <div style="max-width:1200px;margin:0 auto;">
-      <h2 class="section-title" style="margin-bottom:10px;">What Families Say</h2>
-      <p class="section-sub">The trust of families is the foundation of everything we do.</p>
-      <div class="grid-3">
-        <div class="glass testimonial-card">
-          <p>Moving my mother to Sygma House was the best decision our family made. The staff remembered her favorite shows, her tea preference, everything. She felt at home within a week.</p>
-          <div class="testimonial-author">— S. Okonkwo</div>
-          <div class="testimonial-role">Daughter of a resident</div>
-        </div>
-        <div class="glass testimonial-card">
-          <p>As a discharge planner, I've referred multiple clients here. The communication is excellent, the intake process is smooth, and the families consistently report high satisfaction.</p>
-          <div class="testimonial-author">— M. Carlson, MSW</div>
-          <div class="testimonial-role">Hospital Discharge Planner</div>
-        </div>
-        <div class="glass testimonial-card">
-          <p>I was nervous about Medicaid waiver coordination, but the team at Sygma House worked directly with our county case manager. The transition was seamless.</p>
-          <div class="testimonial-author">— T. Johnson</div>
-          <div class="testimonial-role">Son of a resident</div>
+  <section class="home-section alt" aria-labelledby="daily-life-title">
+    <div class="home-section-inner story-split">
+      <div class="story-image">
+        <img src="images/home-dining-warm.webp" alt="Dining room table inside Sygma House" width="900" height="675" loading="lazy" decoding="async">
+      </div>
+      <div>
+        <p class="section-kicker">Daily life and care</p>
+        <h2 id="daily-life-title" class="home-heading">The goal is not just care. It is a calmer day.</h2>
+        <p class="home-lede">Daily support should feel steady, not rushed. Residents can receive help with meals, medication support, mobility, personal care, and companionship while still being treated as people with choices.</p>
+        <div class="care-list">
+          <article class="care-row">
+            <h3>Support nearby, not forced</h3>
+            <p>Caregivers stay attentive while respecting independence wherever possible.</p>
+          </article>
+          <article class="care-row">
+            <h3>Meals and routines that feel familiar</h3>
+            <p>Shared spaces, kitchen rhythms, and simple daily routines help the home feel lived in.</p>
+          </article>
+          <article class="care-row">
+            <h3>Families kept in the loop</h3>
+            <p>Questions are welcome. Communication should feel direct, calm, and easy to understand.</p>
+          </article>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Home Photo Gallery -->
-  <div class="section" style="padding-top:0;">
-    <p class="section-sub" style="margin-bottom:8px;font-size:0.88rem;text-transform:uppercase;font-weight:600;letter-spacing:0.07em;color:var(--green);">Our Home</p>
-    <h2 class="section-title">A Warm, Welcoming Place to Live</h2>
-    <p class="section-sub">Real residential comfort — not a clinical facility. Burnsville, Minnesota.</p>
-    <!-- Row 1: 3 equal columns, exterior large left -->
-    <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:16px;margin-bottom:16px;">
-      <div class="photo-item" style="aspect-ratio:4/3;">
-        <img src="images/house-exterior-1.webp" alt="Sygma House exterior — Burnsville, MN" loading="lazy">
-        <div class="photo-caption">Home Exterior</div>
-      </div>
-      <div class="photo-item" style="aspect-ratio:4/3;">
-        <img src="images/living-room.png" alt="Sygma House living room" loading="lazy">
-        <div class="photo-caption">Living Room</div>
-      </div>
-      <div class="photo-item" style="aspect-ratio:4/3;">
-        <img src="images/Kitchen.png" alt="Sygma House kitchen" loading="lazy">
-        <div class="photo-caption">Kitchen</div>
-      </div>
-    </div>
-    <!-- Row 2: 4 equal columns -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
-      <div class="photo-item" style="aspect-ratio:4/3;">
-        <img src="images/dining-room.png" alt="Sygma House dining room" loading="lazy" style="object-position:center top;">
-        <div class="photo-caption">Dining Room</div>
-      </div>
-      <div class="photo-item" style="aspect-ratio:4/3;">
-        <img src="images/bathroom-real.jpg" alt="Sygma House bathroom" loading="lazy">
-        <div class="photo-caption">Bathroom</div>
-      </div>
-      <div class="photo-item" style="aspect-ratio:4/3;">
-        <img src="images/backyard-1.jpg" alt="Sygma House backyard patio" loading="lazy">
-        <div class="photo-caption">Backyard Patio</div>
-      </div>
-      <div class="photo-item" style="aspect-ratio:4/3;">
-        <img src="images/backyard-2.jpg" alt="Sygma House garden & deck" loading="lazy">
-        <div class="photo-caption">Garden & Deck</div>
+  <section class="home-section" aria-labelledby="environment-title">
+    <div class="home-section-inner">
+      <p class="section-kicker">Warm living environment</p>
+      <h2 id="environment-title" class="home-heading">A peaceful place to visit, ask questions, and imagine everyday life.</h2>
+      <p class="home-lede">The home matters because families are not only choosing services. They are choosing where someone may wake up, eat, rest, talk, and feel safe.</p>
+      <div class="environment-grid">
+        <div class="story-image">
+          <img src="images/home-living-warm.webp" alt="Comfortable Sygma House living room with soft seating" width="1100" height="825" loading="lazy" decoding="async">
+        </div>
+        <div class="environment-stack">
+          <div class="story-image">
+            <img src="images/home-backyard-warm.webp" alt="Quiet backyard and deck area at Sygma House" width="665" height="441" loading="lazy" decoding="async">
+          </div>
+          <div class="story-image">
+            <img src="images/home-bathroom-warm.webp" alt="Clean bathroom inside Sygma House" width="665" height="441" loading="lazy" decoding="async">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="section" style="text-align:center;">
-    <h2 class="section-title">Ready to Get Started?</h2>
-    <p class="section-sub" style="margin-left:auto;margin-right:auto;">Complete our intake form and we'll respond within 24 hours. Urgent situations receive same-day contact.</p>
-    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:28px;">
-      <a href="#" onclick="showPage('intake')" class="btn btn-green">Complete Intake Form</a>
-      <a href="#" onclick="showPage('tour')" class="btn" style="background:var(--glass);border:1px solid var(--glass-border);color:var(--text-dark);backdrop-filter:var(--blur);">Schedule a Tour</a>
-      <a href="#" onclick="showPage('contact')" class="btn" style="background:var(--glass);border:1px solid var(--glass-border);color:var(--text-dark);backdrop-filter:var(--blur);">Contact Us</a>
+  <section class="home-section alt" aria-labelledby="services-title">
+    <div class="home-section-inner">
+      <p class="section-kicker">Personalized care services</p>
+      <h2 id="services-title" class="home-heading">Care plans should fit the person, not the other way around.</h2>
+      <p class="home-lede">Sygma House supports adults who need daily help while preserving dignity, privacy, and choice. Families can ask about fit, timing, payment options, and care needs before making decisions.</p>
+      <div class="trust-grid">
+        <article class="trust-card"><h3>Medication support</h3><p>Medication assistance and coordination are handled with attention, documentation, and communication.</p></article>
+        <article class="trust-card"><h3>Daily personal care</h3><p>Help can include dressing, bathing reminders, meals, mobility support, and household routines.</p></article>
+        <article class="trust-card"><h3>Companionship</h3><p>Conversation, shared spaces, and a smaller setting help reduce isolation and make daily life feel less alone.</p></article>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="home-section" aria-labelledby="communication-title">
+    <div class="home-section-inner story-split">
+      <div>
+        <p class="section-kicker">Peace of mind</p>
+        <h2 id="communication-title" class="home-heading">Families deserve clear communication before and after move-in.</h2>
+        <p class="home-lede">You should be able to ask direct questions and receive direct answers. We can talk through care needs, tour options, waiver/private pay questions, timing, and next steps without pressure.</p>
+        <div class="warm-hero-actions">
+          <a href="#" onclick="showPage('tour')" class="btn btn-green">Schedule a Tour</a>
+          <a href="tel:5072229055" class="btn warm-btn-secondary">Call 507-222-9055</a>
+        </div>
+      </div>
+      <div class="care-list">
+        <article class="care-row"><h3>Before a tour</h3><p>Tell us what your family is trying to solve. We will help you understand whether the home may be a fit.</p></article>
+        <article class="care-row"><h3>During a tour</h3><p>Walk through the home, see the rooms, and ask about daily routines, staffing, meals, and care coordination.</p></article>
+        <article class="care-row"><h3>After a tour</h3><p>If it feels right, we can talk through intake, timing, documents, and payment options at a pace that makes sense.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section alt" aria-labelledby="philosophy-title">
+    <div class="home-section-inner">
+      <p class="section-kicker">Care philosophy</p>
+      <h2 id="philosophy-title" class="home-heading">Dignity is in the small things.</h2>
+      <p class="home-lede">A calm greeting. A familiar seat. A preferred drink. Time to answer a question. These details are not extras; they are part of helping people feel safe and respected.</p>
+      <div class="question-grid">
+        <article class="question-card"><h3>Can residents keep independence?</h3><p>Yes, wherever it is safe and appropriate. Support should help residents keep routines, preferences, and dignity.</p></article>
+        <article class="question-card"><h3>Can families ask questions before applying?</h3><p>Yes. A tour or phone call is often the best first step if you are still deciding what kind of care is right.</p></article>
+        <article class="question-card"><h3>Is this a fit for urgent needs?</h3><p>Call us directly for urgent placement questions. Hospital discharge and time-sensitive situations receive priority response.</p></article>
+        <article class="question-card"><h3>What if we are unsure about payment?</h3><p>We can talk through private pay and waiver questions, including what information your family may need next.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section" aria-labelledby="tour-cta-title">
+    <div class="home-section-inner">
+      <div class="warm-cta-band">
+        <div>
+          <h2 id="tour-cta-title">Come see if the home feels right.</h2>
+          <p>No pressure. Visit, ask questions, and take the time your family needs.</p>
+        </div>
+        <div class="warm-hero-actions">
+          <a href="#" onclick="showPage('tour')" class="btn btn-primary">Schedule a Tour</a>
+          <a href="#" onclick="showPage('intake')" class="btn warm-btn-secondary">Start Intake</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- ═══════════════════════════════════════════════ -->
@@ -1656,19 +2112,19 @@ footer ul li a:hover { color: #92d4b0; }
         <div class="glass" style="padding:32px;">
           <h3 style="margin-bottom:20px;">Request a Tour</h3>
           <div class="form-group">
-            <label>Your Name</label>
+            <label for="tour-name">Your Name</label>
             <input type="text" id="tour-name" placeholder="Full name">
           </div>
           <div class="form-group">
-            <label>Phone Number</label>
+            <label for="tour-phone">Phone Number</label>
             <input type="tel" id="tour-phone" placeholder="507-222-9055">
           </div>
           <div class="form-group">
-            <label>Email Address</label>
+            <label for="tour-email">Email Address</label>
             <input type="email" id="tour-email" placeholder="email@example.com">
           </div>
           <div class="form-group">
-            <label>Preferred Tour Type</label>
+            <label for="tour-type">Preferred Tour Type</label>
             <select id="tour-type">
               <option value="in_person">In-Person Tour</option>
               <option value="phone">Phone Consultation</option>
@@ -1676,11 +2132,11 @@ footer ul li a:hover { color: #92d4b0; }
             </select>
           </div>
           <div class="form-group">
-            <label>Preferred Date / Time</label>
+            <label for="tour-preferred-time">Preferred Date / Time</label>
             <input type="text" id="tour-preferred-time" placeholder="e.g. Mon-Wed mornings, or any weekday">
           </div>
           <div class="form-group">
-            <label>Any questions or notes?</label>
+            <label for="tour-notes">Any questions or notes?</label>
             <textarea rows="3" id="tour-notes" placeholder="Optional - tell us anything you'd like us to know"></textarea>
           </div>
           <button class="btn btn-green" style="width:100%;justify-content:center;" onclick="submitTourRequest(this)">Request Tour</button>
@@ -1743,10 +2199,10 @@ footer ul li a:hover { color: #92d4b0; }
       </div>
       <div class="glass" style="padding:32px;">
         <h3 style="margin-bottom:20px;">Send a Message</h3>
-        <div class="form-group"><label>Name</label><input type="text" id="contact-name" placeholder="Your name"></div>
-        <div class="form-group"><label>Email</label><input type="email" id="contact-email" placeholder="email@example.com"></div>
-        <div class="form-group"><label>Phone</label><input type="tel" id="contact-phone" placeholder="Optional"></div>
-        <div class="form-group"><label>Message</label><textarea rows="4" id="contact-message" placeholder="How can we help you?"></textarea></div>
+        <div class="form-group"><label for="contact-name">Name</label><input type="text" id="contact-name" placeholder="Your name"></div>
+        <div class="form-group"><label for="contact-email">Email</label><input type="email" id="contact-email" placeholder="email@example.com"></div>
+        <div class="form-group"><label for="contact-phone">Phone</label><input type="tel" id="contact-phone" placeholder="Optional"></div>
+        <div class="form-group"><label for="contact-message">Message</label><textarea rows="4" id="contact-message" placeholder="How can we help you?"></textarea></div>
         <button class="btn btn-green" style="width:100%;justify-content:center;" onclick="submitContactMessage(this)">Send Message</button>
       </div>
     </div>
@@ -1778,14 +2234,14 @@ footer ul li a:hover { color: #92d4b0; }
     </div>
     <div class="glass" style="padding:32px;max-width:600px;">
       <h3 style="margin-bottom:20px;">Apply Now</h3>
-      <div class="form-group"><label>Name</label><input type="text" placeholder="Full name"></div>
-      <div class="form-group"><label>Phone</label><input type="tel" placeholder="507-222-9055"></div>
-      <div class="form-group"><label>Email</label><input type="email" placeholder="email@example.com"></div>
+      <div class="form-group"><label for="career-name">Name</label><input type="text" id="career-name" placeholder="Full name"></div>
+      <div class="form-group"><label for="career-phone">Phone</label><input type="tel" id="career-phone" placeholder="507-222-9055"></div>
+      <div class="form-group"><label for="career-email">Email</label><input type="email" id="career-email" placeholder="email@example.com"></div>
       <div class="form-group">
-        <label>Position of Interest</label>
-        <select><option>Direct Support Professional</option><option>Overnight Staff</option><option>Other</option></select>
+        <label for="career-position">Position of Interest</label>
+        <select id="career-position"><option>Direct Support Professional</option><option>Overnight Staff</option><option>Other</option></select>
       </div>
-      <div class="form-group"><label>Tell us about yourself</label><textarea rows="4" placeholder="Experience, availability, why you want to work in assisted living..."></textarea></div>
+      <div class="form-group"><label for="career-message">Tell us about yourself</label><textarea id="career-message" rows="4" placeholder="Experience, availability, why you want to work in assisted living..."></textarea></div>
       <button class="btn btn-green" style="width:100%;justify-content:center;" onclick="alert('Application received! We will be in touch shortly.')">Submit Application</button>
     </div>
   </div>
@@ -1815,9 +2271,9 @@ footer ul li a:hover { color: #92d4b0; }
         <div class="form-step active" id="step-1">
           <h3 style="margin-bottom:20px;">Who is reaching out?</h3>
           <div class="form-grid">
-            <div class="form-group"><label>Your Name *</label><input type="text" id="f-family-name" placeholder="First and last name"></div>
+            <div class="form-group"><label for="f-family-name">Your Name *</label><input type="text" id="f-family-name" placeholder="First and last name"></div>
             <div class="form-group">
-              <label>Your Relationship to Resident *</label>
+              <label for="f-relationship">Your Relationship to Resident *</label>
               <select id="f-relationship">
                 <option value="">Select...</option>
                 <option>Adult child</option>
@@ -1832,8 +2288,8 @@ footer ul li a:hover { color: #92d4b0; }
             </div>
           </div>
           <div class="form-grid">
-            <div class="form-group"><label>Phone Number *</label><input type="tel" id="f-family-phone" placeholder="507-222-9055"></div>
-            <div class="form-group"><label>Email Address *</label><input type="email" id="f-family-email" placeholder="email@example.com"></div>
+            <div class="form-group"><label for="f-family-phone">Phone Number *</label><input type="tel" id="f-family-phone" placeholder="507-222-9055"></div>
+            <div class="form-group"><label for="f-family-email">Email Address *</label><input type="email" id="f-family-email" placeholder="email@example.com"></div>
           </div>
           <div class="form-nav"><div></div><button class="btn btn-green" onclick="nextStep(2)">Next →</button></div>
         </div>
@@ -1842,11 +2298,11 @@ footer ul li a:hover { color: #92d4b0; }
         <div class="form-step" id="step-2">
           <h3 style="margin-bottom:20px;">About the Prospective Resident</h3>
           <div class="form-grid">
-            <div class="form-group"><label>Resident Name *</label><input type="text" id="f-resident-name" placeholder="Full name"></div>
-            <div class="form-group"><label>Resident Age</label><input type="number" id="f-resident-age" placeholder="Age" min="18" max="120"></div>
+            <div class="form-group"><label for="f-resident-name">Resident Name *</label><input type="text" id="f-resident-name" placeholder="Full name"></div>
+            <div class="form-group"><label for="f-resident-age">Resident Age</label><input type="number" id="f-resident-age" placeholder="Age" min="18" max="120"></div>
           </div>
           <div class="form-group">
-            <label>Where is the resident currently located? *</label>
+            <label for="f-location">Where is the resident currently located? *</label>
             <select id="f-location">
               <option value="">Select...</option>
               <option value="home">At home</option>
@@ -1857,7 +2313,7 @@ footer ul li a:hover { color: #92d4b0; }
             </select>
           </div>
           <div class="form-group">
-            <label>Mobility Level</label>
+            <label for="f-mobility">Mobility Level</label>
             <select id="f-mobility">
               <option value="">Select...</option>
               <option>Independent (walks without assistance)</option>
@@ -1867,8 +2323,8 @@ footer ul li a:hover { color: #92d4b0; }
             </select>
           </div>
           <div class="form-group">
-            <label>Primary care needs (select all that apply)</label>
-            <div class="checkbox-group">
+            <p class="form-group-label" id="care-needs-label">Primary care needs (select all that apply)</p>
+            <div class="checkbox-group" role="group" aria-labelledby="care-needs-label">
               <label class="checkbox-item"><input type="checkbox" value="personal_care"> Personal care</label>
               <label class="checkbox-item"><input type="checkbox" value="medication"> Medication management</label>
               <label class="checkbox-item"><input type="checkbox" value="memory"> Memory support</label>
@@ -1887,7 +2343,7 @@ footer ul li a:hover { color: #92d4b0; }
         <div class="form-step" id="step-3">
           <h3 style="margin-bottom:20px;">Payment & Insurance</h3>
           <div class="form-group">
-            <label>How do you plan to pay for care? *</label>
+            <label for="f-payment">How do you plan to pay for care? *</label>
             <select id="f-payment" onchange="toggleWaiverFields()">
               <option value="">Select...</option>
               <option value="private_pay">Private pay (out of pocket)</option>
@@ -1897,7 +2353,7 @@ footer ul li a:hover { color: #92d4b0; }
           </div>
           <div id="waiver-fields" style="display:none;">
             <div class="form-group">
-              <label>Which waiver program?</label>
+              <label for="f-waiver-type">Which waiver program?</label>
               <select id="f-waiver-type">
                 <option value="">Select...</option>
                 <option value="elderly">Elderly Waiver (EW)</option>
@@ -1908,12 +2364,12 @@ footer ul li a:hover { color: #92d4b0; }
               </select>
             </div>
             <div class="form-grid">
-              <div class="form-group"><label>Case Manager Name</label><input type="text" id="f-case-manager" placeholder="Name of county/managed care case manager"></div>
-              <div class="form-group"><label>County</label><input type="text" id="f-county" placeholder="e.g. Hennepin, Ramsey"></div>
+              <div class="form-group"><label for="f-case-manager">Case Manager Name</label><input type="text" id="f-case-manager" placeholder="Name of county/managed care case manager"></div>
+              <div class="form-group"><label for="f-county">County</label><input type="text" id="f-county" placeholder="e.g. Hennepin, Ramsey"></div>
             </div>
           </div>
           <div class="form-group" style="margin-top:10px;">
-            <label>Additional notes on payment / insurance</label>
+            <label for="f-payment-notes">Additional notes on payment / insurance</label>
             <textarea id="f-payment-notes" rows="2" placeholder="Optional — any relevant details"></textarea>
           </div>
           <div class="form-nav">
@@ -1926,7 +2382,7 @@ footer ul li a:hover { color: #92d4b0; }
         <div class="form-step" id="step-4">
           <h3 style="margin-bottom:20px;">Timing & Preferences</h3>
           <div class="form-group">
-            <label>When do you need placement? *</label>
+            <label for="f-timeline">When do you need placement? *</label>
             <select id="f-timeline">
               <option value="">Select...</option>
               <option value="asap">As soon as possible (urgent)</option>
@@ -1937,14 +2393,14 @@ footer ul li a:hover { color: #92d4b0; }
             </select>
           </div>
           <div class="form-group">
-            <label>Would you like to schedule a tour?</label>
-            <div class="checkbox-group">
+            <p class="form-group-label" id="tour-choice-label">Would you like to schedule a tour?</p>
+            <div class="checkbox-group" role="radiogroup" aria-labelledby="tour-choice-label">
               <label class="checkbox-item"><input type="radio" name="tour" id="f-tour-yes" value="yes"> Yes — please contact me to schedule</label>
               <label class="checkbox-item"><input type="radio" name="tour" id="f-tour-no" value="no"> Not at this time</label>
             </div>
           </div>
           <div class="form-group">
-            <label>Anything else we should know?</label>
+            <label for="f-notes">Anything else we should know?</label>
             <textarea id="f-notes" rows="3" placeholder="Diagnoses, behavioral notes, special requirements, or questions for us..."></textarea>
           </div>
           <div class="form-group" style="display:flex;gap:10px;align-items:flex-start;">
