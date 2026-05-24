@@ -49,7 +49,7 @@ export default async function handler(req, res) {
       pixel_code: pixelCode,
       event: mapTikTokEvent(eventName),
       event_id: payload.event_id || crypto.randomUUID(),
-      timestamp: Math.floor(Date.now() / 1000).toString(),
+      event_time: Math.floor(Date.now() / 1000),
       context: {
         page: { url: payload.event_source_url },
         user: cleanObject({
