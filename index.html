@@ -129,6 +129,7 @@ nav {
 .nav-logo-wrap img {
   height: 74px; width: 250px; display: block;
   object-fit: contain; object-position: left center;
+  background: transparent;
 }
 .nav-links-wrap {
   flex: 1; display: flex; align-items: center;
@@ -862,10 +863,10 @@ footer ul li a:hover { color: #92d4b0; }
 
 .warm-hero {
   position: relative;
-  min-height: calc(100vh - 74px);
+  min-height: min(860px, calc(100vh - 74px));
   display: grid;
   align-items: center;
-  padding: 82px 28px 70px;
+  padding: 42px 28px 52px;
   overflow: hidden;
 }
 .warm-hero::before {
@@ -1270,7 +1271,7 @@ footer ul li a:hover { color: #92d4b0; }
 <nav>
   <div class="nav-inner">
     <a href="#" onclick="showPage('home')" class="nav-logo-wrap">
-      <img src="images/logo-nav.png" alt="Sygma House — A Real Home for Real People">
+      <img src="images/logo-nav-transparent.png" alt="Sygma House — A Real Home for Real People">
     </a>
     <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
       <span></span><span></span><span></span>
